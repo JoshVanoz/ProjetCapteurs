@@ -9,3 +9,4 @@ Pour plus de détails sur la forme du rendu, consultez l’annexe 1.
 
 
 Fork le projet 
+Pierre va taper Joshua et Tanguy

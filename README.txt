@@ -8,6 +8,12 @@ se rapprochent du projet. Analyser ces solutions.
 Pour plus de détails sur la forme du rendu, consultez l’annexe 1.
 
 
-Fork le projet 
+Fork le projet
 Maxime
 Pierre va taper Joshua et Tanguy
+
+
+Remotes:
+Maxime : 	https://github.com/Effobless/ProjetCapteurs.git
+Pierre : 	https://github.com/bilout36/ProjetCapteurs
+Florian : https://github.com/FlorianThomas/ProjetCapteurs

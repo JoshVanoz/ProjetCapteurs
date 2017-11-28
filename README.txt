@@ -17,3 +17,4 @@ Remotes:
 Maxime : 	https://github.com/Effobless/ProjetCapteurs.git
 Pierre : 	https://github.com/bilout36/ProjetCapteurs
 Florian : https://github.com/FlorianThomas/ProjetCapteurs
+Tanguy :	https://github.com/sheik37/ProjetCapteurs

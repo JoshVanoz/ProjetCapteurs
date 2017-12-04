@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+</br>
+</br>
+</br>
+    <div class="titre">
+        <h2> Contactez-nous !</h2>
+    </div>
+    <div class="apropos">
+        <h2>A propos</h2>
+        <p>Ce site a été réalisé par 7 personnes : </p>
+        <ul>
+            <li>Project Master : Perceval CHARREYRON (perceval.charreyron@etu.univ-orleans.fr)</li>
+            <li>Arduino Master : Baptiste BARBIERI (baptiste.barbieri@etu.univ-orleans.fr)</li>
+            <li>Archive and Documentation Manager : Tanguy BOIS (tanguy.bois@etu.univ-orleans.fr)</li>
+            <li>Web Master : Eros GUIL-HURTADO (eros.guil-hurtado@etu.univ-orleans.fr)</li>
+            <li>Database Administrator : Kamel MALKI (kamel.malki1@etu.univ-orleans.fr)</li>
+            <li>Web Master : Nicolas MORMICHE (nicolas.mormiche@etu.univ-orleans.fr)</li>
+            <li>Web Master : Jason NEVES (jason.neves@etu.univ-orleans.fr)</li>
+        </ul>
+        <p>Ardui'Now est un service de gestion d'objets connectés, permettant de recueillir un certain nombre
+          d'informations récoltées préalablement par des capteurs autonomes. L'application propose ainsi un grand nombre de
+          fonctionnalités permettant de visualiser chacune de vos données recueillies par les différents capteurs.</p>
+    </div>
+    <div class="contact">
+      <h2>Formulaire de contact : </h2>
+        <input type="text" name="name" placeholder="Votre nom" required> <input type="text" name="phone" placeholder="Téléphone"></br>
+        <input type="text" name="mail" placeholder="Adresse e-mail" required> </br>
+        <input type="text" name="message" placeholder="Votre message..." required> </br>
+        <button name="send">Envoyer</button> <button name="back">Retour</button>
+    </div>
+{% endblock %}

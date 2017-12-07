@@ -1,7 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
+    
+    <!-- Bloc CSS -->
+    {% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for ('static', filename ='home.css') }}">
+    {% endblock %}
+
+    <!-- Bloc metas -->
+    {% block metas %}
+    {{ super() }}
     <meta charset="UTF-8">
+    {% endblock %}
+
     <title>Ardui'Now</title>
   </head>
 </html>

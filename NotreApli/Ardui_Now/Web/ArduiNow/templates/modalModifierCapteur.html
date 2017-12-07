@@ -1,0 +1,106 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal">&times;</button>
+  <h4 class="modal-title">Modifier capteur : </h4>
+</div>
+<div class="modal-body" id="container">
+
+
+  <script>
+  // function SelectedElement()
+  // {
+  //     var element = document.getElementById('capteurs');
+  //     var value=element.options[element.selectedIndex].text;
+  //     $('#capt').val(value);
+  //     return value;
+  // }
+
+
+  $(document).ready(function () {
+    "use strict";
+    // Click on li item will change input text value
+    $('li').click(function () {
+        $('#capt').val($(this).html());
+        $('#numero').val($(this).data('id'));
+        $('#nom').val($(this).text());
+        $('#type').val($(this).data('type'));
+        $('#frequence').val($(this).data('frequence'));
+        $('#formule').val($(this).data('formule'));
+
+    });
+
+    // Type some text into input will hide some fruit !
+    function recherche() {
+        var input_content = $.trim($(this).val());
+        if (!input_content) {
+            $('ul>li').show();
+        } else {
+          $('ul>li').each(function(){
+      if($(this).html().toLowerCase().startsWith(input_content) == true)
+              $(this).show();
+      else
+              $(this).hide();
+});
+        }
+      }
+    $('#capt').keyup(recherche);
+
+
+
+});
+  </script>
+  <div id="formulaireModif">
+  <form id="formulaire" method="POST" name="modif"  action="{{ url_for('capteur_bp.principale') }}">
+      <p>
+          <label for="numero">Numéro :</label>
+          <div class="">
+            <input type="number" name="numero" id="numero" style="width:200px; height:30px;"/>
+
+          </div>
+          </br></br>
+
+          <label for="nom">Nom :</label>
+          <input type="text" name="nom" id="nom" maxlength="100" style="width:200px; height:30px;"/>
+          </br></br></br>
+
+          <label for="type">Type :</label>
+          <input type="text" name="type" id="type" style="width:200px; height:30px;"/>
+          </br></br></br>
+
+          <label for="frequence">Frequence :</label>
+          <input type="number" name="frequence" id="frequence"style="width:200px; height:30px;"/>
+          </br></br></br>
+
+          <label for="formule">Formule :</label>
+          <input type="number" name="formule" id="formule" maxlength="255" style="width:200px; height:30px;"/>
+          </br></br></br>
+      </p>
+  <button type="submit" class="btn btn-default green  glyphicon glyphicon-ok"  id="val" name="validation"> Valider</button>
+  <button type="button" class="btn btn-default red glyphicon glyphicon-remove" data-dismiss="modal"> Annuler</button></br>
+  <button type="submit" id="suppr" class="btn btn-default red glyphicon glyphicon-trash" name="suppression"> Supprimer</button></br>
+  </form>
+</div>
+
+
+
+
+<div class="mycontent-left" id="listeCapteurs">
+  <p>
+  <form id="recherche" method="post" >
+      <p>
+          <input type="text" name="capt" id="capt" style="width:200px; height:30px;" autocomplete="off"/>
+      </p>
+  </form>
+  <form>
+    <!-- <select id="capteurs" size={{size}} onchange="SelectedElement();"> -->
+      <ul id="listecapteur">
+  {%for c in listeCapteurs%}
+  <!-- <option value="{{c.captId}}">{{c.cName}}</option> -->
+  <li id="elemCapteur" data-id="{{c.captId}}" data-type="{{c.cType}}" data-frequence="{{c.frequence}}" data-formule="{{c.formule}}">{{c.cName}}</li></br>
+  {%endfor%}
+</ul>
+<!-- </select> -->
+</form>
+<p></p>
+</p>
+</div>
+</div>

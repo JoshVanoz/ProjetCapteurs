@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <main class="cd-main-content">
+        <div class="cd-container">
+            <h3>Profil de l'utilisateur</h3>
+
+            <p>Bienvenue, {{ g.user.username }}</p>
+
+            <p>Dernière connexion à : {{ g.user.last_login_at }}</p>
+            <p>
+              Vous avez {{g.user.capteurs.all()|length}} capteurs
+            </p>
+        </div>
+    </main>
+{% endblock %}

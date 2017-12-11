@@ -1,0 +1,228 @@
+.headerstyle{
+  background-color: dimgrey;
+  margin-top: 0px;
+  height: 130px;
+  border-bottom: 1.5px solid black;
+}
+.titre_app{
+  margin-top: 0px;
+  text-align: center;
+  color: white;
+  text-shadow: 2px 2px 4px #000000;
+}
+.image_header{
+  border: 4px solid grey;
+  box-shadow: 10px 10px 5px #888888;
+}
+.edit{
+  margin-top:60px;
+}
+.button_header{
+  float: right;
+  background-color:#555555;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  font-size: 16px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  width: 130px;
+}
+.symmetric{
+  transform: scale(1, -1);
+}
+.plan_li_no_puce{
+   list-style-type:none;
+}
+.grp1{
+  height: 50%;
+  width: 100%;
+}
+.grp2{
+  height: 50%;
+  width: 100%;
+}
+#editcolsm8_map{
+  padding-left: 0px;
+}
+.button_header:hover {
+    background-color: black;
+    color: white;
+}
+.carousel-inner{
+  height: 300px;
+}
+footer{
+  bottom: 0;
+  width: 100%;
+  z-index:1500;
+  text-align: center;
+}
+.ulfoot{
+    display:block;
+    list-style-type: none; //aucune puce affichée
+}
+.footer li{
+  display: inline;
+
+}
+header{
+  position: fixed;
+  width: 100%;
+  top:0;
+  z-index:1500;
+}
+body{
+  position:relative;
+  width: 100%;
+  z-index: 0;
+}
+.inputModalEnregistrer{
+  margin-left: 25%;
+}
+.mail{
+    width: 280px;
+}
+.v1{
+  margin-bottom: 20px;
+}
+.green{
+  background-color:#339933;
+  color:white;
+}
+.red{
+  background-color:#cc0000;
+  color:white;
+}
+.border{
+  border: 1px solid black;
+  border-radius: 4%;
+}
+.mycontent-left {
+  border-right: 1px solid #333;
+}
+#imageMap{
+  height: 600px;
+  width: 100%;
+  border-top-left-radius: 5%;
+    border-bottom-left-radius: 5%;
+}
+.modifcol-sm{
+  height: 590px;
+}
+.searchCap{
+  padding-left: 0px;
+}
+.button_align_cpt{
+  position: absolute;
+  margin-left: 70%;
+  bottom: 4px;
+}
+#ajoutcapteur, #modifierCapteur{
+  z-index: 8000;
+}
+#onglets{
+  display: none;
+}
+#onglets li{
+  position: relative;
+  float: left;
+  list-style: none;
+  padding: 2px 5px 7px;
+  margin-right: 5px;
+  border: 1px solid black;
+  cursor: pointer;
+  background-color: #EEEEEE;
+  color: black;
+  z-index: 1;
+}
+#onglets .actif{
+  border-bottom: none;
+  font-weight: bold;
+  z-index: 10;
+}
+#contenu{
+  clear: both;
+  position: relative;
+  margin: 0 20px;
+  padding: 10px;
+  border: 1px solid black;
+  z-index: 5;
+  top: -6px;
+  background-color: #EEEEEE;
+  color: black;
+  width: 500px;
+  overflow: hidden;
+  border-radius: 15px;
+  width: 100%;
+  height: 400px;
+  overflow: scroll;
+}
+.graph{
+  width: 90%;
+  height: 240px;
+    border: 1px solid black;
+margin-left: 5%;
+}
+.featur-modif{
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+.decaleblock{
+  margin:5%;
+  background-color: white;
+  overflow: scroll;
+  max-height: 200px;
+}
+.alignboutongreengraphe{
+  margin-left: 48%;
+}
+.editcolmd8_calc{
+  width: auto;
+  margin:5%;
+}
+#formulaire label {
+        display: block;
+        width: 200px;
+        float: left;
+}
+
+#container{
+  display: flex;
+  flex-direction: row;
+  padding-left: 2%;
+}
+
+#container #listeCapteurs {
+  order:1;
+
+    float:left;
+    width:60%;
+}
+#container #formulaireModif {
+  order:2;
+  margin-left: 10%;
+}
+
+#val{
+  margin-right: 10%;
+}
+#listecapteur{
+  list-style-type: none;
+}
+#elemCapteur{
+    cursor :pointer;
+}
+.modifslide{
+  width: 500px;
+  height: 500px;
+}
+
+#suppr{
+  margin-left: 25%;
+  margin-right: 50%;
+}
+
+.mentions{
+    text-align: center;
+}

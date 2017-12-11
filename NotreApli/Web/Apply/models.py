@@ -36,3 +36,9 @@ class AlesDroits(db.Model):
     Lecture = db.Column(db.Boolean)
     Edition = db.Column(db.Boolean)
     Suppression = db.Column(db.Boolean)
+
+class Donnee(db.Model):
+    val = db.Column(db.Float)
+    dateRel = db.Column(db.DateTime.Date, primary_key=True)
+    idCapt = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
+    

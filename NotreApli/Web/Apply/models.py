@@ -12,10 +12,14 @@ class Parterre(db.Model):
     nomP = db.Column(db.String(100))
     lieuGeoPX= db.Column(db.Float))
     lieuGeoPY= db.Column(db.Float)
+    def __repr__(self):
+        return "<Parterre (%d) %s>" % (self.idP, self.nomP)
 
 class TypePlante(db.Model):
     idPlant = db.Column(db.Integer, primary_key=True)
     NomPlant = db.Column(db.String(100))
+    def __repr__(self):
+        return "<TypePlante (%d) %s>" % (self.NomPlant)
 
 class TypeMesure(db.Model):
     IdTypeM = db.Column(db.Integer, primary_key=True)
@@ -32,6 +36,9 @@ class Capteur(db.Model):
     intervalleTemps = db.Column(db.DateTime.time)
     numTel = db.Column(db.String(10))
 
+    def __repr__(self):
+        return "<Capteur (%d) %s>" % (self.idCapt, self.nomCapt)
+
 class AlesDroits(db.Model):
     Lecture = db.Column(db.Boolean)
     Edition = db.Column(db.Boolean)
@@ -41,4 +48,3 @@ class Donnee(db.Model):
     val = db.Column(db.Float)
     dateRel = db.Column(db.DateTime.Date, primary_key=True)
     idCapt = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
-    

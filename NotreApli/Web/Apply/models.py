@@ -7,6 +7,9 @@ class Utilisateur(db.Model):
     mdpU = db.Column(db.String(100))
     prenomU = db.Column(db.String(20))
 
+    def __repr__(self):
+        return "<Utilisateur (%d) %s>" % (self.idU, self.nomU)
+
 class Parterre(db.Model):
     idP = db.Column(db.Integer, primary_key=True)
     nomP = db.Column(db.String(100))
@@ -20,6 +23,9 @@ class TypePlante(db.Model):
 class TypeMesure(db.Model):
     IdTypeM = db.Column(db.Integer, primary_key=True)
     nomTypeM = db.Column(db.String(100))
+
+    def __repr__(self):
+        return "<TypeMesure (%d) %s>" % (self.nomTypeM)
 
 
 class Capteur(db.Model):
@@ -41,4 +47,6 @@ class Donnee(db.Model):
     val = db.Column(db.Float)
     dateRel = db.Column(db.DateTime.Date, primary_key=True)
     idCapt = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
-    
+
+    def __repr__(self):
+        return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)

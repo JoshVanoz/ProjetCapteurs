@@ -31,3 +31,7 @@ aside{
   flex: 1;
   margin-left: 10px;
 }
+
+#navbar{
+  font-size: large;
+}

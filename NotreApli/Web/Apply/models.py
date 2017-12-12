@@ -1,5 +1,5 @@
 from .app import db
-
+from flask_login import UserMixin
 
 class Utilisateur(db.Model):
     idU = db.Column(db.String(50), primary_key=True)
@@ -58,6 +58,7 @@ class Donnee(db.Model):
     val = db.Column(db.Float)
     dateRel = db.Column(db.DateTime, primary_key=True)
     idCapt = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
-
     def __repr__(self):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)
+def get_id(idU):
+    return Utilisateur.query.get(idU)

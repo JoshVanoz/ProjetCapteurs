@@ -6,3 +6,8 @@ def home():
     return render_template(
         "home.html",
         title="Hello World!")
+
+@app.route("/Parterre/")
+def parterre():
+    return render_template(
+        "parterre.html")

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block navbar %}
+<<<<<<< HEAD
+<nav class=navbar>
+  <ul>
+    <li><a href ="/">Accueil</a></li>
+    <li><a href ="{{ url_for('parterre') }}">Mes parterres</a></li>
+    <li><a href ="autres_parterres.html">Autres parterres</a></li>
+    <li><a href ="add_parterre.html">Ajouter un parterre</a></li>
+    <li><a href ="add_capteur.html">Ajouter un capteur</a></li>
+  </ul>
+</nav>
+=======
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Arduinow</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Accueil</a></li>
+            <li><a href="#about">Mes parterres</a></li>
+            <li><a href="#about">Autres parterres</a></li>
+            <li><a href="#about">Ajouter un parterre</a></li>
+            <li><a href="#about">Ajouter un capteur</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+>>>>>>> Josh/master
+{% endblock %}

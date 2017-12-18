@@ -63,3 +63,6 @@ class Donnee(db.Model):
 
 def get_id(idU):
     return Utilisateur.query.get(idU)
+
+def get_parterres():
+    return Parterre.query.all()

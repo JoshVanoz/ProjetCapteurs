@@ -60,5 +60,6 @@ class Donnee(db.Model):
     idCapt = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
     def __repr__(self):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)
+
 def get_id(idU):
     return Utilisateur.query.get(idU)

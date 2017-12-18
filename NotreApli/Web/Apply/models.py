@@ -13,7 +13,7 @@ class Utilisateur(db.Model):
 class Parterre(db.Model):
     idP = db.Column(db.Integer, primary_key=True)
     nomP = db.Column(db.String(100))
-    lieuGeoPX= db.Column(db.Float))
+    lieuGeoPX= db.Column(db.Float)
     lieuGeoPY= db.Column(db.Float)
     def __repr__(self):
         return "<Parterre (%d) %s>" % (self.idP, self.nomP)
@@ -36,7 +36,7 @@ class Capteur(db.Model):
     idCapt = db.Column(db.Integer, primary_key=True)
     lieuGeoCaptX = db.Column(db.Float)
     lieuGeoCaptY = db.Column(db.Float)
-    lvlBatCapt = db.Column(db.Integer))
+    lvlBatCapt = db.Column(db.Integer)
     nomCapt = db.Column(db.String(20))
     datePlacement = db.Column(db.DateTime.Date)
     intervalleTemps = db.Column(db.DateTime.time)

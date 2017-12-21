@@ -2,10 +2,9 @@
 
 {% block content %}
 <aside>
-  <p><a href="#">Parterre1</a></p>
-  <p><a href="#">Parterre2</a></p>
-  <p><a href="#">Parterre3</a></p>
-  <p><a href="#">Parterre4</a></p>
+  {% for parterre in mesParterre %}
+  <p><a href="#">{{parterre.nomP}}</a></p>
+  {% endfor %}
 </aside>
 
 {% block main %}{% endblock %}

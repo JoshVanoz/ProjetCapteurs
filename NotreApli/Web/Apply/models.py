@@ -70,3 +70,6 @@ def load_user(username):
 
 def get_id(idU):
     return Utilisateur.query.get(idU)
+
+def get_parterres():
+    return Parterre.query.all()

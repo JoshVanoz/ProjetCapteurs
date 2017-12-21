@@ -16,7 +16,8 @@ def home():
 @app.route("/Parterre/")
 def parterre():
     return render_template(
-        "parterre.html")
+        "parterre.html",
+        mesParterre = get_parterres())
 
 class LoginForm(FlaskForm):
     username = StringField('Username')

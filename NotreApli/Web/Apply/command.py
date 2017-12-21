@@ -24,6 +24,11 @@ def newuser(idU,nomU,mdpU,prenomU):
     db.session.commit()
 
 @manager.command
-def passwd(idU,password):
-    '''modifier password user'''
-    from .models import Utilisateur
+def passwd(username,password):
+    from .models import User,get_user
+    from hashlib import sha256
+    m = sha256()
+    m.update(password.encode())
+    user=get_user(username)
+    user.password=m.hexdigest()
+    db.session.commit()

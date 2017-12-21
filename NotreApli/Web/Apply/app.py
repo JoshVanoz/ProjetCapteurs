@@ -19,3 +19,7 @@ def mkpath(p):
 app.config['SQLALCHEMY_DATABASE_URI']=(
     'sqlite:///'+mkpath('../tuto.db'))
 db=SQLAlchemy(app)
+
+app.config['SECRET_KEY']="f80e3c9d-4229-4e14-a302-7b624a52f6eb"
+from flask_login import LoginManager
+login_manager = LoginManager(app)

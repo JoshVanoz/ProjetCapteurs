@@ -32,6 +32,9 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+              {% if current_user.is_authenticated() %}
+              <li><a> {{ current_user}}
         </div><!--/.nav-collapse -->
       </div>
     </nav>

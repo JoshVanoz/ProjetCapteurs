@@ -62,8 +62,11 @@ class Donnee(db.Model):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)
 
 def get_user(username):
-    return User.query.filter(Utilisateur.IdU==username).one()
+    return Utilisateur.query.filter(Utilisateur.IdU==username).one()
 
 @login_manager.user_loader
 def load_user(username):
-    return User.query.get(username)
+    return Utilisateur.query.get(username)
+
+def get_id(idU):
+    return Utilisateur.query.get(idU)

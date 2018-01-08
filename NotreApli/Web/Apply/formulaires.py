@@ -32,4 +32,3 @@ class UserForm(FlaskForm):
 
     def set_next(self, newNext):
         self.next.data = newNext
-        

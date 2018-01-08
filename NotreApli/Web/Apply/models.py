@@ -1,4 +1,4 @@
-from .app import db
+from .app import db,login_manager
 from flask_login import UserMixin
 
 class Utilisateur(db.Model):
@@ -61,5 +61,15 @@ class Donnee(db.Model):
     def __repr__(self):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)
 
+def get_user(username):
+    return Utilisateur.query.filter(Utilisateur.IdU==username).one()
+
+@login_manager.user_loader
+def load_user(username):
+    return Utilisateur.query.get(username)
+
 def get_id(idU):
     return Utilisateur.query.get(idU)
+
+def get_parterres():
+    return Parterre.query.all()

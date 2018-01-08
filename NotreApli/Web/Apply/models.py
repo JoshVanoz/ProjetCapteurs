@@ -10,6 +10,12 @@ class Utilisateur(db.Model):
     def __repr__(self):
         return "<Utilisateur (%d) %s>" % (self.idU, self.nomU)
 
+    def get_name(self):
+        return self.nomU
+
+    def get_id(self):
+        return self.idU
+
 class Parterre(db.Model):
     idP = db.Column(db.Integer, primary_key=True)
     nomP = db.Column(db.String(100))
@@ -18,11 +24,23 @@ class Parterre(db.Model):
     def __repr__(self):
         return "<Parterre (%d) %s>" % (self.idP, self.nomP)
 
+    def get_name(self):
+        return self.nomP
+
+    def get_id(self):
+        return self.idP
+
 class TypePlante(db.Model):
     idPlant = db.Column(db.Integer, primary_key=True)
     NomPlant = db.Column(db.String(100))
     def __repr__(self):
         return "<TypePlante (%d) %s>" % (self.NomPlant)
+
+    def get_name(self):
+        return self.NomPlant
+
+    def get_id(self):
+        return self.idPlant
 
 class TypeMesure(db.Model):
     IdTypeM = db.Column(db.Integer, primary_key=True)
@@ -30,6 +48,12 @@ class TypeMesure(db.Model):
 
     def __repr__(self):
         return "<TypeMesure (%d) %s>" % (self.nomTypeM)
+
+    def get_name(self):
+        return self.nomTypeM
+
+    def get_id(self):
+        return self.IdTypeM
 
 
 class Capteur(db.Model):
@@ -45,6 +69,12 @@ class Capteur(db.Model):
     def __repr__(self):
         return "<Capteur (%d) %s>" % (self.idCapt, self.nomCapt)
 
+    def get_name(self):
+        return self.nomCapt
+
+    def get_id(self):
+        return self.idCapt
+
 class AlesDroits(db.Model):
 
     Lecture = db.Column(db.Boolean)
@@ -53,6 +83,8 @@ class AlesDroits(db.Model):
     idP = db.Column(db.Integer, db.ForeignKey("parterre.idP"), primary_key = True)
     idU = db.Column(db.String(50), db.ForeignKey("utilisateur.idU"), primary_key = True)
 
+    def get_id(self):
+        return (self.idP, self.idU)
 
 class Donnee(db.Model):
     val = db.Column(db.Float)
@@ -60,6 +92,9 @@ class Donnee(db.Model):
     idCapt = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
     def __repr__(self):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)
+
+    def get_id(self):
+        return (self.dateRel, self.idCapt)
 
 def get_user(username):
     return Utilisateur.query.filter(Utilisateur.IdU==username).one()

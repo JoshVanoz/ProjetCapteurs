@@ -16,6 +16,13 @@ class Utilisateur(db.Model):
     def get_id(self):
         return self.idU
 
+    def set_name(self,nomU):
+        self.nomU = nomU
+    def set_surname(self,prenomU):
+        self.prenomU = prenomU
+    def set_mdp(self,mdpU):
+        self.mdpU = mdpU
+
 class Parterre(db.Model):
     idP = db.Column(db.Integer, primary_key=True)
     nomP = db.Column(db.String(100))
@@ -30,6 +37,13 @@ class Parterre(db.Model):
     def get_id(self):
         return self.idP
 
+    def set_name(self,nomP):
+        self.nomP = nomP
+    def set_lieuGeoPX(self,lieuGeoPX):
+        self lieuGeoPX = lieuGeoPX
+    def set_lieuGeoPY(self,lieuGeoPY):
+        self lieuGeoPY = lieuGeoPY
+
 class TypePlante(db.Model):
     idPlant = db.Column(db.Integer, primary_key=True)
     NomPlant = db.Column(db.String(100))
@@ -41,6 +55,10 @@ class TypePlante(db.Model):
 
     def get_id(self):
         return self.idPlant
+
+    def set_name(self,NomPlant):
+        self.NomPlant = NomPlant
+
 
 class TypeMesure(db.Model):
     IdTypeM = db.Column(db.Integer, primary_key=True)
@@ -54,6 +72,9 @@ class TypeMesure(db.Model):
 
     def get_id(self):
         return self.IdTypeM
+
+    def set_name(self,nomTypeM):
+        self.nomTypeM = nomTypeM
 
 
 class Capteur(db.Model):
@@ -74,6 +95,15 @@ class Capteur(db.Model):
 
     def get_id(self):
         return self.idCapt
+
+    def set_name(self,nomCapt):
+        self.nomCapt = nomCapt
+    def set_lieuGeoCaptX(self,lieuGeoCaptX):
+        self lieuGeoCaptX = lieuGeoCaptX
+    def set_lieuGeoCaptY(self,lieuGeoCaptY):
+        self lieuGeoCaptY = lieuGeoCaptY
+    def set_num(self,numTel):
+        self.numTel = numTel
 
 class AlesDroits(db.Model):
 

@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,HiddenField,PasswordField
 from wtforms.validators import DataRequired
 from hashlib import sha256
-from flask_login import login_user,current_user
+from flask_login import login_user,current_user, logout_user
 
 @app.route("/")
 def home():
@@ -30,7 +30,7 @@ class LoginForm(FlaskForm):
         m = sha256()
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
-        return user if passwd == user.password else None
+        return user if passwd == user.mdpU else None
 
 @app.route("/login/",methods=("GET","POST",))
 def login():
@@ -43,3 +43,8 @@ def login():
     return render_template(
         "login.html",
         form = f)
+
+@app.route("/logout/")
+def logout():
+    logout_user()
+    return redirect(url_for('home'))

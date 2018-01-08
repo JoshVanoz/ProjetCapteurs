@@ -7,6 +7,9 @@ class Utilisateur(db.Model):
     mdpU = db.Column(db.String(100))
     prenomU = db.Column(db.String(20))
 
+    def get_id(self):
+        return self.username
+
     def __repr__(self):
         return "<Utilisateur (%d) %s>" % (self.idU, self.nomU)
 

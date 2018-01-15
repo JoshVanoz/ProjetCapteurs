@@ -81,7 +81,6 @@ class CapteurForm(FlaskForm):
     def get_name(self):
         return self.name.data
 
-
     def get_Parterre(self):
         return self.parterre.data
 

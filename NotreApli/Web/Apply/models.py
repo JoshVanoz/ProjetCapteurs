@@ -175,6 +175,9 @@ class Capteur(db.Model):
     def set_num(self,numTel):
         self.numTel = numTel
 
+    def set_interval(self, newInterval):
+        self.intervalleTemps = newInterval
+
 class AlesDroits(db.Model):
 
     Lecture = db.Column(db.Boolean)

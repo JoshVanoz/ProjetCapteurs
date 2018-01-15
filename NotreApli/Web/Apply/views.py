@@ -108,5 +108,16 @@ def edit_capteur(id):
 def save_capteur(id):
     f = CapteurForm()
     a = get_capteur_id(id)
-    a.set_name(f.get_name())
-    a.set
+    if f.validate_on_submit():
+        a.set_name(f.get_name())
+        a.set_num(f.get_phoneNumber())
+        a.set_interval(f.get_interval())
+        db.session.commit()
+        return redirect(url_for(
+            "capteur_info",
+            id = id,
+            titre = a.get_name()))
+    return render_template(
+        "addCapteur.html",
+        titre = a.get_name(),
+        form = f)

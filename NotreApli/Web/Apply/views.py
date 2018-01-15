@@ -59,6 +59,7 @@ def capteur_info(id):
     capteur = get_capteur_id(id))
 
 @app.route("/Ajouter/Capteur/")
+@login_required
 def add_Capteur():
     f = CapteurForm()
     return render_template("addCapteur.html", form = f, title= "Ajouter un nouveau Capteur")
@@ -83,7 +84,7 @@ def new_capteur_saving():
         titre = "Nouveau Capteur")
 
 @app.route("/Supprimer/Capteur",methods=["POST","GET"])
-# @login_required
+@login_required
 def delete_capteur():
     if request.method=="POST":
         if request.form['del']=="":
@@ -96,7 +97,7 @@ def delete_capteur():
 
 
 @app.route("/Supprimer/Capteur/<int:id>",methods=["POST","GET"])
-# @login_required
+@login_required
 def delete_cap(id=None):
     if id==None:
         if request.method=="POST":

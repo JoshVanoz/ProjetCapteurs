@@ -38,6 +38,12 @@ class UserForm(FlaskForm):
     def set_next(self, newNext):
         self.next.data = newNext
 
+class InscriptionForm(FlaskForm):
+
+    username = StringField("Username")
+    password = PasswordField("Password")
+    nom = StringField("Nom")
+    prenom = StringField("Prénom")
 
 class CapteurForm(FlaskForm):
     """

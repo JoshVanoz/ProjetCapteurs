@@ -32,6 +32,27 @@ def login():
 			return redirect(next)
 	return render_template("login.html",form=f)
 
+@app.route("/inscription/",methods=("GET","POST",))
+def inscription():
+    f=InscriptionForm()
+    return render_template("inscription.html",form=f)
+
+@app.route("/inscription/save/", methods=["POST"])
+def save_inscription():
+    user= None
+    f=InscriptionForm()
+    from hashlib import sha256
+    m = sha256()
+    m.update(f.password.data.encode())
+    if f.validate_on_submit():
+        user=Utilisateur(idU=f.username.data,mdpU=m.hexdigest(),nomU=f.nom.data,prenomU=f.prenom.data)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template(
+		"inscription.html",
+		form=f)
+
 @app.route("/logout/")
 def logout():
     logout_user()

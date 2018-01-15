@@ -21,7 +21,7 @@ class Utilisateur(db.Model):
 
     def set_surname(self,prenomU):
         self.prenomU = prenomU
-        
+
     def set_mdp(self,mdpU):
         self.mdpU = mdpU
 
@@ -79,6 +79,9 @@ class TypeMesure(db.Model):
 
     def set_name(self,nomTypeM):
         self.nomTypeM = nomTypeM
+
+    def get_TypeMesures():
+        return TypeMesure.query.order_by(TypeMesure.nomTypeM)
 
 
 class Capteur(db.Model):

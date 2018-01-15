@@ -1,0 +1,14 @@
+{% extends "header.html" %}
+
+{% block main %}
+<h1>Mon capteur</h1>
+<ul>{{capteur.nomCapt}}
+  <li>Id : {{capteur.idCapt}}</li>
+  <li>{{capteur.lieuGeoCaptX}}</li>
+  <li>{{capteur.lieuGeoCaptY}}</li>
+  <li>{{capteur.lvlBatCapt}}</li>
+  <li>{{capteur.lvlBatCapt}}</li>
+  <li>{{capteur.datePlacement}}</li>
+</ul>
+
+{% endblock %}

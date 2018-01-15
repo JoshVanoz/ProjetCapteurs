@@ -19,7 +19,7 @@ class Utilisateur(db.Model):
     def set_name(self,nomU):
         self.nomU = nomU
 
-    def set_surname(self,prenomU):
+    def set_firstname(self,prenomU):
         self.prenomU = prenomU
 
     def set_mdp(self,mdpU):
@@ -173,3 +173,9 @@ def get_parterres():
 
 def get_parterre(id):
     return Parterre.query.get(id)
+
+def get_capteurs():
+    return Capteur.query.all()
+
+def get_capteur_id(id):
+    return Capteur.query.get(id)

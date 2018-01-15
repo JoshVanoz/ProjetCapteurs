@@ -1,5 +1,6 @@
 from .app import db,login_manager
 from flask_login import UserMixin
+import datetime
 
 class Utilisateur(db.Model):
     idU = db.Column(db.String(50), primary_key=True)
@@ -72,6 +73,9 @@ class Parterre(db.Model):
     def get_plantes(self):
         return self.plantes
 
+    def add_capteur(self, capteur):
+        self.capteurs.append(capteur)
+
 class TypePlante(db.Model):
     idPlant = db.Column(db.Integer, primary_key=True)
     NomPlant = db.Column(db.String(100))
@@ -118,11 +122,16 @@ class Capteur(db.Model):
     intervalleTemps = db.Column(db.Integer)
     numTel = db.Column(db.String(10))
 
-    def __init__(self, name, TypeMesure, tel, parterre):
+    def __init__(self, name, TypeMesure, tel, parterre, x, y, intervalle):
         self.nomCapt = name
-        self.lieuGeoCaptX = 0
-        self.lieuGeoCaptY = 0
+        self.lieuGeoCaptX = x
+        self.lieuGeoCaptY = y
         self.lvlBatCapt = 50
+        self.numTel = tel
+        self.datePlacement = datetime.datetime.now()
+        self.intervalleTemps = intervalle
+        # self.TypeMesure = TypeMesure
+        parterre.add_capteur(self)
 
     def __repr__(self):
         return "<Capteur (%d) %s>" % (self.idCapt, self.nomCapt)
@@ -132,6 +141,27 @@ class Capteur(db.Model):
 
     def get_id(self):
         return self.idCapt
+
+    def get_coordonnees(self):
+        return (self.lieuGeoCaptX, self.set_lieuGeoCaptY)
+
+    def get_date(self):
+        return self.datePlacement
+
+    def get_lvlBattery(self):
+        return self.lvlBatCapt
+
+    def get_interval(self):
+        return self.intervalleTemps
+
+    def get_TypeMesure(self):
+        return None
+
+    def get_phoneNumber(self):
+        return self.numTel
+
+    def get_parterre(self):
+        return None
 
     def set_name(self,nomCapt):
         self.nomCapt = nomCapt

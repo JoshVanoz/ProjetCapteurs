@@ -9,4 +9,6 @@
   <li>Date Placement : {{capteur.datePlacement}}</li>
 </ul>
 
+<a href= "{{ url_for('edit_capteur', id = capteur.get_id()) }}">Modifier</a>
+
 {% endblock %}

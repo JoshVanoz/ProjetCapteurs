@@ -83,7 +83,10 @@ def new_capteur_saving():
         o = Capteur(name = f.get_name(),
                     tel = f.get_phoneNumber(),
                     TypeMesure = f.get_TypeMesure(),
-                    parterre = f.get_Parterre())
+                    parterre = f.get_Parterre(),
+                    x = f.get_coordonnees()[0],
+                    y = f.get_coordonnees()[1],
+                    intervalle = f.get_interval())
         db.session.add(o)
         db.session.commit()
         return redirect(url_for('capteur_info', id = o.get_id()))
@@ -91,3 +94,19 @@ def new_capteur_saving():
         "create-capteur.html",
         form  = f,
         titre = "Nouveau Capteur")
+
+@app.route("/Capteur/edit/<int:id>")
+def edit_capteur(id):
+    capteur = get_capteur_id(id)
+    form = CapteurForm(capteur)
+    return render_template(
+        "addCapteur.html",
+        titre = capteur.get_name(),
+        form=form)
+
+@app.route("/Capteur/save/<int:id>")
+def save_capteur(id):
+    f = CapteurForm()
+    a = get_capteur_id(id)
+    a.set_name(f.get_name())
+    a.set

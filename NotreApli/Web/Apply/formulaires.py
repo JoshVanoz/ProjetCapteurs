@@ -3,7 +3,9 @@ from wtforms import HiddenField, StringField, PasswordField, IntegerField, DateF
 import datetime
 from wtforms.validators import DataRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from .models import get_TypeMesures, get_parterres
+from .models import *
+from hashlib import sha256
+from flask_login import login_user,current_user, logout_user, login_required
 
 class UserForm(FlaskForm):
     """
@@ -20,7 +22,7 @@ class UserForm(FlaskForm):
     def get_password(self):
         return self.password.data
 
-    def get_authentificated_user(self):
+    def get_authenticated_user(self):
         user = load_user(self.username.data)
         if user is None:
             return None
@@ -28,7 +30,7 @@ class UserForm(FlaskForm):
         m = sha256()
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
-        return user if passwd == user.get_password() else None
+        return user if passwd == user.mdpU else None
 
     def get_next(self):
         return self.next.data
@@ -36,6 +38,12 @@ class UserForm(FlaskForm):
     def set_next(self, newNext):
         self.next.data = newNext
 
+class InscriptionForm(FlaskForm):
+
+    username = StringField("Username")
+    password = PasswordField("Password")
+    nom = StringField("Nom")
+    prenom = StringField("Prénom")
 
 class CapteurForm(FlaskForm):
     """
@@ -81,6 +89,9 @@ class CapteurForm(FlaskForm):
     def get_name(self):
         return self.name.data
 
+    def get_coordonnees(self):
+        return (self.lieuGeoX.data, self.lieuGeoY.data)
+
     def get_Parterre(self):
         return self.parterre.data
 
@@ -105,8 +116,53 @@ class CapteurForm(FlaskForm):
     def get_TypeMesure(self):
         return self.TypeMesure.data
 
-    def get_parterre(self):
+    def get_Parterre(self):
         return self.parterre.data
 
-    def get_coordonnees(self):
-        return (self.lieuGeoX.data,self.lieuGeoY.data)
+
+
+class ParterreForm(FlaskForm):
+
+    id   = HiddenField('id')
+    nomP = StringField('Nom', validators = [DataRequired()])
+    lieuGeoPX = FloatField('Position X')
+    lieuGeoPY = FloatField('Position Y')
+    next = HiddenField()
+
+    def __init__(self, id=None, name=None):
+        super().__init__()
+        if id:
+            self.id.data = id
+            self.nomP.data = nomP
+            self.lieuGeoX = 0
+            self.lieuGeoY = 0
+            name = StringField('Nom', validators = [DataRequired()])
+            lieuGeoX = IntegerField('Position X')
+            lieuGeoY = IntegerField('Position Y')
+            self.next.data = "save_capteur"
+        else:
+            self.next.data = "new_parterre_saving"
+
+    def get_id(self):
+        return self.id.data
+
+    def get_name(self):
+        return self.nomP.data
+
+    def get_next(self):
+        return self.next.data
+
+    def set_name(self, newName):
+        self.album_name.data = newName
+
+    def get_lieuGeoPx(self):
+        return self.lieuGeoPX.data
+
+    def get_lieuGeoPy(self):
+        return self.lieuGeoPY.data
+
+    def set_lieuGeoPX(self,lieuGeoPX):
+        self.lieuGeoPX = lieuGeoPX
+
+    def set_lieuGeoPY(self,lieuGeoPY):
+        self.lieuGeoPY = lieuGeoPY

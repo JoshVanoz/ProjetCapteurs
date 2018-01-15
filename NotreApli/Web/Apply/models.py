@@ -2,7 +2,7 @@ from .app import db,login_manager
 from flask_login import UserMixin
 import datetime
 
-class Utilisateur(db.Model):
+class Utilisateur(db.Model, UserMixin):
     idU = db.Column(db.String(50), primary_key=True)
     nomU = db.Column(db.String(20))
     mdpU = db.Column(db.String(100))
@@ -58,6 +58,12 @@ class Parterre(db.Model):
     def get_id(self):
         return self.idP
 
+    def get_lieuGeoPx(self):
+        return self.lieuGeoPX
+    def get_lieuGeoPy(self):
+        return self.lieuGeoPY
+
+
     def set_name(self,nomP):
         self.nomP = nomP
 
@@ -66,6 +72,10 @@ class Parterre(db.Model):
 
     def set_lieuGeoPY(self,lieuGeoPY):
         self.lieuGeoPY = lieuGeoPY
+
+    def get_Parterre(self):
+        return self.parterre
+
 
     def get_capteurs(self):
         return self.capteurs
@@ -199,6 +209,7 @@ class Donnee(db.Model):
 
     def get_id(self):
         return (self.dateRel, self.idCapt)
+
 
 def get_user(username):
     return Utilisateur.query.filter(Utilisateur.IdU==username).one()

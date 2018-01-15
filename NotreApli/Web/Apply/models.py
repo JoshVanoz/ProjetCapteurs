@@ -18,16 +18,18 @@ class Utilisateur(db.Model):
 
     def set_name(self,nomU):
         self.nomU = nomU
+
     def set_surname(self,prenomU):
         self.prenomU = prenomU
+        
     def set_mdp(self,mdpU):
         self.mdpU = mdpU
 
 class Parterre(db.Model):
     idP = db.Column(db.Integer, primary_key=True)
     nomP = db.Column(db.String(100))
-    lieuGeoPX= db.Column(db.Float)
-    lieuGeoPY= db.Column(db.Float)
+    lieuGeoPX = db.Column(db.Float)
+    lieuGeoPY = db.Column(db.Float)
     def __repr__(self):
         return "<Parterre (%d) %s>" % (self.idP, self.nomP)
 
@@ -39,10 +41,12 @@ class Parterre(db.Model):
 
     def set_name(self,nomP):
         self.nomP = nomP
+
     def set_lieuGeoPX(self,lieuGeoPX):
-        self lieuGeoPX = lieuGeoPX
+        self.lieuGeoPX = lieuGeoPX
+
     def set_lieuGeoPY(self,lieuGeoPY):
-        self lieuGeoPY = lieuGeoPY
+        self.lieuGeoPY = lieuGeoPY
 
 class TypePlante(db.Model):
     idPlant = db.Column(db.Integer, primary_key=True)
@@ -98,10 +102,13 @@ class Capteur(db.Model):
 
     def set_name(self,nomCapt):
         self.nomCapt = nomCapt
+
     def set_lieuGeoCaptX(self,lieuGeoCaptX):
-        self lieuGeoCaptX = lieuGeoCaptX
+        self.lieuGeoCaptX = lieuGeoCaptX
+
     def set_lieuGeoCaptY(self,lieuGeoCaptY):
-        self lieuGeoCaptY = lieuGeoCaptY
+        self.lieuGeoCaptY = lieuGeoCaptY
+
     def set_num(self,numTel):
         self.numTel = numTel
 
@@ -120,6 +127,7 @@ class Donnee(db.Model):
     val = db.Column(db.Float)
     dateRel = db.Column(db.DateTime, primary_key=True)
     idCapt = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
+
     def __repr__(self):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)
 

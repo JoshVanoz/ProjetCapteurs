@@ -46,3 +46,11 @@ def login():
     return render_template(
         "login.html",
         form = f)
+
+@app.route("/Contacts/")
+def contacts():
+    return render_template("contacts.html")
+
+@app.route("/Parterre/info")
+def parterre_info():
+    return render_template("parterre-info.html")

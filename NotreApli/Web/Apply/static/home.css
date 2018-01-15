@@ -35,3 +35,6 @@ aside{
 #navbar{
   font-size: large;
 }
+.navbar-nav > li:hover{
+  border-bottom: solid white;
+}

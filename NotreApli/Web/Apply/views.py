@@ -5,8 +5,7 @@ from .formulaires import *
 from flask_wtf import FlaskForm
 from wtforms import StringField,HiddenField,PasswordField
 from wtforms.validators import DataRequired
-from hashlib import sha256
-from flask_login import login_user,current_user, logout_user
+from flask_login import login_user,current_user, logout_user, login_required
 
 @app.route("/")
 def home():
@@ -20,31 +19,18 @@ def parterre():
         "parterre.html",
         mesParterre = get_parterres())
 
-class LoginForm(FlaskForm):
-    username = StringField('Username')
-    password = PasswordField('Password')
-
-    def get_authenticated_user(self):
-        user = Utilisateur.query.get(self.username.data)
-        if user is None:
-            return None
-        m = sha256()
-        m.update(self.password.data.encode())
-        passwd = m.hexdigest()
-        return user if passwd == user.mdpU else None
-
 @app.route("/login/",methods=("GET","POST",))
 def login():
-    f = LoginForm()
-    if f.validate_on_submit():
-        user = f.get_authenticated_user()
-        if user:
-            login_user(user)
-            return redirect(url_for("home"))
-    return render_template(
-        "login.html",
-        form = f)
-
+	f= UserForm()
+	if not f.is_submitted():
+		f.next.data = request.args.get("next")
+	elif f.validate_on_submit():
+		user = f.get_authenticated_user()
+		if user:
+			login_user(user)
+			next = f.next.data or url_for("home")
+			return redirect(next)
+	return render_template("login.html",form=f)
 
 @app.route("/logout/")
 def logout():

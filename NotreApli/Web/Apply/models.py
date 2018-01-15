@@ -1,14 +1,11 @@
 from .app import db,login_manager
 from flask_login import UserMixin
 
-class Utilisateur(db.Model):
+class Utilisateur(db.Model, UserMixin):
     idU = db.Column(db.String(50), primary_key=True)
     nomU = db.Column(db.String(20))
     mdpU = db.Column(db.String(100))
     prenomU = db.Column(db.String(20))
-
-    def get_id(self):
-        return self.username
 
     def __repr__(self):
         return "<Utilisateur (%d) %s>" % (self.idU, self.nomU)

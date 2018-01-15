@@ -104,6 +104,9 @@ class TypeMesure(db.Model):
     def set_name(self,nomTypeM):
         self.nomTypeM = nomTypeM
 
+    def get_TypeMesures():
+        return TypeMesure.query.order_by(TypeMesure.nomTypeM)
+
 
 class Capteur(db.Model):
     idCapt = db.Column(db.Integer, primary_key=True)
@@ -114,6 +117,12 @@ class Capteur(db.Model):
     datePlacement = db.Column(db.DateTime)
     intervalleTemps = db.Column(db.Integer)
     numTel = db.Column(db.String(10))
+
+    def __init__(self, name, TypeMesure, tel, parterre):
+        self.nomCapt = name
+        self.lieuGeoCaptX = 0
+        self.lieuGeoCaptY = 0
+        self.lvlBatCapt = 50
 
     def __repr__(self):
         return "<Capteur (%d) %s>" % (self.idCapt, self.nomCapt)

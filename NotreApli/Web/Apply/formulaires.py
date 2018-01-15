@@ -69,6 +69,9 @@ class CapteurForm(FlaskForm):
             self.parterre = parterre
             self.lieuGeoX = 0
             self.lieuGeoY = 0
+            name = StringField('Nom', validators = [DataRequired()])
+            lieuGeoX = FloatField('Position X')
+            lieuGeoY = FloatField('Position Y')
             self.lvlBattery = 100
             self.placementDate = datetime.datetime.now()
             self.intervalTime = 5
@@ -108,3 +111,51 @@ class CapteurForm(FlaskForm):
 
     def get_Parterre(self):
         return self.parterre
+
+
+
+class ParterreForm(FlaskForm):
+
+    id   = HiddenField('id')
+    nomP = StringField('Nom', validators = [DataRequired()])
+    lieuGeoPX = FloatField('Position X')
+    lieuGeoPY = FloatField('Position Y')
+    next = HiddenField()
+
+    def __init__(self, id=None, name=None):
+        super().__init__()
+        if id:
+            self.id.data = id
+            self.nomP.data = nomP
+            self.lieuGeoX = 0
+            self.lieuGeoY = 0
+            name = StringField('Nom', validators = [DataRequired()])
+            lieuGeoX = IntegerField('Position X')
+            lieuGeoY = IntegerField('Position Y')
+            self.next.data = "save_capteur"
+        else:
+            self.next.data = "new_parterre_saving"
+
+    def get_id(self):
+        return self.id.data
+
+    def get_name(self):
+        return self.nomP.data
+
+    def get_next(self):
+        return self.next.data
+
+    def set_name(self, newName):
+        self.album_name.data = newName
+
+    def get_lieuGeoPx(self):
+        return self.lieuGeoPX.data
+
+    def get_lieuGeoPy(self):
+        return self.lieuGeoPY.data
+
+    def set_lieuGeoPX(self,lieuGeoPX):
+        self.lieuGeoPX = lieuGeoPX
+
+    def set_lieuGeoPY(self,lieuGeoPY):
+        self.lieuGeoPY = lieuGeoPY

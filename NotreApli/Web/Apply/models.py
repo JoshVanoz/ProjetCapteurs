@@ -57,6 +57,12 @@ class Parterre(db.Model):
     def get_id(self):
         return self.idP
 
+    def get_lieuGeoPx(self):
+        return self.lieuGeoPX
+    def get_lieuGeoPy(self):
+        return self.lieuGeoPY
+
+
     def set_name(self,nomP):
         self.nomP = nomP
 
@@ -65,6 +71,7 @@ class Parterre(db.Model):
 
     def set_lieuGeoPY(self,lieuGeoPY):
         self.lieuGeoPY = lieuGeoPY
+
 
     def get_capteurs(self):
         return self.capteurs
@@ -166,6 +173,7 @@ class Donnee(db.Model):
 
     def get_id(self):
         return (self.dateRel, self.idCapt)
+
 
 def get_user(username):
     return Utilisateur.query.filter(Utilisateur.IdU==username).one()

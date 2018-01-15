@@ -35,7 +35,8 @@ def login():
 @app.route("/logout/")
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(        "create-capteur.html",
+url_for('home'))
 
 @app.route("/Contacts/")
 def contacts():
@@ -52,6 +53,7 @@ def capteur():
     return render_template(
         "capteur.html",
         mesCapteurs = get_capteurs())
+
 
 @app.route("/Capteur/info/<int:id>")
 def capteur_info(id):
@@ -79,7 +81,7 @@ def new_capteur_saving():
         db.session.commit()
         return redirect(url_for('capteur_info', id = o.get_id()))
     return render_template(
-        "create-capteur.html",
+        "addCapteur.html",
         form  = f,
         titre = "Nouveau Capteur")
 
@@ -110,3 +112,25 @@ def delete_cap(id=None):
         db.session.commit()
     la = get_capteurs()
     return render_template("capteur.html", mesCapteurs = la)
+
+
+@app.route("/Ajouter/Parterre/")
+@login_required
+def add_Parterre():
+    f = ParterreForm()
+    return render_template("create-parterre.html", form = f, title= "Ajouter un nouveau Parterre")
+
+@app.route("/Ajouter/Parterre/saving/", methods=("POST",))
+def new_parterre_saving():
+    f = ParterreForm()
+    if f.validate_on_submit():
+        o = Parterre(nomP = f.get_name(),
+                    lieuGeoPX = f.get_lieuGeoPx(),
+                    lieuGeoPY = f.get_lieuGeoPy())
+        db.session.add(o)
+        db.session.commit()
+        return redirect(url_for('parterre_info', id = o.get_id()))
+    return render_template(
+        "create-parterre.html",
+        form  = f,
+        titre = "Nouveau Capteur")

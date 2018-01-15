@@ -149,7 +149,8 @@ def edit_capteur(id):
 
 @app.route("/Capteur/save/<int:id>")
 def save_capteur(id):
-    f = CapteurForm()
-    a = get_capteur_id(id)
-    a.set_name(f.get_name())
-    a.set
+    pass
+    # f = CapteurForm()
+    # a = get_capteur_id(id)
+    # a.set_name(f.get_name())
+    # a.set

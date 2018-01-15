@@ -73,6 +73,9 @@ class Parterre(db.Model):
     def set_lieuGeoPY(self,lieuGeoPY):
         self.lieuGeoPY = lieuGeoPY
 
+    def get_Parterre(self):
+        return self.parterre
+
 
     def get_capteurs(self):
         return self.capteurs

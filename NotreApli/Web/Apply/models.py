@@ -93,7 +93,7 @@ class TypeMesure(db.Model):
     nomTypeM = db.Column(db.String(100))
 
     def __repr__(self):
-        return "<TypeMesure (%d) %s>" % (self.nomTypeM)
+        return "<TypeMesure (%d) %s>" % (self.IdTypeM, self.nomTypeM)
 
     def get_name(self):
         return self.nomTypeM
@@ -188,3 +188,6 @@ def get_capteurs():
 
 def get_capteur_id(id):
     return Capteur.query.get(id)
+
+def get_TypeMesures():
+    return TypeMesure.query.all()

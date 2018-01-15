@@ -86,7 +86,7 @@ def new_capteur_saving():
                     parterre = f.get_Parterre())
         db.session.add(o)
         db.session.commit()
-        return redirect(url_for('Capteur', id = o.get_id()))
+        return redirect(url_for('capteur_info', id = o.get_id()))
     return render_template(
         "create-capteur.html",
         form  = f,

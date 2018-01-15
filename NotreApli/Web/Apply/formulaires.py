@@ -3,6 +3,7 @@ from wtforms import HiddenField, StringField, PasswordField, IntegerField, DateF
 import datetime
 from wtforms.validators import DataRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from .models import get_TypeMesures, get_parterres
 
 class UserForm(FlaskForm):
     """
@@ -50,7 +51,7 @@ class CapteurForm(FlaskForm):
     intervalTime = IntegerField('Intervalle temps')
     phoneNumber = StringField('Numéro de téléphone')
     TypeMesure = QuerySelectField("Type de mesure mesurée :", query_factory = lambda : get_TypeMesures())
-    parterre = QuerySelectField("Parterre associé :", query_factory = lambda : get_Parterres())
+    parterre = QuerySelectField("Parterre associé :", query_factory = lambda : get_parterres())
     next = HiddenField()
 
     def __init__(self, id=None, name=None, phone="0000000000", mesure=None, parterre=None):
@@ -100,8 +101,8 @@ class CapteurForm(FlaskForm):
     def set_phoneNumber(self, newValue):
         self.phoneNumber = newValue
 
-    def get_TypeMesure():
+    def get_TypeMesure(self):
         return self.TypeMesure
 
-    def get_Parterre():
+    def get_Parterre(self):
         return self.parterre

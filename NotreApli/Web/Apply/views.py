@@ -7,7 +7,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField,HiddenField,PasswordField
 from wtforms.validators import DataRequired
 from hashlib import sha256
-from flask_login import login_user,current_user
+from flask_login import login_user,current_user, login_required
+
 
 @app.route("/")
 def home():
@@ -91,3 +92,31 @@ def new_capteur_saving():
         "create-capteur.html",
         form  = f,
         titre = "Nouveau Capteur")
+
+@app.route("/Supprimer/Capteur",methods=["POST","GET"])
+# @login_required
+def delete_capteur():
+    if request.method=="POST":
+        if request.form['del']=="":
+            return render_template("delete-capteur.html", liste = get_capteurs(), titre="Veuillez selectionner un capteur")
+        else:
+            a=get_capteur_id(int(request.form['del']))
+            db.session.delete(a)
+            db.session.commit()
+    return render_template("delete-capteur.html",liste=get_capteurs())
+
+
+@app.route("/Supprimer/Capteur/<int:id>",methods=["POST","GET"])
+# @login_required
+def delete_cap(id=None):
+    if id==None:
+        if request.method=="POST":
+            a=id
+            db.session.delete(a)
+            db.session.commit()
+    else:
+        capteur = get_capteur_id(id)
+        db.session.delete(capteur)
+        db.session.commit()
+    la = get_capteurs()
+    return render_template("capteur.html", mesCapteurs = la)

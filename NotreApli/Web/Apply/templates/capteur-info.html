@@ -2,11 +2,18 @@
 
 {% block main %}
 <h1>Mon capteur : </h1>
+<div>
 <ul>{{capteur.nomCapt}}
   <li>Lieu géolocalisation en X : {{capteur.lieuGeoCaptX}}</li>
   <li>Lieu géolocalisation en Y :{{capteur.lieuGeoCaptY}}</li>
   <li>Niveau de batterie : {{capteur.lvlBatCapt}}</li>
   <li>Date Placement : {{capteur.datePlacement}}</li>
 </ul>
+</div>
+<div>
+    <form method="POST" action="{{ url_for('delete_cap',id=capteur.idCapt) }}">
+        <input class="btn btn-default" type="submit" value="Supprimer">
+    </form>
+  </div>
 
 {% endblock %}

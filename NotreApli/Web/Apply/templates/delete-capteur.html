@@ -1,0 +1,16 @@
+{% extends "header.html" %}
+{% block main %}
+<h1>Suppression d'un Capteur</h1>
+<div>
+    <form method="POST" action="{{ url_for('delete_capteur') }}">
+        <select name="del">
+            <option value="">Faites votre choix</option>
+            {% for capteur in liste %}
+                <option value='{{ capteur.idCapt }}'>{{ capteur.nomCapt }}</option>
+            {% endfor %}
+        </select>
+        <input class="btn btn-default" type="submit" value="Supprimer">
+    </form>
+    <p>{{titre}}</p>
+  </div>
+{% endblock %}

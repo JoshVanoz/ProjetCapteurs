@@ -3,7 +3,9 @@ from wtforms import HiddenField, StringField, PasswordField, IntegerField, DateF
 import datetime
 from wtforms.validators import DataRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from .models import get_TypeMesures, get_parterres
+from .models import *
+from hashlib import sha256
+from flask_login import login_user,current_user, logout_user, login_required
 
 class UserForm(FlaskForm):
     """
@@ -20,7 +22,7 @@ class UserForm(FlaskForm):
     def get_password(self):
         return self.password.data
 
-    def get_authentificated_user(self):
+    def get_authenticated_user(self):
         user = load_user(self.username.data)
         if user is None:
             return None
@@ -28,7 +30,7 @@ class UserForm(FlaskForm):
         m = sha256()
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
-        return user if passwd == user.get_password() else None
+        return user if passwd == user.mdpU else None
 
     def get_next(self):
         return self.next.data

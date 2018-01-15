@@ -3,10 +3,16 @@ from flask_login import UserMixin
 import datetime
 
 class Utilisateur(db.Model, UserMixin):
-    idU = db.Column(db.String(50), primary_key=True)
-    nomU = db.Column(db.String(20))
-    mdpU = db.Column(db.String(100))
+    idU     = db.Column(db.String(50), primary_key=True)
+    mdpU    = db.Column(db.String(100))
+    nomU    = db.Column(db.String(20))
     prenomU = db.Column(db.String(20))
+
+    def __init__(self, idU, mdpU, nomU, prenomU):
+        self.idU     = idU
+        self.mdpU    = mdpU
+        self.nomU    = nomU
+        self.prenomU = prenomU
 
     def __repr__(self):
         return "<Utilisateur (%d) %s>" % (self.idU, self.nomU)
@@ -16,6 +22,12 @@ class Utilisateur(db.Model, UserMixin):
 
     def get_id(self):
         return self.idU
+
+    def get_mdp(self):
+        return self.mdpU
+
+    def get_surname(self):
+        return self.prenomU
 
     def set_name(self,nomU):
         self.nomU = nomU
@@ -36,18 +48,23 @@ association_parterre_capteur = db.Table("association_parterre_capteur",
                                         db.Column("parterre_id", db.Integer, db.ForeignKey("parterre.idP"), primary_key = True),
                                         db.Column("capteur_id", db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True))
 class Parterre(db.Model):
-    idP = db.Column(db.Integer, primary_key=True)
-    nomP = db.Column(db.String(100))
+    idP       = db.Column(db.Integer, primary_key=True)
+    nomP      = db.Column(db.String(100))
     lieuGeoPX = db.Column(db.Float)
     lieuGeoPY = db.Column(db.Float)
-    plantes = db.relationship("TypePlante",
-                              secondary = association_parterre_typePlante,
-                              lazy = "dynamic",
-                              backref = db.backref("TypePlante", lazy = True))
-    capteurs = db.relationship("Capteur",
-                               secondary = association_parterre_capteur,
-                               lazy = "dynamic",
-                               backref = db.backref("Capteur", lazy = True))
+    plantes   = db.relationship("TypePlante",
+                                secondary = association_parterre_typePlante,
+                                lazy      = "dynamic",
+                                backref   = db.backref("TypePlante", lazy = True))
+    capteurs  = db.relationship("Capteur",
+                                secondary = association_parterre_capteur,
+                                lazy      = "dynamic",
+                                backref   = db.backref("Capteur", lazy = True))
+
+    def __init__(self, name, x, y):
+        self.nomP      = name
+        self.lieuGeoPX = x
+        self.lieuGeoPY = y
 
     def __repr__(self):
         return "<Parterre (%d) %s>" % (self.idP, self.nomP)
@@ -58,24 +75,8 @@ class Parterre(db.Model):
     def get_id(self):
         return self.idP
 
-    def get_lieuGeoPx(self):
-        return self.lieuGeoPX
-    def get_lieuGeoPy(self):
-        return self.lieuGeoPY
-
-
-    def set_name(self,nomP):
-        self.nomP = nomP
-
-    def set_lieuGeoPX(self,lieuGeoPX):
-        self.lieuGeoPX = lieuGeoPX
-
-    def set_lieuGeoPY(self,lieuGeoPY):
-        self.lieuGeoPY = lieuGeoPY
-
-    def get_Parterre(self):
-        return self.parterre
-
+    def get_coordonnees(self):
+        return (self.lieuGeoPX, self.lieuGeoPY)
 
     def get_capteurs(self):
         return self.capteurs
@@ -83,12 +84,33 @@ class Parterre(db.Model):
     def get_plantes(self):
         return self.plantes
 
+    def set_name(self,nomP):
+        self.nomP = nomP
+
+    def set_X(self,lieuGeoPX):
+        self.lieuGeoPX = lieuGeoPX
+
+    def set_Y(self,lieuGeoPY):
+        self.lieuGeoPY = lieuGeoPY
+
     def add_capteur(self, capteur):
         self.capteurs.append(capteur)
 
+    def add_plante(self, plante):
+        self.plantes.append(plante)
+
+    def delete_capteur(self, capteur):
+        if capteur in self.capteurs:
+            self.capteurs.remove(capteur)
+
+    def delete_plante(self, plante):
+        if plante in self.plantes:
+            self.plantes.remove(plante)
+
 class TypePlante(db.Model):
-    idPlant = db.Column(db.Integer, primary_key=True)
+    idPlant  = db.Column(db.Integer, primary_key=True)
     NomPlant = db.Column(db.String(100))
+
     def __repr__(self):
         return "<TypePlante (%d) %s>" % (self.NomPlant)
 
@@ -103,45 +125,44 @@ class TypePlante(db.Model):
 
 
 class TypeMesure(db.Model):
-    IdTypeM = db.Column(db.Integer, primary_key=True)
-    nomTypeM = db.Column(db.String(100))
+    id_typeM  = db.Column(db.Integer, primary_key=True)
+    nom_typeM = db.Column(db.String(100))
 
     def __repr__(self):
-        return "<TypeMesure (%d) %s>" % (self.IdTypeM, self.nomTypeM)
+        return "<TypeMesure (%d) %s>" % (self.id_typeM, self.nom_typeM)
 
     def get_name(self):
-        return self.nomTypeM
+        return self.nom_typeM
 
     def get_id(self):
-        return self.IdTypeM
+        return self.id_typeM
 
     def set_name(self,nomTypeM):
-        self.nomTypeM = nomTypeM
-
-    def get_TypeMesures():
-        return TypeMesure.query.order_by(TypeMesure.nomTypeM)
-
+        self.nom_typeM = nomTypeM
 
 class Capteur(db.Model):
-    idCapt = db.Column(db.Integer, primary_key=True)
-    lieuGeoCaptX = db.Column(db.Float)
-    lieuGeoCaptY = db.Column(db.Float)
-    lvlBatCapt = db.Column(db.Integer)
-    nomCapt = db.Column(db.String(20))
-    datePlacement = db.Column(db.DateTime)
+    idCapt          = db.Column(db.Integer, primary_key=True)
+    nomCapt         = db.Column(db.String(20))
+    lieuGeoCaptX    = db.Column(db.Float)
+    lieuGeoCaptY    = db.Column(db.Float)
+    lvlBatCapt      = db.Column(db.Integer)
+    datePlacement   = db.Column(db.DateTime)
     intervalleTemps = db.Column(db.Integer)
-    numTel = db.Column(db.String(10))
+    numTel          = db.Column(db.String(10))
+    typeM_id        = db.Column(db.Integer, db.ForeignKey("type_mesure.id_typeM"))
+    parterre_id     = db.Column(db.Integer, db.ForeignKey("parterre.idP"))
 
-    def __init__(self, name, TypeMesure, tel, parterre, x, y, intervalle):
-        self.nomCapt = name
-        self.lieuGeoCaptX = x
-        self.lieuGeoCaptY = y
-        self.lvlBatCapt = 50
-        self.numTel = tel
-        self.datePlacement = datetime.datetime.now()
+    def __init__(self, name, intervalle, tel, TypeMesure, parterre):
+        self.nomCapt         = name
+        self.lieuGeoCaptX    = 51.25
+        self.lieuGeoCaptY    = 45.2
+        self.lvlBatCapt      = 50
+        self.numTel          = tel
+        self.datePlacement   = datetime.datetime.now()
         self.intervalleTemps = intervalle
-        # self.TypeMesure = TypeMesure
-        parterre.add_capteur(self)
+        self.typeM_id        = TypeMesure
+        self.parterre_id     = parterre
+        get_parterre(parterre).add_capteur(self)
 
     def __repr__(self):
         return "<Capteur (%d) %s>" % (self.idCapt, self.nomCapt)
@@ -153,7 +174,7 @@ class Capteur(db.Model):
         return self.idCapt
 
     def get_coordonnees(self):
-        return (self.lieuGeoCaptX, self.set_lieuGeoCaptY)
+        return (self.lieuGeoCaptX, self.lieuGeoCaptY)
 
     def get_date(self):
         return self.datePlacement
@@ -164,22 +185,22 @@ class Capteur(db.Model):
     def get_interval(self):
         return self.intervalleTemps
 
-    def get_TypeMesure(self):
-        return None
+    def get_typeMesure(self):
+        return self.typeM_id
 
     def get_phoneNumber(self):
         return self.numTel
 
     def get_parterre(self):
-        return None
+        return self.parterre_id
 
     def set_name(self,nomCapt):
         self.nomCapt = nomCapt
 
-    def set_lieuGeoCaptX(self,lieuGeoCaptX):
+    def set_X(self,lieuGeoCaptX):
         self.lieuGeoCaptX = lieuGeoCaptX
 
-    def set_lieuGeoCaptY(self,lieuGeoCaptY):
+    def set_Y(self,lieuGeoCaptY):
         self.lieuGeoCaptY = lieuGeoCaptY
 
     def set_num(self,numTel):
@@ -188,21 +209,33 @@ class Capteur(db.Model):
     def set_interval(self, newInterval):
         self.intervalleTemps = newInterval
 
+    def set_lvlBattery(self, newVal):
+        self.lvlBattery = newVal
+
+    def set_typeMesure(self, newType):
+        self.typeM_id = newType
+
+    def set_parterre(self, newParterre):
+        if self.parterre_id != None:
+            get_parterre(self.parterre_id).delete_capteur(self)
+        self.parterre_id = newParterre
+        get_parterre(newParterre).add_capteur(self)
+
 class AlesDroits(db.Model):
 
-    Lecture = db.Column(db.Boolean)
-    Edition = db.Column(db.Boolean)
+    Lecture     = db.Column(db.Boolean)
+    Edition     = db.Column(db.Boolean)
     Suppression = db.Column(db.Boolean)
-    idP = db.Column(db.Integer, db.ForeignKey("parterre.idP"), primary_key = True)
-    idU = db.Column(db.String(50), db.ForeignKey("utilisateur.idU"), primary_key = True)
+    idP         = db.Column(db.Integer, db.ForeignKey("parterre.idP"), primary_key = True)
+    idU         = db.Column(db.String(50), db.ForeignKey("utilisateur.idU"), primary_key = True)
 
     def get_id(self):
         return (self.idP, self.idU)
 
 class Donnee(db.Model):
-    val = db.Column(db.Float)
+    val     = db.Column(db.Float)
     dateRel = db.Column(db.DateTime, primary_key=True)
-    idCapt = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
+    idCapt  = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
 
     def __repr__(self):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)
@@ -210,16 +243,19 @@ class Donnee(db.Model):
     def get_id(self):
         return (self.dateRel, self.idCapt)
 
+    def get_capteur(self):
+        return self.idCapt
+
+    def get_val(self):
+        return self.val
+
 
 def get_user(username):
-    return Utilisateur.query.filter(Utilisateur.IdU==username).one()
+    return Utilisateur.query.filter(Utilisateur.idU==username).one()
 
 @login_manager.user_loader
 def load_user(username):
     return Utilisateur.query.get(username)
-
-def get_id(idU):
-    return Utilisateur.query.get(idU)
 
 def get_parterres():
     return Parterre.query.all()
@@ -227,11 +263,14 @@ def get_parterres():
 def get_parterre(id):
     return Parterre.query.get(id)
 
+def get_typeMesures():
+    return TypeMesure.query.order_by(TypeMesure.nom_typeM)
+
 def get_capteurs():
     return Capteur.query.all()
 
-def get_capteur_id(id):
+def get_capteur(id):
     return Capteur.query.get(id)
 
-def get_TypeMesures():
-    return TypeMesure.query.all()
+def get_typeMesure(id):
+    return TypeMesure.query.get(id)

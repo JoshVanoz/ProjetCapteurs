@@ -11,81 +11,105 @@ from flask_login import login_user,current_user, logout_user, login_required
 def home():
     return render_template(
         "home.html",
-        title="Hello World!")
+        title = "Hello World!")
 
 @app.route("/Parterre/")
 def parterre():
     return render_template(
-        "parterre.html",
-        mesParterre = get_parterres())
+        "mesParterre.html",
+        mesParterre = get_parterres(),
+        title       = "Liste des Parterres")
 
-@app.route("/login/",methods=("GET","POST",))
+@app.route("/login/", methods = ("GET","POST",))
 def login():
-	f= UserForm()
+	f = LoginForm()
 	if not f.is_submitted():
-		f.next.data = request.args.get("next")
+		f.set_next(request.args.get("next"))
 	elif f.validate_on_submit():
 		user = f.get_authenticated_user()
 		if user:
 			login_user(user)
-			next = f.next.data or url_for("home")
+			next = f.get_next() or url_for("home")
 			return redirect(next)
-	return render_template("login.html",form=f)
+	return render_template(
+        "login.html",
+        form  = f,
+        title = "Connexion")
 
-@app.route("/inscription/",methods=("GET","POST",))
+@app.route("/inscription/", methods = ("GET","POST",))
 def inscription():
-    f=InscriptionForm()
-    return render_template("inscription.html",form=f)
+    f = InscriptionForm()
+    return render_template(
+        "inscription.html",
+        form = f,
+        title = "Inscription")
 
 @app.route("/inscription/save/", methods=["POST"])
 def save_inscription():
-    user= None
-    f=InscriptionForm()
-    from hashlib import sha256
-    m = sha256()
-    m.update(f.password.data.encode())
-    if f.validate_on_submit():
-        user=Utilisateur(idU=f.username.data,mdpU=m.hexdigest(),nomU=f.nom.data,prenomU=f.prenom.data)
+    user = None
+    f = InscriptionForm()
+    if f.validate_on_submit() and f.uniq_Username() and f.passwd_confirmed():
+        from hashlib import sha256
+        m = sha256()
+        m.update(f.get_mdp().encode())
+        user = Utilisateur(
+            idU     = f.get_id(),
+            mdpU    = m.hexdigest(),
+            nomU    = f.get_name(),
+            prenomU = f.get_surname())
         db.session.add(user)
         db.session.commit()
         return redirect(url_for('login'))
     return render_template(
 		"inscription.html",
-		form=f)
+		form  = f,
+        title = "Inscription")
 
 @app.route("/logout/")
 def logout():
     logout_user()
-    return redirect(        "create-capteur.html",
-url_for('home'))
+    return redirect(url_for('home'))
 
 @app.route("/Contacts/")
 def contacts():
-    return render_template("contacts.html")
+    return render_template(
+        "contacts.html",
+        title = "Contacts")
 
 @app.route("/Parterre/info/<int:id>")
 def parterre_info(id):
+    parterre = get_parterre(id)
     return render_template(
         "parterre-info.html",
-        parterre = get_parterre(id))
+        parterre = parterre,
+        title    = parterre.get_name())
 
 @app.route("/Capteur/")
 def capteur():
     return render_template(
         "capteur.html",
-        mesCapteurs = get_capteurs())
+        mesCapteurs = get_capteurs(),
+        title = "Liste des Capteurs")
 
 
 @app.route("/Capteur/info/<int:id>")
 def capteur_info(id):
-    return render_template("capteur-info.html",
-    capteur = get_capteur_id(id))
+    capteur = get_capteur(id)
+    return render_template(
+        "capteur-info.html",
+        capteur  = capteur,
+        title    = capteur.get_name(),
+        parterre = get_parterre(capteur.get_parterre()),
+        mesure   = get_typeMesure(capteur.get_typeMesure()))
 
 @app.route("/Ajouter/Capteur/")
 @login_required
 def add_Capteur():
     f = CapteurForm()
-    return render_template("addCapteur.html", form = f, title= "Ajouter un nouveau Capteur")
+    return render_template(
+        "addCapteur.html",
+        form  = f,
+        title = "Nouveau Capteur")
 
 @app.route("/Ajouter/Capteur/saving/", methods=("POST",))
 def new_capteur_saving():
@@ -94,13 +118,12 @@ def new_capteur_saving():
     """
     f = CapteurForm()
     if f.validate_on_submit():
-        o = Capteur(name = f.get_name(),
-                    tel = f.get_phoneNumber(),
-                    TypeMesure = f.get_TypeMesure(),
-                    parterre = f.get_Parterre(),
-                    x = f.get_coordonnees()[0],
-                    y = f.get_coordonnees()[1],
-                    intervalle = f.get_interval())
+        o = Capteur(
+            name       = f.get_name(),
+            intervalle = f.get_interval(),
+            tel        = f.get_phoneNumber(),
+            TypeMesure = f.get_typeMesure().get_id(),
+            parterre   = f.get_parterre().get_id())
         db.session.add(o)
         db.session.commit()
         return redirect(url_for('capteur_info', id = o.get_id()))
@@ -109,48 +132,51 @@ def new_capteur_saving():
         form  = f,
         titre = "Nouveau Capteur")
 
-@app.route("/Supprimer/Capteur",methods=["POST","GET"])
+@app.route("/Supprimer/Capteur", methods = ["POST","GET"])
 @login_required
 def delete_capteur():
     if request.method=="POST":
         if request.form['del']=="":
-            return render_template("delete-capteur.html", liste = get_capteurs(), titre="Veuillez selectionner un capteur")
+            return render_template(
+                "delete-capteur.html",
+                liste = get_capteurs(),
+                title = "Supprimer un capteur")
         else:
-            a=get_capteur_id(int(request.form['del']))
+            a = get_capteur(int(request.form['del']))
             db.session.delete(a)
             db.session.commit()
-    return render_template("delete-capteur.html",liste=get_capteurs())
+    return render_template(
+        "delete-capteur.html",
+        liste = get_capteurs(),
+        title = "Supprimer un capteur")
 
 
-@app.route("/Supprimer/Capteur/<int:id>",methods=["POST","GET"])
+@app.route("/Supprimer/Capteur/<int:id>")
 @login_required
-def delete_cap(id=None):
-    if id==None:
-        if request.method=="POST":
-            a=id
-            db.session.delete(a)
-            db.session.commit()
-    else:
-        capteur = get_capteur_id(id)
-        db.session.delete(capteur)
-        db.session.commit()
-    la = get_capteurs()
-    return render_template("capteur.html", mesCapteurs = la)
+def delete_cap(id):
+    capteur = get_capteur(id)
+    db.session.delete(capteur)
+    db.session.commit()
+    return redirect(url_for("capteur"))
 
 
 @app.route("/Ajouter/Parterre/")
 @login_required
 def add_Parterre():
     f = ParterreForm()
-    return render_template("create-parterre.html", form = f, title= "Ajouter un nouveau Parterre")
+    return render_template(
+        "create-parterre.html",
+        form  = f,
+        title = "Ajouter un nouveau Parterre")
 
 @app.route("/Ajouter/Parterre/saving/", methods=("POST",))
 def new_parterre_saving():
     f = ParterreForm()
     if f.validate_on_submit():
-        o = Parterre(nomP = f.get_name(),
-                    lieuGeoPX = f.get_lieuGeoPx(),
-                    lieuGeoPY = f.get_lieuGeoPy())
+        o = Parterre(
+            name = f.get_name(),
+            x = f.get_coordonnees()[0],
+            y = f.get_coordonnees()[1])
         db.session.add(o)
         db.session.commit()
         return redirect(url_for('parterre_info', id = o.get_id()))
@@ -161,27 +187,30 @@ def new_parterre_saving():
 
 @app.route("/Capteur/edit/<int:id>")
 def edit_capteur(id):
-    capteur = get_capteur_id(id)
+    capteur = get_capteur(id)
     form = CapteurForm(capteur)
     return render_template(
         "addCapteur.html",
-        titre = capteur.get_name(),
-        form=form)
+        title = capteur.get_name()+" - edit",
+        form  = form)
 
-@app.route("/Capteur/save/<int:id>")
-def save_capteur(id):
+@app.route("/Capteur/save/", methods = ("POST",))
+def save_capteur():
     f = CapteurForm()
-    a = get_capteur_id(id)
+    a = get_capteur(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())
         a.set_num(f.get_phoneNumber())
         a.set_interval(f.get_interval())
+        if a.get_parterre() != f.get_parterre().get_id():
+            a.set_parterre(f.get_parterre().get_id())
+        if a.get_typeMesure() != f.get_typeMesure().get_id():
+            a.set_typeMesure(f.get_typeMesure().get_id())
         db.session.commit()
         return redirect(url_for(
             "capteur_info",
-            id = id,
-            titre = a.get_name()))
+            id    = f.get_id()))
     return render_template(
         "addCapteur.html",
-        titre = a.get_name(),
-        form = f)
+        title = a.get_name()+" - edit",
+        form  = f)

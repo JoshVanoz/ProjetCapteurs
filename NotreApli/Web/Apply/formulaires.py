@@ -5,9 +5,8 @@ from wtforms.validators import DataRequired
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from .models import *
 from hashlib import sha256
-from flask_login import login_user,current_user, logout_user, login_required
 
-class UserForm(FlaskForm):
+class LoginForm(FlaskForm):
     """
     Login formular. Used to connect an user to the application.
     """
@@ -42,24 +41,41 @@ class InscriptionForm(FlaskForm):
 
     username = StringField("Username")
     password = PasswordField("Password")
-    nom = StringField("Nom")
-    prenom = StringField("Prénom")
+    confirm  = PasswordField("Confirm password")
+    nom      = StringField("Nom")
+    prenom   = StringField("Prénom")
+
+    def get_id(self):
+        return self.username.data
+
+    def get_mdp(self):
+        return self.password.data
+
+    def get_name(self):
+        return self.nom.data
+
+    def get_surname(self):
+        return self.prenom.data
+
+    def uniq_Username(self):
+        return load_user(self.username.data) == None
+
+    def passwd_confirmed(self):
+        return self.password.data == self.confirm.data
+
 
 class CapteurForm(FlaskForm):
     """
     Creation and Edition Sensor formular. Used to create or to modify a Sensor.
     """
 
-    id   = HiddenField('id')
-    name = StringField('Nom', validators = [DataRequired()])
-    lieuGeoX = FloatField('Position X')
-    lieuGeoY = FloatField('Position Y')
-    lvlBattery = IntegerField('Level de la Batterie')
+    id           = HiddenField('id')
+    name         = StringField('Nom', validators = [DataRequired()])
     intervalTime = IntegerField('Intervalle temps')
-    phoneNumber = StringField('Numéro de téléphone')
-    TypeMesure = QuerySelectField("Type de mesure mesurée :", query_factory = lambda : get_TypeMesures())
-    parterre = QuerySelectField("Parterre associé :", query_factory = lambda : get_parterres())
-    next = HiddenField()
+    phoneNumber  = StringField('Numéro de téléphone')
+    TypeMesure   = QuerySelectField("Type de mesure mesurée :", query_factory = lambda : get_typeMesures())
+    parterre     = QuerySelectField("Parterre associé :", query_factory = lambda : get_parterres())
+    next         = HiddenField()
 
     def __init__(self, capteur=None):
         """
@@ -67,16 +83,13 @@ class CapteurForm(FlaskForm):
         """
         super().__init__()
         if capteur:
-            self.id.data = capteur.get_id()
-            self.name.data = capteur.get_name()
-            self.phoneNumber.data = capteur.get_phoneNumber()
-            self.TypeMesure.data = capteur.get_TypeMesure()
-            self.parterre.data = capteur.get_parterre()
-            self.lieuGeoX.data = capteur.get_coordonnees()[0]
-            self.lieuGeoY.data = capteur.get_coordonnees()[1]
-            self.lvlBattery.data = capteur.get_lvlBattery()
+            self.id.data           = capteur.get_id()
+            self.name.data         = capteur.get_name()
+            self.phoneNumber.data  = capteur.get_phoneNumber()
+            self.TypeMesure.data   = get_typeMesure(capteur.get_typeMesure())
+            self.parterre.data     = get_parterre(capteur.get_parterre())
             self.intervalTime.data = capteur.get_interval()
-            self.next.data = "new_capteur_saving"
+            self.next.data         = "save_capteur"
         else:
             self.next.data = "new_capteur_saving"
 
@@ -89,59 +102,37 @@ class CapteurForm(FlaskForm):
     def get_name(self):
         return self.name.data
 
-    def get_coordonnees(self):
-        return (self.lieuGeoX.data, self.lieuGeoY.data)
-
-    def get_Parterre(self):
+    def get_parterre(self):
         return self.parterre.data
-
-    def get_next(self):
-        return self.next.data
-
-    def set_name(self, newName):
-        self.album_name.data = newName
-
-    def get_lvlBattery(self):
-        return self.lvlBattery.data
-
-    def set_lvlBattery(self, newValue):
-        self.lvlBattery = newValue
 
     def get_phoneNumber(self):
         return self.phoneNumber.data
 
-    def set_phoneNumber(self, newValue):
-        self.phoneNumber = newValue
-
-    def get_TypeMesure(self):
+    def get_typeMesure(self):
         return self.TypeMesure.data
 
-    def get_Parterre(self):
-        return self.parterre.data
-
+    def get_next(self):
+        return self.next.data
 
 
 class ParterreForm(FlaskForm):
 
-    id   = HiddenField('id')
-    nomP = StringField('Nom', validators = [DataRequired()])
+    id        = HiddenField('id')
+    nomP      = StringField('Nom', validators = [DataRequired()])
     lieuGeoPX = FloatField('Position X')
     lieuGeoPY = FloatField('Position Y')
-    next = HiddenField()
+    next      = HiddenField()
 
-    def __init__(self, id=None, name=None):
+    def __init__(self, parterre=None):
         super().__init__()
-        if id:
-            self.id.data = id
-            self.nomP.data = nomP
-            self.lieuGeoX = 0
-            self.lieuGeoY = 0
-            name = StringField('Nom', validators = [DataRequired()])
-            lieuGeoX = IntegerField('Position X')
-            lieuGeoY = IntegerField('Position Y')
-            self.next.data = "save_capteur"
+        if parterre:
+            self.id.data        = parterre.get_id()
+            self.nomP.data      = parterre.get_name()
+            self.lieuGeoPX.data = parterre.get_coordonnees()[0]
+            self.lieuGeoPY.data = parterre.get_coordonnees()[1]
+            self.next.data      = "save_capteur"
         else:
-            self.next.data = "new_parterre_saving"
+            self.next.data      = "new_parterre_saving"
 
     def get_id(self):
         return self.id.data
@@ -149,20 +140,8 @@ class ParterreForm(FlaskForm):
     def get_name(self):
         return self.nomP.data
 
+    def get_coordonnees(self):
+        return (self.lieuGeoPX.data, self.lieuGeoPY.data)
+
     def get_next(self):
         return self.next.data
-
-    def set_name(self, newName):
-        self.album_name.data = newName
-
-    def get_lieuGeoPx(self):
-        return self.lieuGeoPX.data
-
-    def get_lieuGeoPy(self):
-        return self.lieuGeoPY.data
-
-    def set_lieuGeoPX(self,lieuGeoPX):
-        self.lieuGeoPX = lieuGeoPX
-
-    def set_lieuGeoPY(self,lieuGeoPY):
-        self.lieuGeoPY = lieuGeoPY

@@ -3,7 +3,7 @@
 {% block content %}
 <aside>
   {% for capteur in mesCapteurs %}
-  <p><a href="{{ url_for('capteur_info',id=capteur.idCapt) }}">{{capteur.nomCapt}}</a></p>
+    <a href="{{ url_for('capteur_info', id = capteur.get_id()) }}">{{ capteur.get_name() }}</a>
   {% endfor %}
 </aside>
 

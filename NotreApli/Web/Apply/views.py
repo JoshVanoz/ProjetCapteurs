@@ -54,3 +54,15 @@ def contacts():
 @app.route("/Parterre/info")
 def parterre_info():
     return render_template("parterre-info.html")
+
+@app.route("/Capteur/")
+def capteur():
+    return render_template(
+
+        "capteur.html",
+        mesCapteurs = get_capteurs())
+
+@app.route("/Capteur/info/<int:id>")
+def capteur_info(id):
+    return render_template("capteur-info.html",
+    capteur = get_capteur_id(id))

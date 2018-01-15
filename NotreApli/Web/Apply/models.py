@@ -19,9 +19,9 @@ class Utilisateur(db.Model):
     def set_name(self,nomU):
         self.nomU = nomU
 
-    def set_surname(self,prenomU):
+    def set_firstname(self,prenomU):
         self.prenomU = prenomU
-        
+
     def set_mdp(self,mdpU):
         self.mdpU = mdpU
 
@@ -88,7 +88,7 @@ class Capteur(db.Model):
     lvlBatCapt = db.Column(db.Integer)
     nomCapt = db.Column(db.String(20))
     datePlacement = db.Column(db.DateTime)
-    intervalleTemps = db.Column(db.DateTime)
+    intervalleTemps = db.Column(db.Integer)
     numTel = db.Column(db.String(10))
 
     def __repr__(self):
@@ -146,3 +146,9 @@ def get_id(idU):
 
 def get_parterres():
     return Parterre.query.all()
+
+def get_capteurs():
+    return Capteur.query.all()
+
+def get_capteur_id(id):
+    return Capteur.query.get(id)

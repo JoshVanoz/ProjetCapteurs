@@ -17,7 +17,6 @@ def home():
 @app.route("/Parterre/")
 def parterre():
     return render_template(
-
         "parterre.html",
         mesParterre = get_parterres())
 
@@ -51,6 +50,8 @@ def login():
 def contacts():
     return render_template("contacts.html")
 
-@app.route("/Parterre/info")
-def parterre_info():
-    return render_template("parterre-info.html")
+@app.route("/Parterre/info/<int:id>")
+def parterre_info(id):
+    return render_template(
+        "parterre-info.html",
+        parterre = get_parterre(id))

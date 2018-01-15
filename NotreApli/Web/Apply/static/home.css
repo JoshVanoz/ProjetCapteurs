@@ -38,3 +38,7 @@ aside{
 .navbar-nav > li:hover{
   border-bottom: solid white;
 }
+
+.capteurs, .fleurs{
+  border: solid black;
+}

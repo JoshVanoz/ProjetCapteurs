@@ -1,5 +1,25 @@
 {% extends "header.html" %}
 
 {% block main %}
+<h1>{{ parterre.get_name() }}</h1>
+
+<div class="fleurs">
+  <p> liste des fleurs </p>
+  <ul>
+  {% for plante in parterre.get_plantes() %}
+    <li>{{plante.get_name()}}</li>
+  {% endfor %}
+  </ul>
+</div>
+
+<div class="capteurs">
+  <p> liste des capteurs </p>
+  <ul>
+  {% for capteur in parterre.get_capteurs() %}
+    <li>{{capteur.get_name()}}</li>
+  {% endfor %}
+  </ul>
+</div>
+
 
 {% endblock %}

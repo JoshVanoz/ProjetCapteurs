@@ -3,7 +3,7 @@
 {% block content %}
 <aside>
   {% for parterre in mesParterre %}
-  <p><a href="{{ url_for('parterre_info') }}">{{parterre.nomP}}</a></p>
+  <p><a href="{{ url_for('parterre_info', id=parterre.get_id()) }}">{{parterre.nomP}}</a></p>
   {% endfor %}
 </aside>
 

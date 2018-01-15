@@ -21,15 +21,33 @@ class Utilisateur(db.Model):
 
     def set_surname(self,prenomU):
         self.prenomU = prenomU
-        
+
     def set_mdp(self,mdpU):
         self.mdpU = mdpU
 
+association_parterre_typePlante = db.Table("association_parterre_typePlante",
+                                           db.metadata,
+                                           db.Column("parterre_id", db.Integer, db.ForeignKey("parterre.idP"), primary_key = True),
+                                           db.Column("type_plante_id", db.Integer, db.ForeignKey("type_plante.idPlant"), primary_key = True))
+
+association_parterre_capteur = db.Table("association_parterre_capteur",
+                                        db.metadata,
+                                        db.Column("parterre_id", db.Integer, db.ForeignKey("parterre.idP"), primary_key = True),
+                                        db.Column("capteur_id", db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True))
 class Parterre(db.Model):
     idP = db.Column(db.Integer, primary_key=True)
     nomP = db.Column(db.String(100))
     lieuGeoPX = db.Column(db.Float)
     lieuGeoPY = db.Column(db.Float)
+    plantes = db.relationship("TypePlante",
+                              secondary = association_parterre_typePlante,
+                              lazy = "dynamic",
+                              backref = db.backref("TypePlante", lazy = True))
+    capteurs = db.relationship("Capteur",
+                               secondary = association_parterre_capteur,
+                               lazy = "dynamic",
+                               backref = db.backref("Capteur", lazy = True))
+
     def __repr__(self):
         return "<Parterre (%d) %s>" % (self.idP, self.nomP)
 
@@ -47,6 +65,12 @@ class Parterre(db.Model):
 
     def set_lieuGeoPY(self,lieuGeoPY):
         self.lieuGeoPY = lieuGeoPY
+
+    def get_capteurs(self):
+        return self.capteurs
+
+    def get_plantes(self):
+        return self.plantes
 
 class TypePlante(db.Model):
     idPlant = db.Column(db.Integer, primary_key=True)
@@ -88,7 +112,7 @@ class Capteur(db.Model):
     lvlBatCapt = db.Column(db.Integer)
     nomCapt = db.Column(db.String(20))
     datePlacement = db.Column(db.DateTime)
-    intervalleTemps = db.Column(db.DateTime)
+    intervalleTemps = db.Column(db.Integer)
     numTel = db.Column(db.String(10))
 
     def __repr__(self):
@@ -146,3 +170,6 @@ def get_id(idU):
 
 def get_parterres():
     return Parterre.query.all()
+
+def get_parterre(id):
+    return Parterre.query.get(id)

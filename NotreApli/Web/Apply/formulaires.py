@@ -11,8 +11,8 @@ class LoginForm(FlaskForm):
     Login formular. Used to connect an user to the application.
     """
 
-    username = StringField("Username")
-    password = PasswordField("Password")
+    username = StringField("Pseudo")
+    password = PasswordField("Mot de passe")
     next     = HiddenField()
 
     def get_id(self):
@@ -39,9 +39,9 @@ class LoginForm(FlaskForm):
 
 class InscriptionForm(FlaskForm):
 
-    username = StringField("Username")
-    password = PasswordField("Password")
-    confirm  = PasswordField("Confirm password")
+    username = StringField("Pseudo")
+    password = PasswordField("Mot de passe")
+    confirm  = PasswordField("Confirmation")
     nom      = StringField("Nom")
     prenom   = StringField("Prénom")
 

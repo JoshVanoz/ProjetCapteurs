@@ -237,3 +237,13 @@ def save_parterre():
     return render_template("create-parterre.html",
                 title= parterre.get_name()+"  - edit",
                 form = f)
+
+@app.route("/Supprimer/Parterre/<int:id>")
+def delete_parterre(id):
+    a   = get_parterre(id)
+    bac = get_bac_a_sable()
+    for capteur in a.get_capteurs():
+        capteur.set_parterre(bac.get_id())
+    db.session.delete(a)
+    db.session.commit()
+    return redirect(url_for("parterre"))

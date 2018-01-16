@@ -274,3 +274,9 @@ def get_capteur(id):
 
 def get_typeMesure(id):
     return TypeMesure.query.get(id)
+
+def get_bac_a_sable():
+    for parterre in get_parterres():
+        if parterre.get_name()=="Bac à sable":
+            return parterre
+    return None

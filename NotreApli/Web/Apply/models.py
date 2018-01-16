@@ -177,7 +177,8 @@ class Capteur(db.Model):
         return (self.lieuGeoCaptX, self.lieuGeoCaptY)
 
     def get_date(self):
-        return self.datePlacement
+        dateP = str(self.datePlacement)[:10]+"  |  "+str(self.datePlacement)[11:16]
+        return dateP
 
     def get_lvlBattery(self):
         return self.lvlBatCapt

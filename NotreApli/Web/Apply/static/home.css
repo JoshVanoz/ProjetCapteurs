@@ -70,12 +70,63 @@ body{
 #buttonA{
   flex: 1 1;
 }
+#mapInfo{
+  display: flex;
+  width: 100%;
+}
 #infoCap{
  border: thin solid black;
  padding: 10px;
  height: 50vh;
-  margin: auto;
+ margin: auto;
+  width: 30%;
+ flex: 0 1 1;
+}
+#map{
+  flex: 1 1 0;
+  height: 50vh;
+  width: 40%;
 }
 .listePos{
   height: 90%;
+  padding-top: 5vh;
+  list-style-type: none;
+  padding-left: 0;
+}
+.listePos li{
+  padding-bottom: 3vh;
+}
+.contentInfo {
+  font-size: 1.7vh;
+  text-decoration: underline;
+}
+.itemInfo{
+  padding-left: 1vw;
+  font-weight: bold;
+  font-size: 1.8vh;
+}
+#formEditCap{
+  padding: 2vh;
+  margin: auto;
+  width: 70%;
+}
+.buttonSave{
+  display: flex;
+  font-style: bold;
+}
+.buttonSave > input{
+  margin-top: 2vh;
+  margin-right: 10vw;
+  flex : 1 0;
+}
+.buttonSave > a{
+  margin-top: 2vh;
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
+  flex; 0 1;
+}
+#formEditCap label{
+  margin: 2vh;
+  font-size: large;
+  text-decoration: underline;
 }

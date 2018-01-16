@@ -70,9 +70,9 @@ class CapteurForm(FlaskForm):
     """
 
     id           = HiddenField('id')
-    name         = StringField('Nom', validators = [DataRequired()])
-    intervalTime = IntegerField('Intervalle temps')
-    phoneNumber  = StringField('Numéro de téléphone')
+    name         = StringField('Nom : ', validators = [DataRequired()])
+    intervalTime = IntegerField('Intervalle temps : ')
+    phoneNumber  = StringField('Numéro de téléphone : ')
     TypeMesure   = QuerySelectField("Type de mesure mesurée :", query_factory = lambda : get_typeMesures())
     parterre     = QuerySelectField("Parterre associé :", query_factory = lambda : get_parterres())
     next         = HiddenField()

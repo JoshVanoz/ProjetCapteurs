@@ -3,9 +3,51 @@ from .app import manager, db
 
 @manager.command
 def loaddb():
-    from .models import Capteur, Utilisateur, Parterre, TypePlante, TypeMesure, AlesDroits, Donnee
+    from .models import Coordonnees, Utilisateur, Parterre, TypePlante, TypeMesure, Capteur, AlesDroits, Donnee
     db.create_all()
     db.session.commit()
+
+    newuser(idU     = "tanguy",
+            nomU    = "voiry",
+            mdpU    = "test",
+            prenomU = "tanguy")
+
+
+    newuser(idU     = "florian",
+            nomU    = "thomas",
+            mdpU    = "test",
+            prenomU = "florian")
+
+
+    newuser(idU     = "maxime",
+            nomU    = "deboffle",
+            mdpU    = "test",
+            prenomU = "maxime")
+
+
+    newuser(idU     = "pierre",
+            nomU    = "lemiere",
+            mdpU    = "test",
+            prenomU = "pierre")
+
+
+    newuser(idU     = "joshua",
+            nomU    = "vanoz",
+            mdpU    = "test",
+            prenomU = "joshua")
+
+    bac = Parterre(name = "Bac à sable")
+
+    db.session.add(bac)
+    bac.set_coordonnees([(0,0)])
+
+    typeM1 = TypeMesure(name = "Humidite")
+    typeM2 = TypeMesure(name = "Temperature")
+    db.session.add(typeM1)
+    db.session.add(typeM2)
+
+    db.session.commit()
+
 
 @manager.command
 def syncdb():

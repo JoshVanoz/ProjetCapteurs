@@ -48,7 +48,7 @@ association_parterre_capteur = db.Table("association_parterre_capteur",
                                         db.Column("parterre_id", db.Integer, db.ForeignKey("parterre.idP"), primary_key = True),
                                         db.Column("capteur_id", db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True))
 
-class Coordonnees(db.Models):
+class Coordonnees(db.Model):
     longitude   = db.Column(db.Float, primary_key = True)
     latitude    = db.Column(db.Float, primary_key = True)
     id_parterre = db.Column(db.Integer, db.ForeignKey("parterre.idP"), primary_key = True)
@@ -81,7 +81,7 @@ class Parterre(db.Model):
                                   order_by = "Coordonnees.numero")
 
     def __init__(self, name):
-        self.nomP      = name
+        self.nomP = name
 
     def __repr__(self):
         return "<Parterre (%d) %s>" % (self.idP, self.nomP)
@@ -105,14 +105,14 @@ class Parterre(db.Model):
         self.nomP = nomP
 
     def set_coordonnees(self, listeTuples):
-        for i in range(len(self.get_coordonnees())):
-            if listeTuples[i][0] != self.coordonnees[i].get_X() or listeTuples[i][1] != self.coordonnees[i].get_Y():
-                coord = Coordonnees(x      = listeTuples[i][0]
-                                    y      = listeTuples[i][1]
-                                    numero = i)
-                if len(self.coordonnee) < i:
-                    self.coordonnee.remove(self.coordonnees[i])
-                self.coordonnees.append(coord)
+        for coord in self.get_coordonnees():
+            db.session.delete(coord)
+        for i in range(len(listeTuples)):
+            coord = Coordonnees(x        = listeTuples[i][0],
+                                y        = listeTuples[i][1],
+                                parterre = self.idP,
+                                num      = i)
+            self.coordonnees.append(coord)
 
 
     def add_capteur(self, capteur):
@@ -149,6 +149,9 @@ class TypePlante(db.Model):
 class TypeMesure(db.Model):
     id_typeM  = db.Column(db.Integer, primary_key=True)
     nom_typeM = db.Column(db.String(100))
+
+    def __init__(self, name):
+        self.nom_typeM = name
 
     def __repr__(self):
         return "<TypeMesure (%d) %s>" % (self.id_typeM, self.nom_typeM)

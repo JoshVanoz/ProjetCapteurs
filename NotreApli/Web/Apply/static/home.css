@@ -3,14 +3,15 @@ body{
   background-image: url("fond.jpg");
   background-repeat: repeat;
 }
-#aside, #section, #h1{
+.aside, .section, .h1{
+  border: solid thin black;
   padding: 10px;
 }
 .container{
   display: flex;
   flex-wrap: wrap;
 }
-#h1{
+.h1{
   order 1;
   width: 100%;
 }
@@ -21,12 +22,12 @@ body{
   margin-right: 1em;
 }
 
-#section{
+.section{
   order:3;
   width: 50%;
 }
 
-#aside{
+.aside{
   order:4;
   flex: 1;
   margin-left: 10px;
@@ -68,4 +69,13 @@ body{
 }
 #buttonA{
   flex: 1 1;
+}
+#infoCap{
+ border: thin solid black;
+ padding: 10px;
+ height: 50vh;
+  margin: auto;
+}
+.listePos{
+  height: 90%;
 }

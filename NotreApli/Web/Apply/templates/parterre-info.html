@@ -20,6 +20,11 @@
   {% endfor %}
   </ul>
 </div>
+<div>
+    <a href = "{{ url_for('edit_parterre', id = parterre.get_id()) }}">
+      <input class = "btn btn-danger" type = "submit" value = "Modifier">
+    </a>
+</div>
 
 
 {% endblock %}

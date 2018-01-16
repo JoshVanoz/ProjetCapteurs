@@ -130,7 +130,7 @@ class ParterreForm(FlaskForm):
             self.nomP.data      = parterre.get_name()
             self.lieuGeoPX.data = parterre.get_coordonnees()[0]
             self.lieuGeoPY.data = parterre.get_coordonnees()[1]
-            self.next.data      = "save_capteur"
+            self.next.data      = "save_parterre"
         else:
             self.next.data      = "new_parterre_saving"
 

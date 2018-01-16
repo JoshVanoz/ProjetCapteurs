@@ -214,3 +214,26 @@ def save_capteur():
         "addCapteur.html",
         title = a.get_name()+" - edit",
         form  = f)
+
+@app.route("/Parterre/edit/<int:id>")
+def edit_parterre(id):
+    parterre = get_parterre(id)
+    form = ParterreForm(parterre)
+    return render_template("create-parterre.html",
+                title= parterre.get_name()+"  - edit",
+                form = form)
+
+@app.route("/Parterre/save/", methods = ("POST",))
+def save_parterre():
+    f= ParterreForm()
+    a = get_parterre(f.get_id())
+    if f.validate_on_submit():
+        a.set_name(f.get_name())
+        a.set_X(f.get_coordonnees()[0])
+        a.set_Y(f.get_coordonnees()[1])
+        db.session.commit()
+        return redirect(url_for("parterre_info",
+                id = a.get_id()))
+    return render_template("create-parterre.html",
+                title= parterre.get_name()+"  - edit",
+                form = f)

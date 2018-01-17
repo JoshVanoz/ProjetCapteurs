@@ -107,21 +107,42 @@ class Parterre(db.Model):
         if plante in self.plantes:
             self.plantes.remove(plante)
 
-class TypePlante(db.Model):
+class Plante(db.Model):
     idPlant  = db.Column(db.Integer, primary_key=True)
-    NomPlant = db.Column(db.String(100))
+    nomPlant = db.Column(db.String(100))
+    comportement = db.Column(db.String(200))
+    taux_humidite = db.Column(db.Float)
+    quantite = db.Column(db.Integer)
 
     def __repr__(self):
-        return "<TypePlante (%d) %s>" % (self.NomPlant)
+        return "<TypePlante (%d) %s>" % (self.nomPlant)
 
     def get_name(self):
-        return self.NomPlant
+        return self.nomPlant
 
     def get_id(self):
         return self.idPlant
 
     def set_name(self,NomPlant):
-        self.NomPlant = NomPlant
+        self.nomPlant = NomPlant
+
+    def get_comportement(self):
+        return self.comportement
+
+    def set_comportement(self, NewComport):
+        self.comportement = NewComport
+
+    def get_taux_humidite(self):
+        return self.taux_humidite
+
+    def set_taux_humidite(self, NewTaux):
+        self.taux_humidite = NewTaux
+
+    def get_quantite(self):
+        return self.quantite
+
+    def set_quantite(self, NewQuantite):
+        self.quantite = NewQuantite
 
 
 class TypeMesure(db.Model):

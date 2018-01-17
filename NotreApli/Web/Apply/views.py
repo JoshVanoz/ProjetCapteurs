@@ -335,7 +335,11 @@ def plante_info(id):
 
 @app.route("/Supprimer/Plante/<int:id>")
 def delete_plante(id):
-    pass
+    plante = get_plante(id)
+    db.session.delete(plante)
+    get_parterre(plante.get_parterre()).delete_plante(plante)
+    db.session.commit()
+    return redirect(url_for("parterre"))
 
 @app.route("/Modifier/Plante/<int:id>")
 def edit_plante(id):

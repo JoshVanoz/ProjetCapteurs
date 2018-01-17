@@ -107,12 +107,13 @@ class Parterre(db.Model):
         if plante in self.plantes:
             self.plantes.remove(plante)
 
-class Plante(db.Model):
+class TypePlante(db.Model):
     idPlant  = db.Column(db.Integer, primary_key=True)
     nomPlant = db.Column(db.String(100))
     comportement = db.Column(db.String(200))
     taux_humidite = db.Column(db.Float)
     quantite = db.Column(db.Integer)
+    parterre_id = db.Column(db.Integer, db.ForeignKey("parterre.idP"))
 
     def __repr__(self):
         return "<TypePlante (%d) %s>" % (self.nomPlant)
@@ -143,6 +144,10 @@ class Plante(db.Model):
 
     def set_quantite(self, NewQuantite):
         self.quantite = NewQuantite
+
+    def get_parterre(self):
+        return self.parterre_id
+
 
 
 class TypeMesure(db.Model):

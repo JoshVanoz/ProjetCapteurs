@@ -1,10 +1,19 @@
 {% extends "header.html" %}
 
-{% block content %}
-<aside>
-  {% for parterre in mesParterre %}
-    <a href="{{ url_for('parterre_info', id = parterre.get_id()) }}">{{parterre.get_name() }}</a>
-  {% endfor %}
-</aside>
-
+{% block main %}
+<h1 class="h1">{{ title }}</h1>
+<div class="row" id="listeCapl">
+  {% if mesCapteurs != [] %}
+    <ul>
+      {% for parterre in mesParterre %}
+        <li><a href="{{ url_for('parterre_info', id = parterre.get_id()) }}" class = "btn btn-default" id="buttonliste">{{ parterre.get_name() }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <section>
+      <p>Aucun parterre dans la base de données</p>
+      <a href="{{ url_for('add_parterre') }}" class = "btn btn-primary" id="buttonAdd"> Ajouter un parterre</a>
+    </section>
+  {% endif %}
+</div>
 {% endblock %}

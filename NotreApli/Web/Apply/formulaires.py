@@ -128,8 +128,8 @@ class ParterreForm(FlaskForm):
         if parterre:
             self.id.data        = parterre.get_id()
             self.nomP.data      = parterre.get_name()
-            self.lieuGeoPX.data = parterre.get_coordonnees()[0]
-            self.lieuGeoPY.data = parterre.get_coordonnees()[1]
+            self.lieuGeoPX.data = parterre.get_coordonnees()[0].get_X()
+            self.lieuGeoPY.data = parterre.get_coordonnees()[0].get_Y()
             self.next.data      = "save_parterre"
         else:
             self.next.data      = "new_parterre_saving"

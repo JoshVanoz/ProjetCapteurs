@@ -47,24 +47,41 @@ association_parterre_capteur = db.Table("association_parterre_capteur",
                                         db.metadata,
                                         db.Column("parterre_id", db.Integer, db.ForeignKey("parterre.idP"), primary_key = True),
                                         db.Column("capteur_id", db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True))
-class Parterre(db.Model):
-    idP       = db.Column(db.Integer, primary_key=True)
-    nomP      = db.Column(db.String(100))
-    lieuGeoPX = db.Column(db.Float)
-    lieuGeoPY = db.Column(db.Float)
-    plantes   = db.relationship("TypePlante",
-                                secondary = association_parterre_typePlante,
-                                lazy      = "dynamic",
-                                backref   = db.backref("TypePlante", lazy = True))
-    capteurs  = db.relationship("Capteur",
-                                secondary = association_parterre_capteur,
-                                lazy      = "dynamic",
-                                backref   = db.backref("Capteur", lazy = True))
 
-    def __init__(self, name, x, y):
-        self.nomP      = name
-        self.lieuGeoPX = x
-        self.lieuGeoPY = y
+class Coordonnees(db.Model):
+    longitude   = db.Column(db.Float, primary_key = True)
+    latitude    = db.Column(db.Float, primary_key = True)
+    id_parterre = db.Column(db.Integer, db.ForeignKey("parterre.idP"), primary_key = True)
+    numero      = db.Column(db.Integer)
+
+    def __init__(self, x, y, parterre, num):
+        self.longitude = x
+        self.latitude  = y
+        self.parterre  = parterre
+        self.numero    = num
+
+    def get_X(self):
+        return self.longitude
+
+    def get_Y(self):
+        return self.latitude
+
+class Parterre(db.Model):
+    idP         = db.Column(db.Integer, primary_key=True)
+    nomP        = db.Column(db.String(100))
+    plantes     = db.relationship("TypePlante",
+                                  secondary = association_parterre_typePlante,
+                                  lazy      = "dynamic",
+                                  backref   = db.backref("TypePlante", lazy = True))
+    capteurs    = db.relationship("Capteur",
+                                  secondary = association_parterre_capteur,
+                                  lazy      = "dynamic",
+                                  backref   = db.backref("Capteur", lazy = True))
+    coordonnees = db.relationship("Coordonnees",
+                                  order_by = "Coordonnees.numero")
+
+    def __init__(self, name):
+        self.nomP = name
 
     def __repr__(self):
         return "<Parterre (%d) %s>" % (self.idP, self.nomP)
@@ -76,7 +93,7 @@ class Parterre(db.Model):
         return self.idP
 
     def get_coordonnees(self):
-        return (self.lieuGeoPX, self.lieuGeoPY)
+        return self.coordonnees
 
     def get_capteurs(self):
         return self.capteurs
@@ -87,11 +104,16 @@ class Parterre(db.Model):
     def set_name(self,nomP):
         self.nomP = nomP
 
-    def set_X(self,lieuGeoPX):
-        self.lieuGeoPX = lieuGeoPX
+    def set_coordonnees(self, listeTuples):
+        for coord in self.get_coordonnees():
+            db.session.delete(coord)
+        for i in range(len(listeTuples)):
+            coord = Coordonnees(x        = listeTuples[i][0],
+                                y        = listeTuples[i][1],
+                                parterre = self.idP,
+                                num      = i)
+            self.coordonnees.append(coord)
 
-    def set_Y(self,lieuGeoPY):
-        self.lieuGeoPY = lieuGeoPY
 
     def add_capteur(self, capteur):
         self.capteurs.append(capteur)
@@ -127,6 +149,9 @@ class TypePlante(db.Model):
 class TypeMesure(db.Model):
     id_typeM  = db.Column(db.Integer, primary_key=True)
     nom_typeM = db.Column(db.String(100))
+
+    def __init__(self, name):
+        self.nom_typeM = name
 
     def __repr__(self):
         return "<TypeMesure (%d) %s>" % (self.id_typeM, self.nom_typeM)

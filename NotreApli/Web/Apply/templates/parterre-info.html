@@ -55,7 +55,7 @@ var imageStyle = new ol.style.Style({
           })
     })
 });
- var coordonnee = [{{parterre.get_coordonnees()[1]}},{{parterre.get_coordonnees()[0]}}];
+ var coordonnee = [{{parterre.get_coordonnees()[0].get_X()}},{{parterre.get_coordonnees()[0].get_Y()}}];
  var zoom = 9;
  var attribution = new ol.control.Attribution({
   collapsible: false

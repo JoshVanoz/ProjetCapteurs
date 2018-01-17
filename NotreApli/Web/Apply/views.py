@@ -173,10 +173,8 @@ def add_Parterre():
 def new_parterre_saving():
     f = ParterreForm()
     if f.validate_on_submit():
-        o = Parterre(
-            name = f.get_name(),
-            x = f.get_coordonnees()[0],
-            y = f.get_coordonnees()[1])
+        o = Parterre(name = f.get_name())
+        o.set_coordonnees([(f.get_coordonnees()[0],f.get_coordonnees()[1])])
         db.session.add(o)
         form = request.form
         longitudes = form.getlist("longitudes")
@@ -241,8 +239,7 @@ def save_parterre():
     a = get_parterre(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())
-        a.set_X(f.get_coordonnees()[0])
-        a.set_Y(f.get_coordonnees()[1])
+        a.set_coordonnees([(f.get_coordonnees()[0],f.get_coordonnees()[1])])
         db.session.commit()
         return redirect(url_for("parterre_info",
                 id = a.get_id()))

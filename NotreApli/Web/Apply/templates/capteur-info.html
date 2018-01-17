@@ -6,6 +6,7 @@
   <ul>
     <li>Lieu géolocalisation en X : {{ capteur.get_coordonnees()[0] }} </li>
     <li>Lieu géolocalisation en Y : {{ capteur.get_coordonnees()[1] }} </li>
+    <li>Numéro de téléphone : {{ capteur.get_phoneNumber() }}
     <li>Niveau de batterie : {{ capteur.get_lvlBattery() }} </li>
     <li>Date Placement : {{ capteur.get_date() }} </li>
     <li>Type de Mesure : {{ mesure.get_name() }} </li>

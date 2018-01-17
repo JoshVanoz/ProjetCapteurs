@@ -178,6 +178,18 @@ def new_parterre_saving():
             x = f.get_coordonnees()[0],
             y = f.get_coordonnees()[1])
         db.session.add(o)
+        form = request.form
+        longitudes = form.getlist("longitudes")
+        latitudes  = form.getlist("latitudes")
+        num=0
+        for longitude,latitude in zip(longitudes, latitudes):
+            c = Coordonnees(latitude = latitude, longitude = longitude, parcelle = o.get_id(), numero=num)
+            num=num+1
+            try:
+                db.session.add(c)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
         db.session.commit()
         return redirect(url_for('parterre_info', id = o.get_id()))
     return render_template(

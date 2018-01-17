@@ -25,16 +25,16 @@
 <div id="mapInfoP">
   <div class = "row" id = "infoParterre">
     <section class = "fleurs">
-      <h4> liste des fleurs </h4>
-      <ul>
+      <h4> Liste des fleurs :</h4>
+      <ul class="listeP">
         {% for plante in parterre.get_plantes() %}
-          <li><a href="{{ url_for('plante_info', id = plante.get_id()) }}"> {{ plante.get_name() }} </a></li>
+          <li><a href="{{ url_for('plante_info', id = plante.get_id()) }}" class="btn btn-default buttonliste"> {{ plante.get_name() }} </a></li>
         {% endfor %}
       </ul>
     </section>
 
     <section class = "capteurs">
-      <h4> liste des capteurs </h4>
+      <h4> Liste des capteurs :</h4>
       <ul>
       {% for capteur in parterre.get_capteurs() %}
         <li>{{ capteur.get_name() }}</li>

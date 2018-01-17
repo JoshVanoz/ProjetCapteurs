@@ -213,7 +213,7 @@ body{
    color: black;
   width: 100%;
 }
-#buttonliste{
+.buttonliste{
   border-radius: 0;
   text-align: left;
   padding-left: 1vw;
@@ -250,7 +250,7 @@ body{
    -moz-border-radius: 5px;
    border-radius: 5px;
   background-color: #fff;
- 
+
    border: solid thin;
   margin-bottom: 5vh;
   margin-top: 5vh;
@@ -303,4 +303,10 @@ body{
 }
 #planteCancel:hover{
   background-color: white;
+}
+.listeP{
+  list-style-type: none;
+}
+.listeP a{
+  width: 50%;
 }

@@ -6,7 +6,7 @@
   {% if mesCapteurs != [] %}
     <ul>
       {% for parterre in mesParterre %}
-        <li><a href="{{ url_for('parterre_info', id = parterre.get_id()) }}" class = "btn btn-default" id="buttonliste">{{ parterre.get_name() }}</a></li>
+        <li><a href="{{ url_for('parterre_info', id = parterre.get_id()) }}" class = "btn btn-default buttonliste">{{ parterre.get_name() }}</a></li>
       {% endfor %}
     </ul>
   {% else %}

@@ -199,6 +199,7 @@ body{
   font-size: large;
   margin-top: 8vh;
   width: 30%;
+  color: white;
 }
 #listeCapl >ul{
   font-size: large;
@@ -217,4 +218,16 @@ body{
   text-align: left;
   padding-left: 1vw;
   font-size: 2vh;
+}
+.footer{
+  text-align: center;
+  padding-top: 1vh;
+}
+#return{
+  width: 50%;
+  background-color: whitesmoke;
+  font-size: 1.7vh;
+}
+#return:hover{
+  background-color: white;
 }

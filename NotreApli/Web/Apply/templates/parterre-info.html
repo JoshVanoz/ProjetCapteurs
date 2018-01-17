@@ -45,7 +45,9 @@
   <div id = "mapP">
     <div id="map" class="col-md-8 map"></div>
   </div>
-
+  <section class="footer">
+    <a href="{{ url_for('parterre') }}" class = "btn btn-default" id="return"> Retour</a>
+  </section>
 {% endblock %}
 {% block scripts %}
 {{super()}}

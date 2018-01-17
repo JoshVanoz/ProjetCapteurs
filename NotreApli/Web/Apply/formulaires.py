@@ -119,8 +119,6 @@ class ParterreForm(FlaskForm):
 
     id        = HiddenField('id')
     nomP      = StringField('Nom', validators = [DataRequired()])
-    lieuGeoPX = FloatField('Position X')
-    lieuGeoPY = FloatField('Position Y')
     next      = HiddenField()
 
     def __init__(self, parterre=None):

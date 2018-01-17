@@ -42,52 +42,47 @@
 {% block scripts %}
 {{super()}}
 <script>
-var imageStyle = new ol.style.Style({
-        image: new ol.style.Circle({
-              radius: 5,
-              snapToPixel: false,
-              fill: new ol.style.Fill({
-              color: [0 , 0 , 255, 0.2]
-          }),
-          stroke: new ol.style.Stroke({
-              color: [0 , 0 , 255 , 1],
-              width: 1
-          })
-    })
-});
- var coordonnee = [{{parterre.get_coordonnees()[0].get_X()}},{{parterre.get_coordonnees()[0].get_Y()}}];
- var zoom = 9;
- var attribution = new ol.control.Attribution({
-  collapsible: false
-});
+      let raster = new ol.layer.Tile({
+        source: new ol.source.OSM()
+      });
 
-var map = new ol.Map({
-  controls: ol.control.defaults({ attribution: false }).extend([attribution]),
-  target: 'map',
-  view: new ol.View({
-      center: ol.proj.fromLonLat(coordonnee),
-    zoom: zoom
-  })
-});
-var layer = new ol.layer.Tile({
-  source: new ol.source.OSM()
-});
-map.addLayer(layer);
-function transform_geometry(element) {
-  var current_projection = new ol.proj.Projection({ code: "EPSG:4326" });
-  var new_projection = layer.getSource().getProjection();
-  element.getGeometry().transform(current_projection, new_projection);
-}
-var point = new ol.geom.Point(coordonnee, 'XY');
-var point_feature = new ol.Feature ( point );
-point_feature.setStyle(imageStyle);
-var features = [ point_feature];
-features.forEach(transform_geometry);
-var layer_point = new ol.layer.Vector({
-  source: new ol.source.Vector( {
-    features: features
-  })
-});
-map.addLayer(layer_point);
-</script>
+
+            let geojsonObject = {
+              'type': 'FeatureCollection',
+              'crs': {
+                'type': 'name',
+                'properties': {
+                  'name': 'EPSG:3857'
+                }
+              },
+              'features': [{
+                'type': 'Feature',
+                'geometry': {
+                  'type': 'Polygon',
+                  'coordinates': [[
+                    {% for coord in parterre.coordonnees %}
+                      [ {{ coord.latitude}}, {{coord.longitude}}],
+                    {% endfor %}
+                  ]]
+                },
+              },
+              ]
+            };
+
+
+      let source = new ol.source.Vector({wrapX: false, features: (new ol.format.GeoJSON()).readFeatures(geojsonObject)});
+
+      let vector = new ol.layer.Vector({
+        source: source
+      });
+      let map = new ol.Map({
+        layers: [raster, vector],
+        target: 'map',
+        view: new ol.View({
+          center: [214408, 6080900],
+          zoom: 15
+        })
+      });
+
+    </script>
 {% endblock %}

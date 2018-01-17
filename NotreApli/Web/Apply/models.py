@@ -104,16 +104,12 @@ class Parterre(db.Model):
     def set_name(self,nomP):
         self.nomP = nomP
 
-    def set_coordonnees(self, listeTuples):
+    def remove_coordonnees(self, listeTuples):
         for coord in self.get_coordonnees():
             db.session.delete(coord)
-        for i in range(len(listeTuples)):
-            coord = Coordonnees(x        = listeTuples[i][0],
-                                y        = listeTuples[i][1],
-                                parterre = self.idP,
-                                num      = i)
-            self.coordonnees.append(coord)
 
+    def add_coordonnee(self, coord):
+        self.coordonnees.append(coord)
 
     def add_capteur(self, capteur):
         self.capteurs.append(capteur)

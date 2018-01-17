@@ -174,17 +174,19 @@ def new_parterre_saving():
     f = ParterreForm()
     if f.validate_on_submit():
         o = Parterre(name = f.get_name())
-        o.set_coordonnees([(f.get_coordonnees()[0],f.get_coordonnees()[1])])
         db.session.add(o)
         form = request.form
         longitudes = form.getlist("longitudes")
         latitudes  = form.getlist("latitudes")
-        num=0
+        num = 0
         for longitude,latitude in zip(longitudes, latitudes):
-            c = Coordonnees(latitude = latitude, longitude = longitude, parcelle = o.get_id(), numero=num)
-            num=num+1
+            c = Coordonnees(x        = longitude,
+                            y        = latitude,
+                            parterre = o.get_id(),
+                            num      = num)
+            num = num+1
             try:
-                db.session.add(c)
+                o.add_coordonnee(c)
                 db.session.commit()
             except Exception as e:
                 db.session.rollback()
@@ -239,10 +241,20 @@ def save_parterre():
     a = get_parterre(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())
-        a.set_coordonnees([(f.get_coordonnees()[0],f.get_coordonnees()[1])])
-        db.session.commit()
-        return redirect(url_for("parterre_info",
-                id = a.get_id()))
+        a.remove_coordonnees()
+        form = request.form
+        longitudes = form.getlist("longitudes")
+        latitudes  = form.getlist("latitudes")
+        num = 0
+        for longitude,latitude in zip(longitudes, latitudes):
+            c = Coordonnees(x        = longitude,
+                            y        = latitude,
+                            parterre = o.get_id(),
+                            num      = num)
+            num = num+1
+            o.add_coordonnee(c)
+            db.session.commit()
+        return redirect(url_for("parterre_info", id = a.get_id()))
     return render_template("create-parterre.html",
                 title= parterre.get_name()+"  - edit",
                 form = f)

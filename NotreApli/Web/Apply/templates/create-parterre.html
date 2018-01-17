@@ -25,13 +25,8 @@
     {{ form.nomP(size = 50,
                  class_ = "form-control") }}
 
-    {{ form.lieuGeoPX.label }}
-    {{ form.lieuGeoPX(size = 50,
-                 class_ = "form-control") }}
 
-    {{ form.lieuGeoPY.label }}
-    {{ form.lieuGeoPY(size = 50,
-                 class_ = "form-control") }}
+  <div id="map" class="col-md-8 map"></div>
   </div>
 {% if form.nomP.errors %}
 <ul class = "list-group">
@@ -94,7 +89,7 @@ function addInteraction() {
          elem.name="longitudes";
          elem.type="hidden"
          coords_node.appendChild(elem);
-//         map.removeInteraction(draw);
+        // map.removeInteraction(draw);
        }
 
     } );

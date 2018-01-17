@@ -1,11 +1,11 @@
 body{
-  padding-top: 70px;
+  padding-top: 7vh;
   background-image: url("fond.jpg");
   background-repeat: repeat;
 }
 .aside, .section, .h1{
   border: solid thin black;
-  padding: 10px;
+  padding: 1vw;
 }
 .container{
   display: flex;
@@ -41,7 +41,7 @@ body{
 }
 
 .capteurs, .fleurs{
-  border: solid black;
+  border: solid black thin;
 }
 
 #login{
@@ -82,10 +82,10 @@ body{
   width: 30%;
  flex: 0 1 1;
 }
-#map{
+#mapC > #map{
   flex: 1 1 0;
   height: 50vh;
-  width: 40%;
+  width: 100%;
 }
 .listePos{
   height: 90%;
@@ -128,5 +128,62 @@ body{
 #formEditCap label{
   margin: 2vh;
   font-size: large;
+  text-decoration: underline;
+}
+<<<<<<< HEAD
+=======
+#divCapH1{
+  display: flex;
+  width: 100%;
+  padding 1vh;
+  border: solid thin;
+}
+#divCapH1 > h1{
+  padding: 2vh;
+  flex: 1;
+  padding-left: 3vw;
+  text-decoration: underline;
+}
+.buttonDelete{
+  display: flex;
+  flex-direction: column;
+  padding: 2vh;
+  text-align: center;
+  width: 20%;
+}
+#bDanger > input{
+  margin-bottom: 2vh;
+  padding: 1vh 2vw 1vh 2vw;
+  width: 100%
+}
+#bEdit > input{
+  padding: 1vh 2vw 1vh 2vw;
+  width: 100%
+}
+#mapInfoP{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+#infoParterre{
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  width: 100%;
+
+}
+#mapP >#map{
+  height: 50vh;
+  width: 100%;
+  margin-top: 2vh;
+}
+#infoParterre > .capteurs, .fleurs{
+  flex: 1;
+  height: 20vh;
+  margin: auto;
+  margin: 0.2vw;
+}
+.capteurs>h4, .fleurs >h4{
+  margin-left: 1vw;;
   text-decoration: underline;
 }

@@ -138,3 +138,47 @@ class ParterreForm(FlaskForm):
 
     def get_next(self):
         return self.next.data
+
+class PlanteForm(FlaskForm):
+
+    id = HiddenField('id')
+    nom_plante = StringField('Nom', validators = [DataRequired()])
+    comportement = StringField('comportement')
+    taux_humidite = FloatField('Taux en humidité nécessaire')
+    quantite = IntegerField('Nombre')
+    parterre = QuerySelectField("Parterre associé :", query_factory = lambda : get_parterres())
+    next = HiddenField()
+
+    def __init__(self, plante=None):
+        super().__init__()
+        if plante :
+            self.id.data = plante.get_id()
+            self.nom_plante.data = plante.get_name()
+            self.comportement.data = plante.get_comportement()
+            self.taux_humidite.data = plante.get_taux_humidite()
+            self.quantite.data = plante.get_quantite()
+            self.parterre.data = get_parterre(capteur.get_parterre())
+            self.next.data = "save_plante"
+        else:
+            self.next.data = "new_plante_saving"
+
+    def get_name(self):
+        return self.nom_plante.data
+
+    def get_id(self):
+        return self.id.data
+
+    def get_comportement(self):
+        return self.comportement.data
+
+    def get_taux_humidite(self):
+        return self.taux_humidite.data
+
+    def get_quantite(self):
+        return self.quantite.data
+
+    def get_parterre(self):
+        return self.parterre.data
+
+    def get_next(self):
+        return self.next.data

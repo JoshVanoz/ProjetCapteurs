@@ -270,3 +270,56 @@ def delete_parterre(id):
     db.session.delete(a)
     db.session.commit()
     return redirect(url_for("parterre"))
+
+@app.route("/Ajouter/Plante/")
+@login_required
+def add_Plante():
+    f = PlanteForm()
+    return render_template(
+        "create-plante.html",
+        form  = f,
+        title = "Nouvelle Plante")
+
+@app.route("/Ajouter/Plante/saving/", methods=("POST",))
+def new_plante_saving():
+    """
+    Saves the new plant in the database and redirect the user to his home page.
+    """
+    f = PlanteForm()
+    if f.validate_on_submit():
+        o = TypePlante(
+            nomPlant = f.get_name(),
+            comportement = f.get_comportement(),
+            taux_humidite = f.get_taux_humidite(),
+            quantite = f.get_quantite(),
+            parterre_id = f.get_parterre().get_id())
+        f.get_parterre().add_plante(o)
+        db.session.add(o)
+        db.session.commit()
+        return redirect(url_for('parterre_info', id = o.get_parterre()))
+    return render_template(
+        "create-plante.html",
+        form  = f,
+        titre = "Nouvelle plante")
+
+@app.route("/Capteur/save/", methods = ("POST",))
+def save_plante():
+    pass
+    # f = CapteurForm()
+    # a = get_capteur(f.get_id())
+    # if f.validate_on_submit():
+    #     a.set_name(f.get_name())
+    #     a.set_num(f.get_phoneNumber())
+    #     a.set_interval(f.get_interval())
+    #     if a.get_parterre() != f.get_parterre().get_id():
+    #         a.set_parterre(f.get_parterre().get_id())
+    #     if a.get_typeMesure() != f.get_typeMesure().get_id():
+    #         a.set_typeMesure(f.get_typeMesure().get_id())
+    #     db.session.commit()
+    #     return redirect(url_for(
+    #         "capteur_info",
+    #         id    = f.get_id()))
+    # return render_template(
+    #     "addCapteur.html",
+    #     title = a.get_name()+" - edit",
+    #     form  = f)

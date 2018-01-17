@@ -7,87 +7,97 @@
 <script src="https://openlayers.org/en/v4.5.0/build/ol.js"></script>
 {% endblock %}
 {% block main %}
-<h1>{{ parterre.get_name() }}</h1>
 
-<div class = "fleurs">
-  <p> liste des fleurs </p>
-  <ul>
-  {% for plante in parterre.get_plantes() %}
-    <li>{{ plante.get_name() }}</li>
-  {% endfor %}
-  </ul>
+
+<div id="divCapH1">
+  <h1>{{ parterre.get_name() }}</h1>
+  {% if parterre.get_name()!= "Bac à sable" %}
+    <div class="buttonDelete">
+      <a href = "{{ url_for('delete_parterre', id = parterre.get_id()) }}" id="bDanger">
+        <input class = "btn btn-danger" type = "submit" value = "Supprimer">
+      </a>
+      <a href = "{{ url_for('edit_parterre', id = parterre.get_id()) }}" id="bEdit">
+        <input class = "btn btn-default" type = "submit" value = "Modifier">
+      </a>
+    </div>
+  {% endif %}
 </div>
 
-<div class = "capteurs">
-  <p> liste des capteurs </p>
-  <ul>
-  {% for capteur in parterre.get_capteurs() %}
-    <li>{{ capteur.get_name() }}</li>
-  {% endfor %}
-  </ul>
-</div>
-<div id="map" class="col-md-8 map"></div>
-{% if parterre.get_name()!= "Bac à sable" %}
-<div>
-    <a href = "{{ url_for('delete_parterre', id = parterre.get_id()) }}">
-      <input class = "btn btn-danger" type = "submit" value = "Supprimer">
-    </a>
-    <a href = "{{ url_for('edit_parterre', id = parterre.get_id()) }}">
-      <input class = "btn btn-danger" type = "submit" value = "Modifier">
-    </a>
-</div>
-{% endif %}
+<div id="mapInfoP">
+  <div class="row" id="infoParterre">
+      <section class = "fleurs">
+        <h4> Liste des fleurs</h4>
+        <ul>
+        {% for plante in parterre.get_plantes() %}
+          <li>{{ plante.get_name() }}</li>
+        {% endfor %}
+        </ul>
+      </section>
 
-{% endblock %}
-{% block scripts %}
-{{super()}}
-<script>
-var imageStyle = new ol.style.Style({
-        image: new ol.style.Circle({
-              radius: 5,
-              snapToPixel: false,
-              fill: new ol.style.Fill({
-              color: [0 , 0 , 255, 0.2]
-          }),
-          stroke: new ol.style.Stroke({
-              color: [0 , 0 , 255 , 1],
-              width: 1
-          })
+      <section class = "capteurs">
+        <h4> Liste des capteurs</h4>
+        <ul>
+        {% for capteur in parterre.get_capteurs() %}
+          <li>{{ capteur.get_name() }}</li>
+        {% endfor %}
+        </ul>
+      </section>
+  </div>
+  <div id="mapP">
+    <div id="map" class="col-md-8 map"></div>
+  </div>
+  {% endblock %}
+
+  {% block scripts %}
+  {{super()}}
+  <script>
+  var imageStyle = new ol.style.Style({
+          image: new ol.style.Circle({
+                radius: 5,
+                snapToPixel: false,
+                fill: new ol.style.Fill({
+                color: [0 , 0 , 255, 0.2]
+            }),
+            stroke: new ol.style.Stroke({
+                color: [0 , 0 , 255 , 1],
+                width: 1
+            })
+      })
+  });
+   var coordonnee = [{{parterre.get_coordonnees()[1]}},{{parterre.get_coordonnees()[0]}}];
+   var zoom = 9;
+   var attribution = new ol.control.Attribution({
+    collapsible: false
+  });
+
+  var map = new ol.Map({
+    controls: ol.control.defaults({ attribution: false }).extend([attribution]),
+    target: 'map',
+    view: new ol.View({
+        center: ol.proj.fromLonLat(coordonnee),
+      zoom: zoom
     })
-});
- var coordonnee = [{{parterre.get_coordonnees()[1]}},{{parterre.get_coordonnees()[0]}}];
- var zoom = 9;
- var attribution = new ol.control.Attribution({
-  collapsible: false
-});
-
-var map = new ol.Map({
-  controls: ol.control.defaults({ attribution: false }).extend([attribution]),
-  target: 'map',
-  view: new ol.View({
-      center: ol.proj.fromLonLat(coordonnee),
-    zoom: zoom
-  })
-});
-var layer = new ol.layer.Tile({
-  source: new ol.source.OSM()
-});
-map.addLayer(layer);
-function transform_geometry(element) {
-  var current_projection = new ol.proj.Projection({ code: "EPSG:4326" });
-  var new_projection = layer.getSource().getProjection();
-  element.getGeometry().transform(current_projection, new_projection);
-}
-var point = new ol.geom.Point(coordonnee, 'XY');
-var point_feature = new ol.Feature ( point );
-point_feature.setStyle(imageStyle);
-var features = [ point_feature];
-features.forEach(transform_geometry);
-var layer_point = new ol.layer.Vector({
-  source: new ol.source.Vector( {
-    features: features
-  })
-});
-map.addLayer(layer_point);
-</script>
+  });
+  var layer = new ol.layer.Tile({
+    source: new ol.source.OSM()
+  });
+  map.addLayer(layer);
+  function transform_geometry(element) {
+    var current_projection = new ol.proj.Projection({ code: "EPSG:4326" });
+    var new_projection = layer.getSource().getProjection();
+    element.getGeometry().transform(current_projection, new_projection);
+  }
+  var point = new ol.geom.Point(coordonnee, 'XY');
+  var point_feature = new ol.Feature ( point );
+  point_feature.setStyle(imageStyle);
+  var features = [ point_feature];
+  features.forEach(transform_geometry);
+  var layer_point = new ol.layer.Vector({
+    source: new ol.source.Vector( {
+      features: features
+    })
+  });
+  map.addLayer(layer_point);
+  </script>
+</div>
 {% endblock %}

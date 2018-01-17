@@ -4,13 +4,15 @@
   <h1 class="h1">Suppression d'un Capteur : </h1>
   <div class="row" id="Suppr">
       <form method = "POST" action = "{{ url_for('delete_capteur') }}">
-        <p>Veuillez selectionner un capteur:</p>
-        <select name = "del">
-          <option value = "">Faites votre choix</option>
-          {% for capteur in liste %}
-            <option value = "{{ capteur.get_id() }}">{{ capteur.get_name() }}</option>
-          {% endfor %}
-        </select>
+        <h3>Veuillez selectionner un capteur :</h3>
+        <div id="delete">
+          <select name = "del" class="del">
+            <option value = "">Faites votre choix</option>
+            {% for capteur in liste %}
+              <option value = "{{ capteur.get_id() }}">{{ capteur.get_name() }}</option>
+            {% endfor %}
+          </select>
+        </div>
         <input class = "btn btn-danger" id="Supprimer"
                type  = "submit"
                value = "Supprimer">

@@ -239,12 +239,38 @@ body{
 #Suppr > form{
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
-.del{
-  text-align: center;
-
+#delete{
+  background: url("arrow.png") no-repeat 98%;
+   height: 5vh;
+   overflow: hidden;
+   width: 100%;
+    -webkit-border-radius: 5px;
+   -moz-border-radius: 5px;
+   border-radius: 5px;
+  background-color: #fff;
+ 
+   border: solid thin;
+  margin-bottom: 5vh;
+  margin-top: 5vh;
+}
+#delete > select{
+  background: transparent;
+   border: none;
+   font-size: 2vh;
+   height: 5vh;
+   padding: 0.5vh;
+   width: 102%;
+  color: #000;
 }
 #Supprimer{
   text-align: center;
-  width:100%;
+  margin: auto;
+  width:20%;
+  font-size: large;
+}
+#Suppr h3 {
+  padding-top: 2vh;
+  text-decoration: underline;
 }

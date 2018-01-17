@@ -28,7 +28,7 @@
       <h4> liste des fleurs </h4>
       <ul>
         {% for plante in parterre.get_plantes() %}
-          <li>{{ plante.get_name() }}</li>
+          <li><a href="{{ url_for('plante_info', id = plante.get_id()) }}"> {{ plante.get_name() }} </a></li>
         {% endfor %}
       </ul>
     </section>

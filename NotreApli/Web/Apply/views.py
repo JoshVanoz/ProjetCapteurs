@@ -150,6 +150,23 @@ def delete_capteur():
         liste = get_capteurs(),
         title = "Supprimer un capteur")
 
+@app.route("/Supprimer/Parterre", methods = ["POST","GET"])
+@login_required
+def delete_part():
+    if request.method=="POST":
+        if request.form['del']=="":
+            return render_template(
+                "delete-parterre.html",
+                liste = get_parterres(),
+                title = "Supprimer un parterre")
+        else:
+            a = get_parterre(int(request.form['del']))
+            db.session.delete(a)
+            db.session.commit()
+    return render_template(
+        "delete-parterre.html",
+        liste = get_parterres(),
+        title = "Supprimer un parterre")
 
 @app.route("/Supprimer/Capteur/<int:id>")
 @login_required

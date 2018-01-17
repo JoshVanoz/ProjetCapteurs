@@ -1,0 +1,21 @@
+{% extends "header.html" %}
+{% block main %}
+<body>
+  <h1 class="h1">Suppression d'un Parterre : </h1>
+  <div class="row" id="Suppr">
+      <form method = "POST" action = "{{ url_for('delete_part') }}">
+        <p>Veuillez selectionner un parterre:</p>
+        <select name = "del">
+          <option value = "">Faites votre choix</option>
+          {% for parterre in liste %}
+            <option value = "{{ parterre.get_id() }}">{{ parterre.get_name() }}</option>
+          {% endfor %}
+        </select>
+        <input class = "btn btn-danger" id="Supprimer"
+               type  = "submit"
+               value = "Supprimer">
+      </form>
+  </div>
+</body>
+
+{% endblock %}

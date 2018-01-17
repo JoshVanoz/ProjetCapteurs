@@ -48,11 +48,16 @@ association_parterre_capteur = db.Table("association_parterre_capteur",
                                         db.Column("parterre_id", db.Integer, db.ForeignKey("parterre.idP"), primary_key = True),
                                         db.Column("capteur_id", db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True))
 
+association_parterre_coordonnee = db.Table("association_parterre_coordonnee",
+                                        db.metadata,
+                                        db.Column("parterre_id", db.Integer, db.ForeignKey("parterre.idP"), primary_key = True),
+                                        db.Column("coord_id", db.Integer, db.ForeignKey("coordonnees.coord_id"), primary_key = True))
+
 class Coordonnees(db.Model):
+    coord_id    = db.Column(db.Integer, primary_key = True)
     longitude   = db.Column(db.Float)
     latitude    = db.Column(db.Float)
-    id_parterre = db.Column(db.Integer, db.ForeignKey("parterre.idP"), primary_key = True)
-    numero      = db.Column(db.Integer, primary_key = True)
+    numero      = db.Column(db.Integer)
 
     def __init__(self, x, y, parterre, num):
         self.longitude = x
@@ -78,7 +83,10 @@ class Parterre(db.Model):
                                   lazy      = "dynamic",
                                   backref   = db.backref("Capteur", lazy = True))
     coordonnees = db.relationship("Coordonnees",
-                                  order_by = "Coordonnees.numero")
+                                  secondary = association_parterre_coordonnee,
+                                  lazy      = "dynamic",
+                                  backref   = db.backref("Coordonnees", lazy = True),
+                                  order_by  = "Coordonnees.numero")
 
     def __init__(self, name):
         self.nomP = name

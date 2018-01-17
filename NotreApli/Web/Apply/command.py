@@ -39,7 +39,11 @@ def loaddb():
     bac = Parterre(name = "Bac à sable")
 
     db.session.add(bac)
-    bac.set_coordonnees([(0,0)])
+    c = Coordonnees(x        = 0,
+                    y        = 0,
+                    parterre = bac.get_id(),
+                    num      = 0)
+    bac.add_coordonnee(c)
 
     typeM1 = TypeMesure(name = "Humidite")
     typeM2 = TypeMesure(name = "Temperature")

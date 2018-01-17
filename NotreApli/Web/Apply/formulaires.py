@@ -157,7 +157,7 @@ class PlanteForm(FlaskForm):
             self.comportement.data = plante.get_comportement()
             self.taux_humidite.data = plante.get_taux_humidite()
             self.quantite.data = plante.get_quantite()
-            self.parterre.data = get_parterre(capteur.get_parterre())
+            self.parterre.data = get_parterre(plante.get_parterre())
             self.next.data = "save_plante"
         else:
             self.next.data = "new_plante_saving"

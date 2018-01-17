@@ -302,25 +302,21 @@ def new_plante_saving():
         form  = f,
         titre = "Nouvelle plante")
 
-@app.route("/Capteur/save/", methods = ("POST",))
+@app.route("/Plante/save/", methods = ("POST",))
 def save_plante():
     pass
     f = PlanteForm()
-    a = get_Plante(f.get_id())
+    a = get_plante(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())
-        a.set_num(f.get_phoneNumber())
-        a.set_interval(f.get_interval())
-        if a.get_parterre() != f.get_parterre().get_id():
-            a.set_parterre(f.get_parterre().get_id())
-        if a.get_typeMesure() != f.get_typeMesure().get_id():
-            a.set_typeMesure(f.get_typeMesure().get_id())
+        a.set_comportement(f.get_comportement())
+        a.set_taux_humidite(f.get_taux_humidite())
+        a.set_quantite(f.get_quantite())
         db.session.commit()
         return redirect(url_for(
-            "capteur_info",
-            id    = f.get_id()))
+            "plante_info", id = f.get_id()))
     return render_template(
-        "addCapteur.html",
+        "create-plante.html",
         title = a.get_name()+" - edit",
         form  = f)
 
@@ -343,4 +339,9 @@ def delete_plante(id):
 
 @app.route("/Modifier/Plante/<int:id>")
 def edit_plante(id):
-    pass
+    plante = get_plante(id)
+    form = PlanteForm(plante)
+    return render_template(
+        "create-plante.html",
+        title = plante.get_name()+" - edit",
+        form  = form)

@@ -305,21 +305,38 @@ def new_plante_saving():
 @app.route("/Capteur/save/", methods = ("POST",))
 def save_plante():
     pass
-    # f = CapteurForm()
-    # a = get_capteur(f.get_id())
-    # if f.validate_on_submit():
-    #     a.set_name(f.get_name())
-    #     a.set_num(f.get_phoneNumber())
-    #     a.set_interval(f.get_interval())
-    #     if a.get_parterre() != f.get_parterre().get_id():
-    #         a.set_parterre(f.get_parterre().get_id())
-    #     if a.get_typeMesure() != f.get_typeMesure().get_id():
-    #         a.set_typeMesure(f.get_typeMesure().get_id())
-    #     db.session.commit()
-    #     return redirect(url_for(
-    #         "capteur_info",
-    #         id    = f.get_id()))
-    # return render_template(
-    #     "addCapteur.html",
-    #     title = a.get_name()+" - edit",
-    #     form  = f)
+    f = PlanteForm()
+    a = get_Plante(f.get_id())
+    if f.validate_on_submit():
+        a.set_name(f.get_name())
+        a.set_num(f.get_phoneNumber())
+        a.set_interval(f.get_interval())
+        if a.get_parterre() != f.get_parterre().get_id():
+            a.set_parterre(f.get_parterre().get_id())
+        if a.get_typeMesure() != f.get_typeMesure().get_id():
+            a.set_typeMesure(f.get_typeMesure().get_id())
+        db.session.commit()
+        return redirect(url_for(
+            "capteur_info",
+            id    = f.get_id()))
+    return render_template(
+        "addCapteur.html",
+        title = a.get_name()+" - edit",
+        form  = f)
+
+@app.route("/Plante/info/<int:id>")
+def plante_info(id):
+    plante = get_plante(id)
+    return render_template(
+        "plante-info.html",
+        plante = plante,
+        title = plante.get_name(),
+        parterre = get_parterre(plante.get_parterre()))
+
+@app.route("/Supprimer/Plante/<int:id>")
+def delete_plante(id):
+    pass
+
+@app.route("/Modifier/Plante/<int:id>")
+def edit_plante(id):
+    pass

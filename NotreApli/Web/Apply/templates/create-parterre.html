@@ -1,4 +1,11 @@
 {% extends "header.html" %}
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="https://openlayers.org/en/v4.5.0/css/ol.css" type="text/css">
+<!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+<script src="https://openlayers.org/en/v4.5.0/build/ol.js"></script>
+{% endblock %}
 {% block main %}
 <h1> {{ title }} </h1>
 <form class  = "form-horizontal"
@@ -18,13 +25,8 @@
     {{ form.nomP(size = 50,
                  class_ = "form-control") }}
 
-    {{ form.lieuGeoPX.label }}
-    {{ form.lieuGeoPX(size = 50,
-                 class_ = "form-control") }}
 
-    {{ form.lieuGeoPY.label }}
-    {{ form.lieuGeoPY(size = 50,
-                 class_ = "form-control") }}
+  <div id="map" class="col-md-8 map"></div>
   </div>
 {% if form.nomP.errors %}
 <ul class = "list-group">
@@ -33,10 +35,66 @@
   {% endfor %}
 </ul>
 {% endif %}
+<div id="coords" class="col-md-8 map"></div>
 <input class = "btn btn-default"
         type ="submit"
         value = "Enregistrer">
 </form>
+{% endblock %}
 
 
+
+{% block scripts %}
+{{super()}}
+<script>
+var raster = new ol.layer.Tile({
+  source: new ol.source.OSM()
+});
+var source = new ol.source.Vector({wrapX: false});
+var vector = new ol.layer.Vector({
+  source: source
+});
+var map = new ol.Map({
+  layers: [raster, vector],
+  target: 'map',
+  view: new ol.View({
+    center: [214408, 6080900],
+    zoom: 15
+  })
+});
+var draw;
+function addInteraction() {
+    draw = new ol.interaction.Draw({
+      source: source,
+      type: /** @type {ol.geom.GeometryType} */ ('Polygon')
+    });
+    draw.on('drawstart', e=>{ source.clear(); document.getElementById("formulaire")} )
+    draw.on('drawend',
+     e => {
+       console.log(e.feature.getGeometry().getCoordinates());
+       let coords_node = document.getElementById("coords");
+
+       while (coords_node.firstChild) {
+         coords_node.removeChild(coords_node.firstChild);
+       }
+       for(coord of e.feature.getGeometry().getCoordinates()[0])
+       {
+         let elem = document.createElement("input")
+         elem.value=coord[0];
+         elem.name="latitudes";
+         elem.type="hidden"
+         coords_node.appendChild(elem);
+         elem = document.createElement("input")
+         elem.value=coord[1];
+         elem.name="longitudes";
+         elem.type="hidden"
+         coords_node.appendChild(elem);
+        // map.removeInteraction(draw);
+       }
+
+    } );
+    map.addInteraction(draw);
+}
+addInteraction();
+</script>
 {% endblock %}

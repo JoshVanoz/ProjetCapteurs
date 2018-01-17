@@ -1,0 +1,22 @@
+.contact{
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+
+}
+.trois{
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
+
+
+}
+.troisbis{
+  display: flex;
+  flex-direction: row;
+  list-style-type: none;
+
+
+}

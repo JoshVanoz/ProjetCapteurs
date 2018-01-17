@@ -11,8 +11,8 @@ class LoginForm(FlaskForm):
     Login formular. Used to connect an user to the application.
     """
 
-    username = StringField("Username")
-    password = PasswordField("Password")
+    username = StringField("Pseudo")
+    password = PasswordField("Mot de passe")
     next     = HiddenField()
 
     def get_id(self):
@@ -39,9 +39,9 @@ class LoginForm(FlaskForm):
 
 class InscriptionForm(FlaskForm):
 
-    username = StringField("Username")
-    password = PasswordField("Password")
-    confirm  = PasswordField("Confirm password")
+    username = StringField("Pseudo")
+    password = PasswordField("Mot de passe")
+    confirm  = PasswordField("Confirmation")
     nom      = StringField("Nom")
     prenom   = StringField("Prénom")
 
@@ -70,9 +70,9 @@ class CapteurForm(FlaskForm):
     """
 
     id           = HiddenField('id')
-    name         = StringField('Nom', validators = [DataRequired()])
-    intervalTime = IntegerField('Intervalle temps')
-    phoneNumber  = StringField('Numéro de téléphone')
+    name         = StringField('Nom : ', validators = [DataRequired()])
+    intervalTime = IntegerField('Intervalle temps : ')
+    phoneNumber  = StringField('Numéro de téléphone : ')
     TypeMesure   = QuerySelectField("Type de mesure mesurée :", query_factory = lambda : get_typeMesures())
     parterre     = QuerySelectField("Parterre associé :", query_factory = lambda : get_parterres())
     next         = HiddenField()
@@ -119,8 +119,6 @@ class ParterreForm(FlaskForm):
 
     id        = HiddenField('id')
     nomP      = StringField('Nom', validators = [DataRequired()])
-    lieuGeoPX = FloatField('Position X')
-    lieuGeoPY = FloatField('Position Y')
     next      = HiddenField()
 
     def __init__(self, parterre=None):
@@ -128,8 +126,6 @@ class ParterreForm(FlaskForm):
         if parterre:
             self.id.data        = parterre.get_id()
             self.nomP.data      = parterre.get_name()
-            self.lieuGeoPX.data = parterre.get_coordonnees()[0]
-            self.lieuGeoPY.data = parterre.get_coordonnees()[1]
             self.next.data      = "save_parterre"
         else:
             self.next.data      = "new_parterre_saving"
@@ -139,9 +135,6 @@ class ParterreForm(FlaskForm):
 
     def get_name(self):
         return self.nomP.data
-
-    def get_coordonnees(self):
-        return (self.lieuGeoPX.data, self.lieuGeoPY.data)
 
     def get_next(self):
         return self.next.data

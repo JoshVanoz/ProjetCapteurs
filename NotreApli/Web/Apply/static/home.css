@@ -1,16 +1,17 @@
 body{
-  padding-top: 70px;
+  padding-top: 7vh;
+  background-image: url("fond.jpg");
+  background-repeat: repeat;
 }
-aside, section, h1{
+.aside, .section, .h1{
   border: solid thin black;
-  padding: 10px;
+  padding: 1vw;
 }
 .container{
-  border: solid thin black;
   display: flex;
   flex-wrap: wrap;
 }
-h1{
+.h1{
   order 1;
   width: 100%;
 }
@@ -21,12 +22,12 @@ h1{
   margin-right: 1em;
 }
 
-section{
+.section{
   order:3;
   width: 50%;
 }
 
-aside{
+.aside{
   order:4;
   flex: 1;
   margin-left: 10px;
@@ -40,5 +41,147 @@ aside{
 }
 
 .capteurs, .fleurs{
-  border: solid black;
+  border: solid black thin;
+}
+
+#login{
+  padding: 25vh 0vw 3vh 0vw;
+  margin-left: 12vw;
+}
+#login label{
+  text-align: center;
+  block-size: 2vw;
+}
+#sub{
+  padding: 20vh 0vw 3vh 0vw;
+  margin-left: 12vw;
+}
+#sub label{
+  text-align: center;
+  block-size: 2vw;
+}
+#buttonLog{
+  margin-left: 10vh;
+}
+.col-sm-offset-2{
+  text-align: center;
+  display: flex;
+}
+#buttonA{
+  flex: 1 1;
+}
+#mapInfo{
+  display: flex;
+  width: 100%;
+}
+#infoCap{
+ border: thin solid black;
+ padding: 10px;
+ height: 50vh;
+ margin: auto;
+  width: 30%;
+ flex: 0 1 1;
+}
+#mapC > #map{
+  flex: 1 1 0;
+  height: 50vh;
+  width: 100%;
+}
+.listePos{
+  height: 90%;
+  padding-top: 5vh;
+  list-style-type: none;
+  padding-left: 0;
+}
+.listePos li{
+  padding-bottom: 3vh;
+}
+.contentInfo {
+  font-size: 1.7vh;
+  text-decoration: underline;
+}
+.itemInfo{
+  padding-left: 1vw;
+  font-weight: bold;
+  font-size: 1.8vh;
+}
+#formEditCap{
+  padding: 2vh;
+  margin: auto;
+  width: 70%;
+}
+.buttonSave{
+  display: flex;
+  font-style: bold;
+}
+.buttonSave > input{
+  margin-top: 2vh;
+  margin-right: 10vw;
+  flex : 1 0;
+}
+.buttonSave > a{
+  margin-top: 2vh;
+  padding-left: 2.5vw;
+  padding-right: 2.5vw;
+  flex; 0 1;
+}
+#formEditCap label{
+  margin: 2vh;
+  font-size: large;
+  text-decoration: underline;
+}
+#divCapH1{
+  display: flex;
+  width: 100%;
+  padding 1vh;
+  border: solid thin;
+}
+#divCapH1 > h1{
+  padding: 2vh;
+  flex: 1;
+  padding-left: 3vw;
+  text-decoration: underline;
+}
+.buttonDelete{
+  display: flex;
+  flex-direction: column;
+  padding: 2vh;
+  text-align: center;
+  width: 20%;
+}
+#bDanger > input{
+  margin-bottom: 2vh;
+  padding: 1vh 2vw 1vh 2vw;
+  width: 100%
+}
+#bEdit > input{
+  padding: 1vh 2vw 1vh 2vw;
+  width: 100%
+}
+#mapInfoP{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+#infoParterre{
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  width: 100%;
+
+}
+#mapP >#map{
+  height: 50vh;
+  width: 100%;
+  margin-top: 2vh;
+}
+#infoParterre > .capteurs, .fleurs{
+  flex: 1;
+  height: 20vh;
+  margin: auto;
+  margin: 0.2vw;
+}
+.capteurs>h4, .fleurs >h4{
+  margin-left: 1vw;;
+  text-decoration: underline;
 }

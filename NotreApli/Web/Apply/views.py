@@ -11,7 +11,7 @@ from flask_login import login_user,current_user, logout_user, login_required
 def home():
     return render_template(
         "home.html",
-        title = "Hello World!")
+        title = "Capteurs")
 
 @app.route("/Parterre/")
 def parterre():
@@ -173,11 +173,23 @@ def add_Parterre():
 def new_parterre_saving():
     f = ParterreForm()
     if f.validate_on_submit():
-        o = Parterre(
-            name = f.get_name(),
-            x = f.get_coordonnees()[0],
-            y = f.get_coordonnees()[1])
+        o = Parterre(name = f.get_name())
         db.session.add(o)
+        form = request.form
+        longitudes = form.getlist("longitudes")
+        latitudes  = form.getlist("latitudes")
+        num = 0
+        for longitude,latitude in zip(longitudes, latitudes):
+            c = Coordonnees(x        = longitude,
+                            y        = latitude,
+                            parterre = o.get_id(),
+                            num      = num)
+            num = num+1
+            try:
+                o.add_coordonnee(c)
+                db.session.commit()
+            except Exception as e:
+                db.session.rollback()
         db.session.commit()
         return redirect(url_for('parterre_info', id = o.get_id()))
     return render_template(
@@ -229,11 +241,21 @@ def save_parterre():
     a = get_parterre(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())
-        a.set_X(f.get_coordonnees()[0])
-        a.set_Y(f.get_coordonnees()[1])
+        a.remove_coordonnees()
         db.session.commit()
-        return redirect(url_for("parterre_info",
-                id = a.get_id()))
+        form = request.form
+        longitudes = form.getlist("longitudes")
+        latitudes  = form.getlist("latitudes")
+        num = 0
+        for longitude,latitude in zip(longitudes, latitudes):
+            c = Coordonnees(x        = longitude,
+                            y        = latitude,
+                            parterre = a.get_id(),
+                            num      = num)
+            num = num+1
+            a.add_coordonnee(c)
+        db.session.commit()
+        return redirect(url_for("parterre_info", id = a.get_id()))
     return render_template("create-parterre.html",
                 title= parterre.get_name()+"  - edit",
                 form = f)
@@ -244,6 +266,7 @@ def delete_parterre(id):
     bac = get_bac_a_sable()
     for capteur in a.get_capteurs():
         capteur.set_parterre(bac.get_id())
+    a.remove_coordonnees()
     db.session.delete(a)
     db.session.commit()
     return redirect(url_for("parterre"))

@@ -1,56 +1,61 @@
 {% extends "header.html" %}
 {% block main %}
-<h1> {{title}} </h1>
-<form class  = "form-horizontal"
-      role = "form"
-      method = "POST"
-      action = "{{ url_for(form.get_next()) }}">
+<h1 class="h1"> {{title}} </h1>
+<div class="row" id="formEditCap">
+  <form class  = "form-horizontal"
+        role = "form"
+        method = "POST"
+        action = "{{ url_for(form.get_next()) }}">
 
-  {{ form.hidden_tag() }}
-  <div class=
-       {% if form.name.errors %}
-       "form-creation has-errors"
-       {% else %}
-       "form-creation"
-       {% endif %}
-       >
-    {{ form.name.label }}
-    {{ form.name(size = 50,
-                 class_ = "form-control") }}
+    {{ form.hidden_tag() }}
+    <div class=
+         {% if form.name.errors %}
+         "form-creation has-errors"
+         {% else %}
+         "form-creation"
+         {% endif %}
+         >
+      {{ form.name.label }}
+      {{ form.name(size = 50,
+                   class_ = "form-control") }}
 
-    {{ form.phoneNumber.label }}
-    {{ form.phoneNumber(size = 50,
-                 class_ = "form-control") }}
+      {{ form.phoneNumber.label }}
+      {{ form.phoneNumber(size = 50,
+                   class_ = "form-control") }}
 
-    {{ form.TypeMesure.label }}
-    {{ form.TypeMesure(size = 50,
-                 class_ = "form-control") }}
+      {{ form.TypeMesure.label }}
+      {{ form.TypeMesure(size = 5,
+                   class_ = "form-control") }}
 
-    {{ form.intervalTime.label }}
-    {{ form.intervalTime(size = 50,
-                 class_ = "form-control") }}
+      {{ form.intervalTime.label }}
+      {{ form.intervalTime(size = 5,
+                   class_ = "form-control") }}
 
-    {{ form.parterre.label }}
-    {{ form.parterre(size = 50,
-                 class_ = "form-control") }}
-  </div>
-{% if form.name.errors %}
-<ul class = "list-group">
-  {% for e in form.name.errors %}
-  <li class="list-group-item list-group-item-danger">{{ e }}</li>
-  {% endfor %}
-</ul>
-{% elif form.phoneNumber.errors %}
-    <ul class = "list-group">
-    {% for e in form.phoneNumber.errors %}
-      <li class = "list-group-item list-group-item-danger">{{ e }}</li>
+      {{ form.parterre.label }}
+      {{ form.parterre(size = 5,
+                   class_ = "form-control") }}
+    </div>
+  {% if form.name.errors %}
+  <ul class = "list-group">
+    {% for e in form.name.errors %}
+    <li class="list-group-item list-group-item-danger">{{ e }}</li>
     {% endfor %}
-    </ul>
-{% endif %}
-<input class = "btn btn-default"
-        type ="submit"
-        value = "Enregistrer">
-</form>
+  </ul>
+  {% elif form.phoneNumber.errors %}
+      <ul class = "list-group">
+      {% for e in form.phoneNumber.errors %}
+        <li class = "list-group-item list-group-item-danger">{{ e }}</li>
+      {% endfor %}
+      </ul>
+  {% endif %}
+  <div class="buttonSave">
+    <input class = "btn btn-success"
+          type ="submit"
+          value = "Enregistrer">
+    <a href="{{ url_for('capteur')}}" class = "btn btn-danger">Annuler</a>
+  </div>
+  </form>
+</div>
 
 
 {% endblock %}

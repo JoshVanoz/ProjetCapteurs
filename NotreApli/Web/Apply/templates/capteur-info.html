@@ -1,5 +1,13 @@
 {% extends "header.html" %}
 
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="https://openlayers.org/en/v4.5.0/css/ol.css" type="text/css">
+<!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+<script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+<script src="https://openlayers.org/en/v4.5.0/build/ol.js"></script>
+{% endblock %}
+
 {% block main %}
 <h1>Mon capteur : {{ capteur.get_name() }} </h1>
 <div>
@@ -18,9 +26,81 @@
       <input class = "btn btn-danger" type = "submit" value = "Supprimer">
     </a>
 
-  <a href = "{{ url_for('edit_capteur', id = capteur.get_id()) }}">
-    <input class = "btn btn-default" type = "submit" value = "Modifier">
-  </a>
-</div>
+<h1 class="h1">Mon capteur : {{ capteur.get_name() }} </h1>
+<div id="mapInfo">
+  <div class="row" id="infoCap">
+    <ul class="listePos">
+      <li><span class="contentInfo">Lieu géolocalisation en X :</span> <span class="itemInfo">{{ capteur.get_coordonnees()[0] }}</span></li>
+      <li><span class="contentInfo">Lieu géolocalisation en Y :</span> <span class="itemInfo">{{ capteur.get_coordonnees()[1] }}</span> </li>
+      <li><span class="contentInfo">Niveau de batterie :</span> <span class="itemInfo">{{ capteur.get_lvlBattery() }}</span> </li>
+      <li><span class="contentInfo">Date Placement :</span> <span class="itemInfo">{{ capteur.get_date() }}</span> </li>
+      <li><span class="contentInfo">Type de Mesure :</span> <span class="itemInfo">{{ mesure.get_name() }}</span> </li>
+      <li><span class="contentInfo">Parterre associé :</span> <span class="itemInfo">{{ parterre.get_name() }}</span> </li>
+    </ul>
+    <div id="button">
+      <a href = "{{ url_for('delete_cap', id = capteur.get_id()) }}">
+        <input class = "btn btn-danger" type = "submit" value = "Supprimer">
+      </a>
+      <a href = "{{ url_for('edit_capteur', id = capteur.get_id()) }}">
+        <input class = "btn btn-default" type = "submit" value = "Modifier">
+      </a>
+    </div>
+  </div>
+  <div id="mapC">
+    <div id="map" class="col-md-8 map"></div>
+  </div>
+  {% endblock %}
 
+  {% block scripts %}
+  {{super()}}
+  <script>
+  var imageStyle = new ol.style.Style({
+          image: new ol.style.Circle({
+                radius: 5,
+                snapToPixel: false,
+                fill: new ol.style.Fill({
+                color: [0 , 0 , 255, 0.2]
+            }),
+            stroke: new ol.style.Stroke({
+                color: [0 , 0 , 255 , 1],
+                width: 1
+            })
+      })
+  });
+   var coordonnee = [{{capteur.get_coordonnees()[0]}},{{capteur.get_coordonnees()[1]}}];
+   var zoom = 9;
+   var attribution = new ol.control.Attribution({
+    collapsible: false
+  });
+
+  var map = new ol.Map({
+    controls: ol.control.defaults({ attribution: false }).extend([attribution]),
+    target: 'map',
+    view: new ol.View({
+        center: ol.proj.fromLonLat(coordonnee),
+      zoom: zoom
+    })
+  });
+  var layer = new ol.layer.Tile({
+    source: new ol.source.OSM()
+  });
+  map.addLayer(layer);
+  function transform_geometry(element) {
+    var current_projection = new ol.proj.Projection({ code: "EPSG:4326" });
+    var new_projection = layer.getSource().getProjection();
+    element.getGeometry().transform(current_projection, new_projection);
+  }
+  var point = new ol.geom.Point(coordonnee, 'XY');
+  var point_feature = new ol.Feature ( point );
+  point_feature.setStyle(imageStyle);
+  var features = [ point_feature];
+  features.forEach(transform_geometry);
+  var layer_point = new ol.layer.Vector({
+    source: new ol.source.Vector( {
+      features: features
+    })
+  });
+  map.addLayer(layer_point);
+  </script>
+</div>
 {% endblock %}

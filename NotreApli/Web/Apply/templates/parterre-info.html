@@ -69,7 +69,7 @@
                   'type': 'Polygon',
                   'coordinates': [[
                     {% for coord in parterre.coordonnees %}
-                      [ {{ coord.latitude}}, {{coord.longitude}}],
+                      [ {{ coord.get_Y()}}, {{coord.get_X()}}],
                     {% endfor %}
                   ]]
                 },

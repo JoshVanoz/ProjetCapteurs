@@ -8,7 +8,9 @@
         <select name = "del">
           <option value = "">Faites votre choix</option>
           {% for parterre in liste %}
-            <option value = "{{ parterre.get_id() }}">{{ parterre.get_name() }}</option>
+            {% if parterre.get_name() != "Bac à sable" %}
+              <option value = "{{ parterre.get_id() }}">{{ parterre.get_name() }}</option>
+            {% endif %}
           {% endfor %}
         </select>
         <input class = "btn btn-danger" id="Supprimer"

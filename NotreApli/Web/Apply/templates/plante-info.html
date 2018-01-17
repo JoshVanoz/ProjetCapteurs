@@ -10,24 +10,21 @@
 
 {% block main %}
 <h1 class="h1">Ma plante : {{ plante.get_name() }} </h1>
-<div id="mapInfo">
-  <div class="row" id="infoCap">
-    <ul class="listePos">
-      <li><span class="contentInfo"> Comportement :</span> <span class="itemInfo">{{ plante.get_comportement() }}</span></li>
-      <li><span class="contentInfo"> Taux d'humidité nécessaire :</span> <span class="itemInfo">{{ plante.get_taux_humidite() }}</span> </li>
-      <li><span class="contentInfo"> Quantité :</span> <span class="itemInfo">{{ plante.get_quantite() }}</span> </li>
-      <li><span class="contentInfo"> Situé dans le parterre :</span> <span class="itemInfo">{{ parterre.get_name() }}</span> </li>
-    </ul>
-    <div id="button">
-      <a href = "{{ url_for('delete_plante', id = plante.get_id()) }}">
-        <input class = "btn btn-danger" type = "submit" value = "Supprimer">
-      </a>
-      <a href = "{{ url_for('edit_plante', id = plante.get_id()) }}">
-        <input class = "btn btn-default" type = "submit" value = "Modifier">
-      </a>
-    </div>
+<div class="row" id="infoPlante">
+  <ul class="listePos" id="listePlante">
+    <li><span class="contentInfo"> Comportement :</span> <span class="itemInfo">{{ plante.get_comportement() }}</span></li>
+    <li><span class="contentInfo"> Taux d'humidité nécessaire :</span> <span class="itemInfo">{{ plante.get_taux_humidite() }}</span> </li>
+    <li><span class="contentInfo"> Quantité :</span> <span class="itemInfo">{{ plante.get_quantite() }}</span> </li>
+    <li><span class="contentInfo"> Situé dans le parterre :</span> <span class="itemInfo">{{ parterre.get_name() }}</span> </li>
+  </ul>
+  <div id="button">
+    <a href = "{{ url_for('delete_plante', id = plante.get_id()) }}" id="planteDelete">
+      <input class = "btn btn-danger" type = "submit" value = "Supprimer">
+    </a>
+    <a href = "{{ url_for('edit_plante', id = plante.get_id()) }}" id="planteEdit">
+      <input class = "btn btn-default" type = "submit" value = " Modifier ">
+    </a>
+    <a href="{{ url_for('parterre')}}" class = "btn btn-default" id="planteCancel" >Annuler</a>
   </div>
-  <div id="mapC">
-    <div id="map" class="col-md-8 map"></div>
-  </div>
+</div>
   {% endblock %}

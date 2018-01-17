@@ -274,3 +274,33 @@ body{
   padding-top: 2vh;
   text-decoration: underline;
 }
+#infoPlante{
+  width: 100%;
+  padding-left: 5vw;
+  margin: auto;
+  border: thin solid;
+  display: flex;
+}
+#listePlante{
+  flex: 1;
+}
+#button{
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+#planteDelete, #planteEdit,#planteCancel{
+  margin: auto;
+  width: 60%;
+}
+#planteEdit > input,#planteDelete > input{
+  padding: 1vw 2vw;
+  width: 100%;
+}
+#planteCancel{
+  background-color: whitesmoke;
+}
+#planteCancel:hover{
+  background-color: white;
+}

@@ -231,3 +231,20 @@ body{
 #return:hover{
   background-color: white;
 }
+#Suppr{
+  text-align: center;
+  margin:auto;
+  width:100%;
+}
+#Suppr > form{
+  display: flex;
+  flex-direction: column;
+}
+.del{
+  text-align: center;
+
+}
+#Supprimer{
+  text-align: center;
+  width:100%;
+}

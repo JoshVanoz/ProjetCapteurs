@@ -1,46 +1,74 @@
 {% extends "header.html" %}
+{% block head %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static',filename='contact.css')}}" >
+{% endblock %}
 
 {% block main %}
-<ul class = "contacts">
-  <li class = "contacts-item">
-    <img class  = "img-circle"
-         src    = "{{ url_for('static', filename = 'artiste_circle.png') }}"
-         alt    = "Generic placeholder image"
-         width  = "140"
-         height = "140">
-    <p>Pierre Lemiere</p>
-  </li>
-  <li class = "contacts-item">
-    <img class  = "img-circle"
-         src    = "{{ url_for('static', filename = 'artiste_circle.png') }}"
-         alt    = "Generic placeholder image"
-         width  = "140"
-         height = "140">
-    <p>Maxime Deboffle</p>
-  </li>
-  <li class = "contacts-item">
-    <img class  = "img-circle"
-         src    = "{{ url_for('static', filename = 'artiste_circle.png') }}"
-         alt    = "Generic placeholder image"
-         width  = "140"
-         height = "140">
-    <p>Florian Thomas</p>
-  </li>
-  <li class = "contacts-item">
-    <img class  = "img-circle"
-         src    = "{{ url_for('static', filename = 'artiste_circle.png') }}"
-         alt    = "Generic placeholder image"
-         width  = "140"
-         height = "140">
-    <p>Tanguy Voiry</p>
-  </li>
-  <li class = "contacts-item">
-    <img class  = "img-circle"
-         src    = "{{url_for('static', filename = 'artiste_circle.png') }}"
-         alt    = "Generic placeholder image"
-         width  = "140"
-         height = "140">
-    <p>Joshua Vanneau</p>
+
+<ul class = "contact">
+  <li>
+    <ul class ="trois">
+    <li class = "contacts-item">
+      <img class  = "img-circle"
+           src    = "{{ url_for('static', filename = 'artiste_circle.png') }}"
+           alt    = "Generic placeholder image"
+           width  = "140"
+           height = "140">
+      <p> pierre.lemiere@etu.univ-orleans.fr </p>
+      <p>Pierre Lemiere</p>
+    </li>
+    <li class = "contacts-item">
+      <img class  = "img-circle"
+           src    = "{{ url_for('static', filename = 'artiste_circle.png') }}"
+           alt    = "Generic placeholder image"
+           width  = "140"
+           height = "140">
+      <p> maxime.deboffle@etu.univ-orleans.fr </p>
+      <p>Maxime Deboffle</p>
+    </li>
+    <li class = "contacts-item">
+      <img class  = "img-circle"
+           src    = "{{ url_for('static', filename = 'artiste_circle.png') }}"
+           alt    = "Generic placeholder image"
+           width  = "140"
+           height = "140">
+      <p> florian.thomas@etu.univ-orleans.fr</p>
+      <p>Florian Thomas</p>
+    </li>
   </li>
 </ul>
+
+  <li>
+    <ul class="troisbis">
+      <li class = "contacts-item">
+        <img class  = "img-circle"
+             src    = "{{ url_for('static', filename = 'artiste_circle.png') }}"
+             alt    = "Generic placeholder image"
+             width  = "140"
+             height = "140">
+        <p> tanguy.voiry@etu.univ-orleans.fr </p>
+        <p>Tanguy Voiry</p>
+      </li>
+      <li class = "contacts-item">
+        <img class  = "img-circle"
+             src    = "{{url_for('static', filename = 'artiste_circle.png') }}"
+             alt    = "Generic placeholder image"
+             width  = "140"
+             height = "140">
+        <p> joshua.vanneau@etu.univ-orleans.fr </p>
+        <p>Joshua Vanneau</p>
+      </li>
+      <li class = "contacts-item">
+        <img class  = "img-circle"
+             src    = "{{url_for('static', filename = 'artiste_circle.png') }}"
+             alt    = "Generic placeholder image"
+             width  = "140"
+             height = "140">
+        <p> zephyr.redin@etu.univ-orleans.fr </p>
+        <p>Zephyr Redin</p>
+      </li>
+    </ul>
+:  </li>
+<ul>
 {% endblock %}

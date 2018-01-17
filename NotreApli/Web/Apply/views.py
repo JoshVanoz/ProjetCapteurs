@@ -11,7 +11,7 @@ from flask_login import login_user,current_user, logout_user, login_required
 def home():
     return render_template(
         "home.html",
-        title = "Hello World!")
+        title = "Capteurs")
 
 @app.route("/Parterre/")
 def parterre():

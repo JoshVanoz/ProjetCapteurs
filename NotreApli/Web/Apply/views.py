@@ -266,6 +266,7 @@ def delete_parterre(id):
     bac = get_bac_a_sable()
     for capteur in a.get_capteurs():
         capteur.set_parterre(bac.get_id())
+    a.remove_coordonnees()
     db.session.delete(a)
     db.session.commit()
     return redirect(url_for("parterre"))

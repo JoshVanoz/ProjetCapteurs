@@ -304,9 +304,27 @@ body{
 #planteCancel:hover{
   background-color: white;
 }
+.fleurs, .capteurs{
+  display: flex;
+  flex-direction: column;
+}
+.fleurs >div, .capteurs >div{
+  display: flex;
+}
 .listeP{
   list-style-type: none;
+  flex: 1;
 }
 .listeP a{
-  width: 50%;
+  width: 80%;
+  font-size: 1.5vh;
+}
+#addflower, #addC{
+  margin-right: 2vh;
+  margin-top: 1vh;
+  background-color: whitesmoke;
+}
+
+#addflower:hover, #addC:hover{
+  background-color: white;
 }

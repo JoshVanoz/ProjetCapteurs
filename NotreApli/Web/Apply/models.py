@@ -142,6 +142,7 @@ class TypePlante(db.Model):
     taux_humidite = db.Column(db.Float)
     quantite = db.Column(db.Integer)
     parterre_id = db.Column(db.Integer, db.ForeignKey("parterre.idP"))
+    
 
     def __repr__(self):
         return "<TypePlante (%d) %s>" % (self.nomPlant)

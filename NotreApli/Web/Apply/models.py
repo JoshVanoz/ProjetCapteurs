@@ -49,10 +49,10 @@ association_parterre_capteur = db.Table("association_parterre_capteur",
                                         db.Column("capteur_id", db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True))
 
 class Coordonnees(db.Model):
-    longitude   = db.Column(db.Float, primary_key = True)
-    latitude    = db.Column(db.Float, primary_key = True)
+    longitude   = db.Column(db.Float)
+    latitude    = db.Column(db.Float)
     id_parterre = db.Column(db.Integer, db.ForeignKey("parterre.idP"), primary_key = True)
-    numero      = db.Column(db.Integer)
+    numero      = db.Column(db.Integer, primary_key = True)
 
     def __init__(self, x, y, parterre, num):
         self.longitude = x
@@ -104,9 +104,11 @@ class Parterre(db.Model):
     def set_name(self,nomP):
         self.nomP = nomP
 
-    def remove_coordonnees(self, listeTuples):
+    def remove_coordonnees(self):
         for coord in self.get_coordonnees():
+            self.coordonnees.remove(coord)
             db.session.delete(coord)
+            db.session.commit()
 
     def add_coordonnee(self, coord):
         self.coordonnees.append(coord)

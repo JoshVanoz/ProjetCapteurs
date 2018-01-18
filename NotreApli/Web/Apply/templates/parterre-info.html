@@ -12,9 +12,21 @@
   <h1>{{ parterre.get_name() }}</h1>
   {% if parterre.get_name()!= "Bac à sable" %}
     <div class="buttonDelete">
-      <a href = "{{ url_for('delete_parterre', id = parterre.get_id()) }}" id="bDanger">
-        <input class = "btn btn-danger" type = "submit" value = "Supprimer" button onclick="myFunction()">
-      </a>
+      <div class="">
+        <a href="#popup1" class="btn btn-danger" id="bDanger">Supprimer</a>
+      </div>
+
+        <div id="popup1" class = "overlay">
+            <div class = "popup">
+              <h2> Etes-vous sûr de vouloir supprimer ce parterre ? </h2>
+              <p> Cette action le supprimera définitivement</p>
+              <a href="#">
+                <button type="button" class="btn btn-default">Annuler</button>
+              </a>
+              <a href = "{{ url_for('delete_parterre', id = parterre.get_id()) }}" class="btn btn-danger">Supprimer
+              </a>
+            </div>
+        </div>
       <a href = "{{ url_for('edit_parterre', id = parterre.get_id()) }}" id="bEdit">
         <input class = "btn btn-default" type = "submit" value = "Modifier">
       </a>
@@ -105,18 +117,7 @@
       });
 
 </script>
-<p id="pop"></p>
-<script>
-function myFunction() {
-    var txt;
-    if (confirm("Voulez vous vraimment le supprimer ?") == true) {
-        txt = "Le capteur est supprimé!";
-    } else {
-        txt = "Non supprimé!";
-    }
-    document.getElementById("pop").innerHTML = txt;
-}
-</script>
+
 
 </div>
 {% endblock %}

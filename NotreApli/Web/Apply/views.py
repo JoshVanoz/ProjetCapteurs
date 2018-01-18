@@ -102,6 +102,13 @@ def capteur_info(id):
         parterre = get_parterre(capteur.get_parterre()),
         mesure   = get_typeMesure(capteur.get_typeMesure()))
 
+@app.route("/Capteur/info/Relever/<int:id>")
+def capteur_info_relever(id):
+    capteur = get_capteur(id)
+    return render_template(
+        "relever-capteur.html",
+        capteur  = capteur,)
+
 @app.route("/Ajouter/Capteur/")
 @login_required
 def add_Capteur():

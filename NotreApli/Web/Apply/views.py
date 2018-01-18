@@ -179,6 +179,7 @@ def delete_part():
                 title = "Supprimer un parterre")
         else:
             a = get_parterre(int(request.form['del']))
+            a.clear_datas()
             db.session.delete(a)
             db.session.commit()
     return render_template(
@@ -223,7 +224,6 @@ def new_parterre_saving():
             num = num+1
             try:
                 o.add_coordonnee(c)
-                db.session.commit()
             except Exception as e:
                 db.session.rollback()
         db.session.commit()
@@ -277,7 +277,6 @@ def save_parterre():
     a = get_parterre(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())
-        db.session.commit()
         form = request.form
         longitudes = form.getlist("longitudes")
         if longitudes != []:
@@ -304,6 +303,7 @@ def delete_parterre(id):
     for capteur in a.get_capteurs():
         capteur.set_parterre(bac.get_id())
     a.remove_coordonnees()
+    a.clear_datas()
     db.session.delete(a)
     db.session.commit()
     return redirect(url_for("parterre"))

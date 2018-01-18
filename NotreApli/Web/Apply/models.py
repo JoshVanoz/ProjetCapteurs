@@ -120,7 +120,6 @@ class Parterre(db.Model):
         for coord in self.get_coordonnees():
             self.coordonnees.remove(coord)
             db.session.delete(coord)
-            db.session.commit()
 
     def add_coordonnee(self, coord):
         self.coordonnees.append(coord)
@@ -138,6 +137,11 @@ class Parterre(db.Model):
     def delete_plante(self, plante):
         if plante in self.plantes:
             self.plantes.remove(plante)
+
+    def clear_datas(self):
+        liste = Donnee.query.filter(Donnee.idParterre == self.idP)
+        for donnee in liste:
+            db.session.delete(donnee)
 
 class TypePlante(db.Model):
     idPlant  = db.Column(db.Integer, primary_key=True)

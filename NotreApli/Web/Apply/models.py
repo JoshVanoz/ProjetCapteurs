@@ -143,6 +143,12 @@ class TypePlante(db.Model):
     quantite = db.Column(db.Integer)
     parterre_id = db.Column(db.Integer, db.ForeignKey("parterre.idP"))
 
+    def __init__(self, nomPlant, comportement, taux_humidite, quantite, parterre_id):
+        self.nomPlant      = nomPlant
+        self.comportement  = comportement
+        self.taux_humidite = taux_humidite
+        self.quantite      = quantite
+        self.parterre_id   = parterre_id
 
     def __repr__(self):
         return "<TypePlante (%d) %s>" % (self.nomPlant)

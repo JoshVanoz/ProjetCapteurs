@@ -1,0 +1,58 @@
+{% extends "header.html" %}
+{% block head %}
+{{ super() }}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{% endblock %}
+{% block main %}
+<h1 class="h1">Relevé du capteur : {{ capteur.get_name() }}</h1>
+<div class="row" id="graph">
+  <script>
+
+  (function() {
+  var d3 = Plotly.d3;
+
+  var WIDTH_IN_PERCENT_OF_PARENT = 30,
+      HEIGHT_IN_PERCENT_OF_PARENT = 40;
+
+  var gd3 = d3.select('body')
+      .append('div')
+      .style({
+          width: WIDTH_IN_PERCENT_OF_PARENT + '%',
+          'margin-left': (100 - WIDTH_IN_PERCENT_OF_PARENT) / 2 + '%',
+
+          height: HEIGHT_IN_PERCENT_OF_PARENT + 'vh',
+          'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
+      });
+
+  var gd = gd3.node();
+
+  Plotly.plot(gd, [{
+      type: 'bar',
+      x: [1, 2, 3, 4],
+      y: [5, 10, 2, 8],
+      marker: {
+          color: '#cyan',
+          line: {
+              width: 2.5
+          }
+      }
+  }], {
+      title: 'Relevé Humidité',
+      font: {
+          size: 16
+      }
+  });
+
+  window.onresize = function() {
+      Plotly.Plots.resize(gd);
+    };
+
+    })();
+    </script>
+</div>
+<div class="info">
+  <h2>Tableau</h2>
+</div>
+
+
+{% endblock %}

@@ -43,8 +43,8 @@
       <div>
         <ul class="listeP">
           {% for capteur in parterre.get_capteurs() %}
-            <li><a href="{{ url_for('capteur_info', id = capteur.get_id()) }}" class="btn btn-default buttonliste">{{ capteur.get_name() }}</li>
-            {% endfor %}
+            <li><a href="{{ url_for('capteur_info', id = capteur.get_id()) }}" class="btn btn-default buttonliste">{{ capteur.get_name() }}</a></li>
+          {% endfor %}
         </ul>
         <div>
           <a href="{{ url_for('add_Capteur')}}" class="btn btn-default" id="addC">Ajouter un capteur</a>

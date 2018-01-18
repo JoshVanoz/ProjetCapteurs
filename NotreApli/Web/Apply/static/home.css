@@ -133,8 +133,8 @@ body{
 .divCapH1{
   display: flex;
   width: 100%;
-  padding 1vh;
   border: solid thin;
+  margin-bottom: 1vh;
 }
 .divCapH1 > h1{
   padding: 2vh;

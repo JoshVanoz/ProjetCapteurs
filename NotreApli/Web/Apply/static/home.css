@@ -80,10 +80,13 @@ body{
  height: 50vh;
  margin: auto;
   width: 35%;
- flex: 0 1 1;
+ flex: 0 1 2;
+}
+#mapC{
+  flex: 1 1 0;
+  width: 50%;
 }
 #mapC > #map{
-  flex: 1 1 0;
   height: 50vh;
   width: 100%;
 }

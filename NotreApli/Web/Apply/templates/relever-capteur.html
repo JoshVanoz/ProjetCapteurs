@@ -7,6 +7,15 @@
 <h1 class="h1">Relevé du capteur : {{ capteur.get_name() }}</h1>
 <div class="info">
   <h2>Tableau</h2>
+  <table>
+    <tr><th>Valeurs</th></tr>
+    {% for donnee in capteur.get_vals() %}
+      <tr>
+        <td>{{ donnee.get_val() }}</td>
+        <td>{{ donnee.get_date_donnee()[:10] }} | {{ donnee.get_date_donnee()[10:16]}}</td>
+      </tr>
+    {% endfor %}
+  </table>
 </div>
 <div class="row">
   <div class="graph">

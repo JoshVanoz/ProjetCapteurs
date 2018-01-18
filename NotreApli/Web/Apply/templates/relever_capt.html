@@ -1,0 +1,24 @@
+{% extends "header.html" %}
+{% block main %}
+<body>
+  <h1 class="h1">Relever d'un Capteur : </h1>
+  <div class="row" id="Capt">
+      <form method = "POST" action = "{{ url_for('capteur_info_relever',id=0) }}">
+        <h3>Veuillez selectionner un capteur :</h3>
+        <div id="relever">
+          <select name = "del" class="del">
+            <option value = "">Faites votre choix</option>
+            {% for capteur in liste %}
+              <option value = "{{ capteur.get_id() }}">{{ capteur.get_name() }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <input class = "btn btn-primary" id="Regarder"
+               type  = "submit"
+               value = "Regarder">
+      </form>
+  </div>
+</body>
+
+{% endblock %}

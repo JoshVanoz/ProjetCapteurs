@@ -1,52 +1,56 @@
 {% extends "header.html" %}
 {% block main %}
-<h1> {{ title }} </h1>
-<form class  = "form-horizontal"
-      role = "form"
-      method = "POST"
-      action = "{{ url_for(form.get_next()) }}">
+<h1 class="h1"> {{ title }} </h1>
+<div class="pl">
+  <form class  = "form-horizontal"
+        role = "form"
+        method = "POST"
+        action = "{{ url_for(form.get_next()) }}">
 
-  {{ form.hidden_tag() }}
-  <div class=
-       {% if form.nom_plante.errors %}
-       "form-creation has-errors"
-       {% else %}
-       "form-creation"
-       {% endif %}
-       >
-    {{ form.nom_plante.label }}
-    {{ form.nom_plante(size = 50,
-                 class_ = "form-control") }}
+    {{ form.hidden_tag() }}
 
-    {{ form.comportement.label }}
-    {{ form.comportement(size = 50,
-                 class_ = "form-control") }}
+    <div class=
+         {% if form.nom_plante.errors %}
+         "form-creation has-errors"
+         {% else %}
+         "form-creation"
+         {% endif %}
+         >
+      {{ form.nom_plante.label }}
+      {{ form.nom_plante(size = 50,
+                   class_ = "form-control") }}
 
-    {{ form.taux_humidite.label }}
-    {{ form.taux_humidite(size = 50,
-                 class_ = "form-control") }}
+      {{ form.comportement.label }}
+      {{ form.comportement(size = 50,
+                   class_ = "form-control") }}
 
-    {{ form.quantite.label }}
-    {{ form.quantite(size = 50,
-                 class_ = "form-control") }}
+      {{ form.taux_humidite.label }}
+      {{ form.taux_humidite(size = 50,
+                   class_ = "form-control") }}
 
-    {% if form.get_next()=="new_plante_saving" %}
-    {{ form.parterre.label }}
-    {{ form.parterre(size = 5,
-                 class_ = "form-control") }}
-    {% endif %}
-  </div>
-{% if form.nom_plante.errors %}
-<ul class = "list-group">
-  {% for e in form.nom_plante.errors %}
-  <li class="list-group-item list-group-item-danger">{{ e }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-<input class = "btn btn-default"
-        type ="submit"
-        value = "Enregistrer">
-</form>
+      {{ form.quantite.label }}
+      {{ form.quantite(size = 50,
+                   class_ = "form-control") }}
+
+      {% if form.get_next()=="new_plante_saving" %}
+      {{ form.parterre.label }}
+      {{ form.parterre(size = 5,
+                   class_ = "form-control") }}
+      {% endif %}
+    </div>
+  {% if form.nom_plante.errors %}
+  <ul class = "list-group">
+    {% for e in form.nom_plante.errors %}
+    <li class="list-group-item list-group-item-danger">{{ e }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <input class = "btn btn-success"
+          type ="submit"
+          value = "Enregistrer">
+  </form>
+</div>
+
 
 
 {% endblock %}

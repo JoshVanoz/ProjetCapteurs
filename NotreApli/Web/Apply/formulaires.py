@@ -22,6 +22,9 @@ class LoginForm(FlaskForm):
         return self.password.data
 
     def get_authenticated_user(self):
+        """
+        Tries to connect the user with informations entered
+        """
         user = load_user(self.username.data)
         if user is None:
             return None
@@ -38,6 +41,9 @@ class LoginForm(FlaskForm):
         self.next.data = newNext
 
 class InscriptionForm(FlaskForm):
+    """
+    Signing Up formular. Used to add a user in the database
+    """
 
     username = StringField("Pseudo")
     password = PasswordField("Mot de passe")
@@ -58,9 +64,15 @@ class InscriptionForm(FlaskForm):
         return self.prenom.data
 
     def uniq_Username(self):
+        """
+        Shows if the username is free
+        """
         return load_user(self.username.data) == None
 
     def passwd_confirmed(self):
+        """
+        Verify if the password is  onfirmed
+        """
         return self.password.data == self.confirm.data
 
 
@@ -116,6 +128,9 @@ class CapteurForm(FlaskForm):
 
 
 class ParterreForm(FlaskForm):
+    """
+    Parterre formular. Used to create or to modify a parterre.
+    """
 
     id        = HiddenField('id')
     nomP      = StringField('Nom', validators = [DataRequired()])
@@ -140,6 +155,9 @@ class ParterreForm(FlaskForm):
         return self.next.data
 
 class PlanteForm(FlaskForm):
+    """
+    Plante formular. Used to Create or to modify a plante
+    """
 
     id = HiddenField('id')
     nom_plante = StringField('Nom', validators = [DataRequired()])

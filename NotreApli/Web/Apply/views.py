@@ -341,7 +341,6 @@ def new_plante_saving():
 
 @app.route("/Plante/save/", methods = ("POST",))
 def save_plante():
-    pass
     f = PlanteForm()
     a = get_plante(f.get_id())
     if f.validate_on_submit():

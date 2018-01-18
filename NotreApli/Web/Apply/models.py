@@ -143,6 +143,12 @@ class TypePlante(db.Model):
     quantite = db.Column(db.Integer)
     parterre_id = db.Column(db.Integer, db.ForeignKey("parterre.idP"))
 
+    def __init__(self, nomPlant, comportement, taux_humidite, quantite, parterre_id):
+        self.nomPlant      = nomPlant
+        self.comportement  = comportement
+        self.taux_humidite = taux_humidite
+        self.quantite      = quantite
+        self.parterre_id   = parterre_id
 
     def __repr__(self):
         return "<TypePlante (%d) %s>" % (self.nomPlant)
@@ -209,6 +215,8 @@ class Capteur(db.Model):
     numTel          = db.Column(db.String(10))
     typeM_id        = db.Column(db.Integer, db.ForeignKey("type_mesure.id_typeM"))
     parterre_id     = db.Column(db.Integer, db.ForeignKey("parterre.idP"))
+    listeDonnees    = db.relationship("Donnee",
+                                      order_by = "Donnee.dateRel")
 
     def __init__(self, name, intervalle, tel, TypeMesure, parterre):
         self.nomCapt         = name
@@ -253,6 +261,9 @@ class Capteur(db.Model):
     def get_parterre(self):
         return self.parterre_id
 
+    def get_vals(self):
+        return self.listeDonnees
+
     def set_name(self,nomCapt):
         self.nomCapt = nomCapt
 
@@ -294,7 +305,12 @@ class AlesDroits(db.Model):
 class Donnee(db.Model):
     val     = db.Column(db.Float)
     dateRel = db.Column(db.DateTime, primary_key=True)
-    idCapt  = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"))
+    idCapt  = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True)
+
+    def __init__(self, value, date, capteur):
+        self.val     = value
+        self.dateRel = date
+        self.idCapt  = capteur
 
     def __repr__(self):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)

@@ -55,7 +55,7 @@
   </div>
 </div>
 <section class="footer">
-  <a href="{{ url_for('parterre') }}" class = "btn btn-default return"> Retour</a>
+  <a href="{{ url_for('capteur_info',id=capteur.get_id()) }}" class = "btn btn-default return"> Retour</a>
 </section>
 
 {% endblock %}

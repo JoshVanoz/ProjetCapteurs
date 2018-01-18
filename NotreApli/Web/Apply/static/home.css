@@ -232,17 +232,17 @@ body{
 .return:hover{
   background-color: white;
 }
-#Suppr{
+.Suppr{
   text-align: center;
   margin:auto;
   width:100%;
 }
-#Suppr > form{
+.Suppr > form{
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-#delete{
+.delete{
   background: url("arrow.png") no-repeat 98%;
    height: 5vh;
    overflow: hidden;
@@ -256,7 +256,7 @@ body{
   margin-bottom: 5vh;
   margin-top: 5vh;
 }
-#delete > select{
+.delete > select{
   background: transparent;
    border: none;
    font-size: 2vh;
@@ -265,13 +265,13 @@ body{
    width: 102%;
   color: #000;
 }
-#Supprimer{
+.Supprimer{
   text-align: center;
   margin: auto;
   width:20%;
   font-size: large;
 }
-#Suppr h3 {
+.Suppr h3 {
   padding-top: 2vh;
   text-decoration: underline;
 }

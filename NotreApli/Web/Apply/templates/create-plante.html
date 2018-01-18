@@ -30,9 +30,11 @@
     {{ form.quantite(size = 50,
                  class_ = "form-control") }}
 
+    {% if form.get_next()=="new_plante_saving" %}
     {{ form.parterre.label }}
     {{ form.parterre(size = 5,
                  class_ = "form-control") }}
+    {% endif %}
   </div>
 {% if form.nom_plante.errors %}
 <ul class = "list-group">

@@ -2,10 +2,10 @@
 {% block main %}
 <body>
   <h1 class="h1">Suppression d'un Capteur : </h1>
-  <div class="row" id="Suppr">
+  <div class="row Suppr">
       <form method = "POST" action = "{{ url_for('delete_capteur') }}">
         <h3>Veuillez selectionner un capteur :</h3>
-        <div id="delete">
+        <div class="delete">
           <select name = "del" class="del">
             <option value = "">Faites votre choix</option>
             {% for capteur in liste %}
@@ -13,7 +13,7 @@
             {% endfor %}
           </select>
         </div>
-        <input class = "btn btn-danger" id="Supprimer"
+        <input class = "btn btn-danger Supprimer"
                type  = "submit"
                value = "Supprimer">
       </form>

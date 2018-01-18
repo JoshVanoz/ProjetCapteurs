@@ -2,10 +2,10 @@
 {% block main %}
 <body>
   <h1 class="h1">Relever d'un Capteur : </h1>
-  <div class="row" id="Capt">
+  <div class="row Suppr">
       <form method = "POST" action = "{{ url_for('capteur_info_relever',id=0) }}">
         <h3>Veuillez selectionner un capteur :</h3>
-        <div id="relever">
+        <div class="delete">
           <select name = "del" class="del">
             <option value = "">Faites votre choix</option>
             {% for capteur in liste %}
@@ -14,9 +14,9 @@
           </select>
         </div>
 
-        <input class = "btn btn-primary" id="Regarder"
+        <input class = "btn btn-primary Supprimer"
                type  = "submit"
-               value = "Regarder">
+               value = "Voir les rélévés">
       </form>
   </div>
 </body>

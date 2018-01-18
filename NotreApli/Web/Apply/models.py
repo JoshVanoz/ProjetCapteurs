@@ -324,6 +324,9 @@ class Donnee(db.Model):
     def get_val(self):
         return self.val
 
+    def get_date_donnee(self):
+        return str(self.dateRel)
+
 
 def get_user(username):
     return Utilisateur.query.filter(Utilisateur.idU==username).one()

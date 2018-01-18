@@ -20,7 +20,7 @@
       <li><span class="contentInfo">Type de Mesure :</span> <span class="itemInfo">{{ mesure.get_name() }}</span> </li>
       <li><span class="contentInfo">Parterre associé :</span> <span class="itemInfo">{{ parterre.get_name() }}</span> </li>
     </ul>
-    <div id="button">
+    <div id="buttonCap">
       <a href = "{{ url_for('delete_cap', id = capteur.get_id()) }}">
         <input class = "btn btn-danger" type = "submit" value = "Supprimer">
       </a>
@@ -32,8 +32,9 @@
   <div id="mapC">
     <div id="map" class="col-md-8 map"></div>
   </div>
+</div>
   <section class="footer">
-    <a href="{{ url_for('parterre') }}" class = "btn btn-default" id="return"> Retour</a>
+    <a href="{{ url_for('parterre') }}" class = "btn btn-default return"> Retour</a>
   </section>
   {% endblock %}
 

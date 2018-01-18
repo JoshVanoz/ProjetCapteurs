@@ -1,5 +1,6 @@
 
 from .app import manager, db
+from datetime import datetime
 
 @manager.command
 def loaddb():
@@ -114,7 +115,39 @@ def loaddb():
                      parterre_id = p1.get_id())
     p1.add_plante(plante2)
 
+    donnee1 = Donnee(value   = 15,
+                     date    = datetime.strptime('Jun 18 2018  10:14AM', '%b %d %Y %I:%M%p'),
+                     capteur = capteur.get_id())
+    db.session.add(donnee1)
+
+    donnee2 = Donnee(value   = 25,
+                     date    = datetime.strptime('Jun 18 2018  11:14AM', '%b %d %Y %I:%M%p'),
+                     capteur = capteur.get_id())
+    db.session.add(donnee2)
+
+    donnee3 = Donnee(value   = 12,
+                     date    = datetime.strptime('Jun 18 2018  12:14PM', '%b %d %Y %I:%M%p'),
+                     capteur = capteur.get_id())
+    db.session.add(donnee3)
+
+    donnee4 = Donnee(value   = 3,
+                     date    = datetime.strptime('Jun 18 2018  10:14AM', '%b %d %Y %I:%M%p'),
+                     capteur = capteur2.get_id())
+    db.session.add(donnee4)
+
+    donnee5 = Donnee(value   = 42,
+                     date    = datetime.strptime('Jun 18 2018  11:14AM', '%b %d %Y %I:%M%p'),
+                     capteur = capteur2.get_id())
+    db.session.add(donnee5)
+
+    donnee6 = Donnee(value   = 36,
+                     date    = datetime.strptime('Jun 18 2018  12:14PM', '%b %d %Y %I:%M%p'),
+                     capteur = capteur2.get_id())
+    db.session.add(donnee6)
+
     db.session.commit()
+
+    donnee1 = Donnee
 
 
 @manager.command

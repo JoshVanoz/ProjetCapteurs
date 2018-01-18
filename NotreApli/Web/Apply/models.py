@@ -53,6 +53,10 @@ association_parterre_coordonnee = db.Table("association_parterre_coordonnee",
                                         db.Column("parterre_id", db.Integer, db.ForeignKey("parterre.idP"), primary_key = True),
                                         db.Column("coord_id", db.Integer, db.ForeignKey("coordonnees.coord_id"), primary_key = True))
 
+association_capteur_donnee = db.Table("association_capteur_donnee",
+                                      db.metadata,
+                                      db.Column("capteur_id", db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True),
+                                      db.Column("donnee_id", db.Integer, db.ForeignKey("donnee.idDonnee"), primary_key = True))
 class Coordonnees(db.Model):
     coord_id    = db.Column(db.Integer, primary_key = True)
     longitude   = db.Column(db.Float)
@@ -216,7 +220,10 @@ class Capteur(db.Model):
     typeM_id        = db.Column(db.Integer, db.ForeignKey("type_mesure.id_typeM"))
     parterre_id     = db.Column(db.Integer, db.ForeignKey("parterre.idP"))
     listeDonnees    = db.relationship("Donnee",
-                                      order_by = "Donnee.dateRel")
+                                      secondary = "association_capteur_donnee",
+                                      lazy = "dynamic",
+                                      backref = db.backref("donnee", lazy = "dynamic"),
+                                      order_by  = "Donnee.dateRel")
 
     def __init__(self, name, intervalle, tel, TypeMesure, parterre):
         self.nomCapt         = name
@@ -291,6 +298,13 @@ class Capteur(db.Model):
         self.parterre_id = newParterre
         get_parterre(newParterre).add_capteur(self)
 
+    def add_data(self, data):
+        self.listeDonnees.append(data)
+
+    def clear_datas(self):
+        for donnee in self.get_vals():
+            self.listeDonnees.remove(donnee)
+
 class AlesDroits(db.Model):
 
     Lecture     = db.Column(db.Boolean)
@@ -303,14 +317,16 @@ class AlesDroits(db.Model):
         return (self.idP, self.idU)
 
 class Donnee(db.Model):
-    val     = db.Column(db.Float)
-    dateRel = db.Column(db.DateTime, primary_key=True)
-    idCapt  = db.Column(db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True)
+    idDonnee    = db.Column(db.Integer, primary_key = True)
+    val         = db.Column(db.Float)
+    dateRel     = db.Column(db.DateTime)
+    idParterre  = db.Column(db.Integer, db.ForeignKey("parterre.idP"))
 
-    def __init__(self, value, date, capteur):
-        self.val     = value
-        self.dateRel = date
-        self.idCapt  = capteur
+    def __init__(self, value, date, capteur, parterre):
+        self.val        = value
+        self.dateRel    = date
+        self.idParterre = parterre
+        get_capteur(capteur).add_data(self)
 
     def __repr__(self):
         return "<Donnee (%d) %s>" % (self.idCapt, self.dateRel, self.val)

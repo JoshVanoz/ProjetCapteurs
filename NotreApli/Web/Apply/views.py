@@ -160,6 +160,7 @@ def delete_capteur():
                 title = "Supprimer un capteur")
         else:
             a = get_capteur(int(request.form['del']))
+            a.clear_datas()
             db.session.delete(a)
             db.session.commit()
     return render_template(
@@ -189,6 +190,7 @@ def delete_part():
 @login_required
 def delete_cap(id):
     capteur = get_capteur(id)
+    capteur.clear_datas()
     db.session.delete(capteur)
     db.session.commit()
     return redirect(url_for("capteur"))

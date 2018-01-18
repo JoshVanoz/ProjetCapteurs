@@ -79,7 +79,7 @@ body{
  padding: 10px;
  height: 50vh;
  margin: auto;
-  width: 30%;
+  width: 35%;
  flex: 0 1 1;
 }
 #mapC > #map{
@@ -130,13 +130,13 @@ body{
   font-size: large;
   text-decoration: underline;
 }
-#divCapH1{
+.divCapH1{
   display: flex;
   width: 100%;
-  padding 1vh;
   border: solid thin;
+  margin-bottom: 1vh;
 }
-#divCapH1 > h1{
+.divCapH1 > h1{
   padding: 2vh;
   flex: 1;
   padding-left: 3vw;
@@ -222,13 +222,14 @@ body{
 .footer{
   text-align: center;
   padding-top: 1vh;
+  width: 100%;;
 }
-#return{
+.return{
   width: 50%;
   background-color: whitesmoke;
   font-size: 1.7vh;
 }
-#return:hover{
+.return:hover{
   background-color: white;
 }
 #Suppr{
@@ -327,4 +328,13 @@ body{
 
 #addflower:hover, #addC:hover{
   background-color: white;
+}
+#buttonCap >a{
+  margin: 2vh;
+}
+#buttonCap{
+  text-align: center;
+}
+.btnReleve{
+  margin-top: 1vh;
 }

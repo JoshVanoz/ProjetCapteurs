@@ -5,16 +5,19 @@
 {% endblock %}
 {% block main %}
 <h1 class="h1">Relevé du capteur : {{ capteur.get_name() }}</h1>
-<div class="row" id="graph">
-  <script>
+<div class="info">
+  <h2>Tableau</h2>
+</div>
+<div class="row">
+  <div class="graph">
+    <script>
+    (function() {
+    var d3 = Plotly.d3;
 
-  (function() {
-  var d3 = Plotly.d3;
-
-  var WIDTH_IN_PERCENT_OF_PARENT = 30,
+    var WIDTH_IN_PERCENT_OF_PARENT = 30,
       HEIGHT_IN_PERCENT_OF_PARENT = 40;
 
-  var gd3 = d3.select('body')
+    var gd3 = d3.select('body')
       .append('div')
       .style({
           width: WIDTH_IN_PERCENT_OF_PARENT + '%',
@@ -24,9 +27,9 @@
           'margin-top': (100 - HEIGHT_IN_PERCENT_OF_PARENT) / 2 + 'vh'
       });
 
-  var gd = gd3.node();
+    var gd = gd3.node();
 
-  Plotly.plot(gd, [{
+    Plotly.plot(gd, [{
       type: 'bar',
       x: [1, 2, 3, 4],
       y: [5, 10, 2, 8],
@@ -36,23 +39,23 @@
               width: 2.5
           }
       }
-  }], {
+    }], {
       title: 'Relevé Humidité',
       font: {
           size: 16
       }
-  });
+    });
 
-  window.onresize = function() {
+    window.onresize = function() {
       Plotly.Plots.resize(gd);
     };
 
     })();
     </script>
+  </div>
 </div>
-<div class="info">
-  <h2>Tableau</h2>
-</div>
-
+<section class="footer">
+  <a href="{{ url_for('capteur_info',id=capteur.get_id()) }}" class = "btn btn-default return"> Retour</a>
+</section>
 
 {% endblock %}

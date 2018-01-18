@@ -8,7 +8,7 @@
 {% endblock %}
 {% block main %}
 
-<div id="divCapH1">
+<div class="divCapH1">
   <h1>{{ parterre.get_name() }}</h1>
   {% if parterre.get_name()!= "Bac à sable" %}
     <div class="buttonDelete">
@@ -43,8 +43,8 @@
       <div>
         <ul class="listeP">
           {% for capteur in parterre.get_capteurs() %}
-            <li><a href="{{ url_for('capteur_info', id = capteur.get_id()) }}" class="btn btn-default buttonliste">{{ capteur.get_name() }}</li>
-            {% endfor %}
+            <li><a href="{{ url_for('capteur_info', id = capteur.get_id()) }}" class="btn btn-default buttonliste">{{ capteur.get_name() }}</a></li>
+          {% endfor %}
         </ul>
         <div>
           <a href="{{ url_for('add_Capteur')}}" class="btn btn-default" id="addC">Ajouter un capteur</a>
@@ -52,12 +52,12 @@
       </div>
     </section>
   </div>
-  <div id = "mapP">
-    <div id="map" class="col-md-8 map"></div>
-  </div>
-  <section class="footer">
-    <a href="{{ url_for('parterre') }}" class = "btn btn-default" id="return"> Retour</a>
-  </section>
+<div id = "mapP">
+  <div id="map" class="col-md-8 map"></div>
+</div>
+<section class="footer">
+  <a href="{{ url_for('parterre') }}" class = "btn btn-default return"> Retour</a>
+</section>
 {% endblock %}
 {% block scripts %}
 {{super()}}

@@ -275,19 +275,20 @@ def save_parterre():
     a = get_parterre(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())
-        a.remove_coordonnees()
         db.session.commit()
         form = request.form
         longitudes = form.getlist("longitudes")
-        latitudes  = form.getlist("latitudes")
-        num = 0
-        for longitude,latitude in zip(longitudes, latitudes):
-            c = Coordonnees(x        = longitude,
-                            y        = latitude,
-                            parterre = a.get_id(),
-                            num      = num)
-            num = num+1
-            a.add_coordonnee(c)
+        if longitudes != []:
+            latitudes  = form.getlist("latitudes")
+            num = 0
+            a.remove_coordonnees()
+            for longitude,latitude in zip(longitudes, latitudes):
+                c = Coordonnees(x        = longitude,
+                                y        = latitude,
+                                parterre = a.get_id(),
+                                num      = num)
+                num = num+1
+                a.add_coordonnee(c)
         db.session.commit()
         return redirect(url_for("parterre_info", id = a.get_id()))
     return render_template("create-parterre.html",

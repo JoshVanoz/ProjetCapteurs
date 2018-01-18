@@ -130,13 +130,13 @@ body{
   font-size: large;
   text-decoration: underline;
 }
-#divCapH1{
+.divCapH1{
   display: flex;
   width: 100%;
   padding 1vh;
   border: solid thin;
 }
-#divCapH1 > h1{
+.divCapH1 > h1{
   padding: 2vh;
   flex: 1;
   padding-left: 3vw;
@@ -328,4 +328,13 @@ body{
 
 #addflower:hover, #addC:hover{
   background-color: white;
+}
+#buttonCap >a{
+  margin: 2vh;
+}
+#buttonCap{
+  text-align: center;
+}
+.btnReleve{
+  margin-top: 1vh;
 }

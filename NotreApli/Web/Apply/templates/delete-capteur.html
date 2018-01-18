@@ -15,9 +15,23 @@
         </div>
         <input class = "btn btn-danger Supprimer"
                type  = "submit"
-               value = "Supprimer">
+               value = "Supprimer"
+               button onclick="myFunction()">
       </form>
   </div>
 </body>
 
+
+<p id="pop"></p>
+<script>
+function myFunction() {
+    var txt;
+    if (confirm("Voulez vous vraimment le supprimer ?") == true) {
+        txt = "Le capteur est supprimé!";
+    } else {
+        txt = "Non supprimé!";
+    }
+    document.getElementById("pop").innerHTML = txt;
+}
+</script>
 {% endblock %}

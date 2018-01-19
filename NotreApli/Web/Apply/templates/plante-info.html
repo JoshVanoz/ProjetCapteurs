@@ -24,7 +24,7 @@
     <a href = "{{ url_for('edit_plante', id = plante.get_id()) }}" id="planteEdit">
       <input class = "btn btn-default" type = "submit" value = " Modifier ">
     </a>
-    <a href="{{ url_for('parterre')}}" class = "btn btn-default" id="planteCancel" >Annuler</a>
+    <a href="{{ url_for('parterre_info', id = parterre.get_id())}}" class = "btn btn-default" id="planteCancel" >Annuler</a>
   </div>
 </div>
   {% endblock %}

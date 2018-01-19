@@ -180,6 +180,9 @@ def delete_part():
         else:
             a = get_parterre(int(request.form['del']))
             a.clear_datas()
+            for capteur in a.get_capteurs():
+                a.delete_capteur(capteur)
+                capteur.set_parterre(1)
             db.session.delete(a)
             db.session.commit()
     return render_template(
@@ -342,6 +345,7 @@ def new_plante_saving():
 @app.route("/Plante/save/", methods = ("POST",))
 def save_plante():
     f = PlanteForm()
+    f.parterre.data = get_parterre(get_plante(f.get_id()).get_parterre())
     a = get_plante(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())

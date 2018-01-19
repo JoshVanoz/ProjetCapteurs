@@ -1,0 +1,12 @@
+Bugs ou améliorations:
+	- Accès parterre relié sur page capteur
+	- Interdire d'entrer des char de l'alphabet dans le numéro de téléphone
+	- Pop up suppression capteur à revoir
+	- Modifier/créer parterre -> pas de perte de focus une fois zone définie
+	- Modifier fleurs -> ne modifie pas la fleur courante mais en ajoute une nouvelle
+
+
+Réglé:
+	- Bouton supprimer capteur via page infos capteur marche pas
+	- Si on supprime un parterre, les capteurs qui sont dedans ne vont pas dans le bac à sable.
+	- Fiche plante -> Bouton annuler rappelle vers la liste des parterres

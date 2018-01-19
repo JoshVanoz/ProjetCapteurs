@@ -152,7 +152,7 @@ body{
   text-align: center;
   width: 20%;
 }
-#bDanger > input{
+#bDanger{
   margin-bottom: 2vh;
   padding: 1vh 2vw 1vh 2vw;
   width: 100%;
@@ -312,15 +312,16 @@ body{
   display: flex;
   flex-direction: column;
 }
-.fleurs >div, .capteurs >div{
+.fleurs > div, .capteurs >div{
   display: flex;
 }
 .listeP{
   list-style-type: none;
   flex: 1;
+  width: initial;
 }
 .listeP a{
-  width: 80%;
+  width: 100%;;
   font-size: 1.5vh;
 }
 #addflower, #addC{
@@ -332,14 +333,25 @@ body{
 #addflower:hover, #addC:hover{
   background-color: white;
 }
-#buttonCap >a{
-  margin: 2vh;
+#buttonCap a{
+  margin: auto;
+  width: 150%;
 }
-#buttonCap{;
+#buttonCap input{
+  width: 50%;
+  margin-left: 5vw;
+}
+#buttonCap{
   text-align: center;
+  display: flex;
 }
-.btnReleve{
-  margin-top: 1vh;
+.btnReleve input{
+  padding: 1vh 2.5vw 1vh 2.5vw;
+  margin: auto;
+}
+.btnReleve {
+  margin: auto;
+  margin-right: 2vh;
 }
 .pl{
   padding-left: 45vh;
@@ -469,4 +481,12 @@ body{
   text-align: center;
   padding: 1vh;
   padding-right: 2vw;
+}
+
+.scrollParterre {
+  overflow: auto;
+  width: 70%;
+  height: 15vh;
+  margin-right: 1.5vw
+  
 }

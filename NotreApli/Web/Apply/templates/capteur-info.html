@@ -15,6 +15,7 @@
     <a href = "{{ url_for('capteur_info_relever', id = capteur.get_id()) }}" id="bDanger">
       <input class = "btn btn-primary" type = "submit" value = "Relévés">
     </a>
+    <a href="{{ url_for('parterre_info',id=capteur.get_parterre()) }}" class = "btn btn-default">Accéder au parterre</a>
   </div>
 </div>
 <div id="mapInfo">

@@ -348,6 +348,9 @@ body{
 .popup>h2,.popup>p{
   color:black;
 }
+.popuP>h2,.popuP>p{
+  color:black;
+}
 .overlay {
   position: absolute;
   top: 0;
@@ -367,9 +370,18 @@ body{
   border: 1px solid #666;
   width: 300px;
   box-shadow: 0 0 50px rgba(0,0,0,0.5);
-  position: relative;
+  position: fixed;
 }
 
+.popuP {
+  margin: 75px auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #666;
+  width: 300px;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  position: relative;
+}
 
 .overlay:target {
   visibility: visible;

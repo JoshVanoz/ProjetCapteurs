@@ -389,3 +389,29 @@ body{
   text-decoration: none;
   color: #666;
 }
+#formEditParterre{
+  margin: auto;
+  padding: auto;
+  width: 100%;
+  padding-top: 2vh;
+}
+#formEditParterre form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 1vw;
+}
+#mapEditParterre > #map{
+  width: 100%;
+  margin-bottom: 4vh;
+  padding-top: 4vh;
+}
+#formEditParterre label {
+  text-decoration: underline;
+  font-size: 2vh;
+}
+#formEditParterre > form >.btn{
+  width: 30%;
+  margin: auto;
+  font-size: 2vh;
+}

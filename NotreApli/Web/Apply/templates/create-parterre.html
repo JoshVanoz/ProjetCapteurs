@@ -7,42 +7,45 @@
 <script src="https://openlayers.org/en/v4.5.0/build/ol.js"></script>
 {% endblock %}
 {% block main %}
-<h1> {{ title }} </h1>
-<form class  = "form-horizontal"
-      role = "form"
-      method = "POST"
-      action = "{{ url_for(form.get_next()) }}">
+<h1 class="h1"> {{ title }} </h1>
+<div class="row" id="formEditParterre">
 
-  {{ form.hidden_tag() }}
-  <div class=
-       {% if form.nomP.errors %}
-       "form-creation has-errors"
-       {% else %}
-       "form-creation"
-       {% endif %}
-       >
-    {{ form.nomP.label }}
-    {{ form.nomP(size = 50,
-                 class_ = "form-control") }}
+  <form class  = "form-horizontal"
+        role = "form"
+        method = "POST"
+        action = "{{ url_for(form.get_next()) }}">
 
+    {{ form.hidden_tag() }}
+    <div class=
+         {% if form.nomP.errors %}
+         "form-creation has-errors"
+         {% else %}
+         "form-creation"
+         {% endif %}
+         >
+      {{ form.nomP.label }}
+      {{ form.nomP(size = 50,
+                   class_ = "form-control") }}
+    </div>
+    {% if form.nomP.errors %}
+    <ul class = "list-group">
+      {% for e in form.nomP.errors %}
+      <li class="list-group-item list-group-item-danger">{{ e }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
 
-  <div id="map" class="col-md-8 map"></div>
-  </div>
-{% if form.nomP.errors %}
-<ul class = "list-group">
-  {% for e in form.nomP.errors %}
-  <li class="list-group-item list-group-item-danger">{{ e }}</li>
-  {% endfor %}
-</ul>
-{% endif %}
-<div id="coords" class="col-md-8 map"></div>
-<input class = "btn btn-default"
-        type ="submit"
-        value = "Enregistrer">
-</form>
+    <div id="mapEditParterre">
+      <div id="map" class="col-md-8 map"></div>
+    </div>
+
+    <input class = "btn btn-success"
+            type ="submit"
+            value = "Enregistrer">
+    
+  </form>
+</div>
 {% endblock %}
-
-
 
 {% block scripts %}
 {{super()}}

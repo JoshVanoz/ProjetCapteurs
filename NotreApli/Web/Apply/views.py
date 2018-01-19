@@ -330,7 +330,9 @@ def new_plante_saving():
             taux_humidite = f.get_taux_humidite(),
             quantite = f.get_quantite(),
             parterre_id = f.get_parterre().get_id())
-    
+        f.get_parterre().add_plante(o)
+        db.session.add(o)
+        db.session.commit()
         return redirect(url_for('parterre_info', id = o.get_parterre()))
     return render_template(
         "create-plante.html",

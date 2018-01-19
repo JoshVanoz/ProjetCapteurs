@@ -1,27 +1,30 @@
 {% extends "header.html" %}
 
-<!-- {% block head %}
+{% block head %}
 {{ super() }}
 <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-{% endblock %} -->
+{% endblock %}
 
 {% block main %}
 <h1 class="h1">Relevé du capteur : {{ capteur.get_name() }}</h1>
 <div class="row" id="info">
-  <h2>Tableau</h2>
-  <table>
-    <tr><th>Valeurs</th><th>Date relévé</th></tr>
-    {% for donnee in capteur.get_vals() %}
-      <tr>
-        <td>{{ donnee.get_val() }}</td>
-        <td>{{ donnee.get_date_donnee()[:10] }} | {{ donnee.get_date_donnee()[10:16]}}</td>
-      </tr>
-    {% endfor %}
-  </table>
-  <p id="demo0"></p>
+  <div class="th">
+    <h4>N°</h4><h4>Valeur</h4><h4>Date</h4>
+  </div>
+  <div class="sroll">
+    <table id="table">
+      {% for donnee in capteur.get_vals() %}
+        <tr>
+          <td>{{ loop.index-1 }}</td>
+          <td>{{ donnee.get_val() }}</td>
+          <td>{{ donnee.get_date_donnee()[:10] }} | {{ donnee.get_date_donnee()[10:16]}}</td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
 </div>
 
-<div id="tester"></div>
+<div id="graph"></div>
 
 <section class="footer">
   <a href="{{ url_for('capteur_info_relever1',id=capteur.get_id()) }}" class = "btn btn-default return"> Retour</a>
@@ -42,7 +45,7 @@
   console.log(x);
   console.log(y);
 
-  TESTER = document.getElementById('tester');
+  TESTER = document.getElementById('graph');
 
   Plotly.plot( TESTER, [{
       x,

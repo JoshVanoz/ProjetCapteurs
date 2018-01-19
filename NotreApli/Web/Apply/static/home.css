@@ -152,10 +152,10 @@ body{
   text-align: center;
   width: 20%;
 }
-#bDanger {
+#bDanger > input{
   margin-bottom: 2vh;
   padding: 1vh 2vw 1vh 2vw;
-  width: 100%
+  width: 100%;
 }
 #bEdit > input{
   padding: 1vh 2vw 1vh 2vw;
@@ -414,4 +414,46 @@ body{
   width: 30%;
   margin: auto;
   font-size: 2vh;
+}
+#info{
+  border: thin solid;
+  margin: auto;
+  height: 60vh;
+  flex: 1 1 0;
+}
+#graph{
+  margin: auto;
+  margin-top: 10vh;
+}
+#table, #info{
+  text-align: center;
+  padding: 1vw;
+  width: 100%;
+}
+#table{
+  padding-top: 2vh;
+  height: 20vh;
+}
+#table th {
+  text-align: center;
+}
+#table tr td {
+  border: thin solid;
+  padding: 1vh;
+}
+.sroll{
+  overflow: auto;
+
+  height: 50vh;
+  border: thin solid;
+}
+.th{
+  display: flex;
+  flex-direction: row;
+  width: inherit
+}
+.th h4 {
+  text-align: center;
+  padding: 1vh;
+  padding-right: 2vw;
 }

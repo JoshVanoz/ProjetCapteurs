@@ -156,43 +156,43 @@ def loaddb():
                      parterre = p1.get_id())
     db.session.add(donnee5)
 
-    donnee6 = Donnee(value   = 36,
+    donnee6 = Donnee(value   = 56,
                      date    = datetime.strptime('Jun 18 2018  12:14PM', '%b %d %Y %I:%M%p'),
                      capteur = capteur2.get_id(),
                      parterre = p1.get_id())
     db.session.add(donnee6)
 
-    donnee7 = Donnee(value   = 36,
+    donnee7 = Donnee(value   = 23,
                      date    = datetime.strptime('Jun 18 2018  1:14PM', '%b %d %Y %I:%M%p'),
                      capteur = capteur2.get_id(),
                      parterre = p1.get_id())
     db.session.add(donnee7)
 
-    donnee8 = Donnee(value   = 36,
+    donnee8 = Donnee(value   = 16,
                      date    = datetime.strptime('Jun 18 2018  2:14PM', '%b %d %Y %I:%M%p'),
                      capteur = capteur2.get_id(),
                      parterre = p1.get_id())
     db.session.add(donnee8)
 
-    donnee9 = Donnee(value   = 36,
+    donnee9 = Donnee(value   = 8,
                      date    = datetime.strptime('Jun 18 2018  3:14PM', '%b %d %Y %I:%M%p'),
                      capteur = capteur.get_id(),
                      parterre = p1.get_id())
     db.session.add(donnee9)
 
-    donnee10 = Donnee(value   = 36,
+    donnee10 = Donnee(value   = 2,
                      date    = datetime.strptime('Jun 18 2018  1:14PM', '%b %d %Y %I:%M%p'),
                      capteur = capteur.get_id(),
                      parterre = p1.get_id())
     db.session.add(donnee10)
 
-    donnee11 = Donnee(value   = 36,
+    donnee11 = Donnee(value   = 5,
                      date    = datetime.strptime('Jun 18 2018  2:14PM', '%b %d %Y %I:%M%p'),
                      capteur = capteur.get_id(),
                      parterre = p1.get_id())
     db.session.add(donnee11)
 
-    donnee12 = Donnee(value   = 36,
+    donnee12 = Donnee(value   = 35,
                      date    = datetime.strptime('Jun 18 2018  3:14PM', '%b %d %Y %I:%M%p'),
                      capteur = capteur2.get_id(),
                      parterre = p1.get_id())

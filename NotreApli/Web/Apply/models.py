@@ -313,8 +313,34 @@ class AlesDroits(db.Model):
     idP         = db.Column(db.Integer, db.ForeignKey("parterre.idP"), primary_key = True)
     idU         = db.Column(db.String(50), db.ForeignKey("utilisateur.idU"), primary_key = True)
 
+    def __init__(self, Lecture, Edition, Suppression, idP, idU):
+        self.Lecture = Lecture
+        self.Edition = Edition
+        self.Suppression = Suppression
+        self.idP = idP
+        self.idU = idU
+
     def get_id(self):
         return (self.idP, self.idU)
+
+    def get_lecture(self):
+        return self.Lecture
+
+    def get_edition(self):
+        return self.Edition
+
+    def get_suppression(self):
+        return self.Suppression
+
+    def set_Lecture(self, NewLecture):
+        self.Lecture = NewLecture
+
+    def set_edition(self, NewEdition):
+        self.Edition = NewEdition
+
+    def set_suppression(self, NewSuppression):
+        self.Suppression = NewSuppression
+
 
 class Donnee(db.Model):
     idDonnee    = db.Column(db.Integer, primary_key = True)
@@ -371,6 +397,9 @@ def get_plante(id):
 
 def get_typeMesure(id):
     return TypeMesure.query.get(id)
+
+def get_droits():
+    return AlesDroits.query.all()
 
 def get_bac_a_sable():
     for parterre in get_parterres():

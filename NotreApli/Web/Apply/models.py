@@ -3,6 +3,9 @@ from flask_login import UserMixin
 import datetime
 
 class Utilisateur(db.Model, UserMixin):
+    """
+    Only users can interact with the database and the application.
+    """
     idU     = db.Column(db.String(50), primary_key=True)
     mdpU    = db.Column(db.String(100))
     nomU    = db.Column(db.String(20))
@@ -58,6 +61,9 @@ association_capteur_donnee = db.Table("association_capteur_donnee",
                                       db.Column("capteur_id", db.Integer, db.ForeignKey("capteur.idCapt"), primary_key = True),
                                       db.Column("donnee_id", db.Integer, db.ForeignKey("donnee.idDonnee"), primary_key = True))
 class Coordonnees(db.Model):
+    """
+    Coordinates can specify the position of a parterre
+    """
     coord_id    = db.Column(db.Integer, primary_key = True)
     longitude   = db.Column(db.Float)
     latitude    = db.Column(db.Float)
@@ -76,6 +82,9 @@ class Coordonnees(db.Model):
         return self.latitude
 
 class Parterre(db.Model):
+    """
+    A Parterre have a list of Capteurs, is located by Coordonnees and contains a list of TypePlantes
+    """
     idP         = db.Column(db.Integer, primary_key=True)
     nomP        = db.Column(db.String(100))
     plantes     = db.relationship("TypePlante",
@@ -120,7 +129,6 @@ class Parterre(db.Model):
         for coord in self.get_coordonnees():
             self.coordonnees.remove(coord)
             db.session.delete(coord)
-            db.session.commit()
 
     def add_coordonnee(self, coord):
         self.coordonnees.append(coord)
@@ -139,7 +147,18 @@ class Parterre(db.Model):
         if plante in self.plantes:
             self.plantes.remove(plante)
 
+    def clear_datas(self):
+        """
+        suppress all datas of the parterre
+        """
+        liste = Donnee.query.filter(Donnee.idParterre == self.idP)
+        for donnee in liste:
+            db.session.delete(donnee)
+
 class TypePlante(db.Model):
+    """
+    A TypePlante is contained in a Parterre. If the Parterre is deleted, plants are deleted too.
+    """
     idPlant  = db.Column(db.Integer, primary_key=True)
     nomPlant = db.Column(db.String(100))
     comportement = db.Column(db.String(200))
@@ -190,6 +209,9 @@ class TypePlante(db.Model):
 
 
 class TypeMesure(db.Model):
+    """
+    A TypeMesure is important to know how to use datas sended by Capteurs
+    """
     id_typeM  = db.Column(db.Integer, primary_key=True)
     nom_typeM = db.Column(db.String(100))
 
@@ -209,6 +231,11 @@ class TypeMesure(db.Model):
         self.nom_typeM = nomTypeM
 
 class Capteur(db.Model):
+    """
+    A Capteur is updates its position and its lvlBatCapt itself.
+    It is placed when he's added in the database.
+    He generates a list of datas at the intervalleTemps between each.
+    """
     idCapt          = db.Column(db.Integer, primary_key=True)
     nomCapt         = db.Column(db.String(20))
     lieuGeoCaptX    = db.Column(db.Float)
@@ -306,6 +333,10 @@ class Capteur(db.Model):
             self.listeDonnees.remove(donnee)
 
 class AlesDroits(db.Model):
+    """
+    The user idU has following rights for a Parterre idP: read, modify, suppress.
+    These rights are given by the creator of the Parterre.
+    """
 
     Lecture     = db.Column(db.Boolean)
     Edition     = db.Column(db.Boolean)
@@ -343,6 +374,9 @@ class AlesDroits(db.Model):
 
 
 class Donnee(db.Model):
+    """
+    Datas. Suppress a Parterre suppress the datas which are related.
+    """
     idDonnee    = db.Column(db.Integer, primary_key = True)
     val         = db.Column(db.Float)
     dateRel     = db.Column(db.DateTime)

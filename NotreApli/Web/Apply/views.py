@@ -160,11 +160,9 @@ def delete_capteur():
                 title = "Supprimer un capteur")
         else:
             a = get_capteur(int(request.form['del']))
-            for droit in get_droits():
-                if droit.get_id() == (get_parterre(a.get_parterre()),current_user.get_id())
-                    a.clear_datas()
-                    db.session.delete(a)
-                    db.session.commit()
+            a.clear_datas()
+            db.session.delete(a)
+            db.session.commit()
     return render_template(
         "delete-capteur.html",
         liste = get_capteurs(),
@@ -181,10 +179,9 @@ def delete_part():
                 title = "Supprimer un parterre")
         else:
             a = get_parterre(int(request.form['del']))
-            for droit in get_droits():
-                if droit.get_id() == (a.get_id(),current_user.get_id())
-                    db.session.delete(a)
-                    db.session.commit()
+            a.clear_datas()
+            db.session.delete(a)
+            db.session.commit()
     return render_template(
         "delete-parterre.html",
         liste = get_parterres(),
@@ -194,11 +191,9 @@ def delete_part():
 @login_required
 def delete_cap(id):
     capteur = get_capteur(id)
-    for droit in get_droits():
-        if droit.get_id() == (capteur.get_id(),current_user.get_id())
-            capteur.clear_datas()
-            db.session.delete(capteur)
-            db.session.commit()
+    capteur.clear_datas()
+    db.session.delete(capteur)
+    db.session.commit()
     return redirect(url_for("capteur"))
 
 
@@ -229,11 +224,8 @@ def new_parterre_saving():
             num = num+1
             try:
                 o.add_coordonnee(c)
-                db.session.commit()
             except Exception as e:
                 db.session.rollback()
-        d = AlesDroits(True, True, True, o.get_id(), current_user.get_id())
-        db.session.add(d)
         db.session.commit()
         return redirect(url_for('parterre_info', id = o.get_id()))
     return render_template(
@@ -285,7 +277,6 @@ def save_parterre():
     a = get_parterre(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())
-        db.session.commit()
         form = request.form
         longitudes = form.getlist("longitudes")
         if longitudes != []:
@@ -308,14 +299,13 @@ def save_parterre():
 @app.route("/Supprimer/Parterre/<int:id>")
 def delete_parterre(id):
     a   = get_parterre(id)
-    for droit in get_droits():
-        if droit.get_id() == (a.get_id(),current_user.get_id())
-            bac = get_bac_a_sable()
-            for capteur in a.get_capteurs():
-                capteur.set_parterre(bac.get_id())
-            a.remove_coordonnees()
-            db.session.delete(a)
-            db.session.commit()
+    bac = get_bac_a_sable()
+    for capteur in a.get_capteurs():
+        capteur.set_parterre(bac.get_id())
+    a.remove_coordonnees()
+    a.clear_datas()
+    db.session.delete(a)
+    db.session.commit()
     return redirect(url_for("parterre"))
 
 @app.route("/Ajouter/Plante/")

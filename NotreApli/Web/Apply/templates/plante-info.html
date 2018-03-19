@@ -18,9 +18,21 @@
     <li><span class="contentInfo"> Situé dans le parterre :</span> <span class="itemInfo">{{ parterre.get_name() }}</span> </li>
   </ul>
   <div id="button">
-    <a href = "{{ url_for('delete_plante', id = plante.get_id()) }}" id="planteDelete">
+    <a href = "#popup1" id="planteDelete">
       <input class = "btn btn-danger" type = "submit" value = "Supprimer">
     </a>
+    <div id="popup1" class = "overlay">
+            <div class = "popuP">
+              <h2> Etes-vous sûr de vouloir supprimer cette plante ? </h2>
+              <p> Cette action la supprimera définitivement !</p>
+              <a href = "{{ url_for('delete_plante', id = plante.get_id()) }}" class="btn btn-danger btn-pop-del">Supprimer
+              </a>
+              <a href="#">
+                <button type="button" class="btn btn-default btn-pop-cancel" onclick="afficher()">Annuler</button>
+              </a>
+
+            </div>
+        </div>
     <a href = "{{ url_for('edit_plante', id = plante.get_id()) }}" id="planteEdit">
       <input class = "btn btn-default" type = "submit" value = " Modifier ">
     </a>

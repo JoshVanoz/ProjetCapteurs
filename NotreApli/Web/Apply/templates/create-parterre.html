@@ -39,11 +39,15 @@
       <div id="map" class="col-md-8 map"></div>
     </div>
 
-    <input class = "btn btn-success"
+    <div class="buttonSave">
+      <input class = "btn btn-success"
             type ="submit"
             value = "Enregistrer">
+      <a href="{{ url_for('parterre_info',id=parterre.get_id()) }}" class = "btn btn-danger">Annuler</a>
+    </div>
 
   </form>
+
 </div>
 {% endblock %}
 

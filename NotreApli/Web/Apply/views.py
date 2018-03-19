@@ -243,7 +243,8 @@ def edit_capteur(id):
     return render_template(
         "addCapteur.html",
         title = capteur.get_name()+" - edit",
-        form  = form)
+        form  = form,
+        capteur = capteur)
 
 @app.route("/Capteur/save/", methods = ("POST",))
 def save_capteur():
@@ -272,7 +273,8 @@ def edit_parterre(id):
     form = ParterreForm(parterre)
     return render_template("create-parterre.html",
                 title= parterre.get_name()+"  - edit",
-                form = form)
+                form = form,
+                parterre = parterre)
 
 @app.route("/Parterre/save/", methods = ("POST",))
 def save_parterre():

@@ -383,20 +383,32 @@ body{
   position: relative;
   width: 50vw;
 }
+
+.popuP {
+  margin: 75px auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #666;
+  width: 300px;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  position: relative;
+  width: 50vw;
+}
+
 .btn-pop-cancel{
   width: 20vh;
 }
 .btn-pop-cancel, .btn-pop-del{
   margin: 1vh 0vw 1vh 0vw;
 }
-.popup > p{
+.popup > p, .popuP > p{
   font-style: italic;
   color: gray;
 }
 .overlay:target {
   visibility: visible;
   opacity: 1;
-  
+
 }
 
 .close {
@@ -488,5 +500,5 @@ body{
   width: 70%;
   height: 15vh;
   margin-right: 1.5vw
-  
+
 }

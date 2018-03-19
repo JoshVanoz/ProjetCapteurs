@@ -360,9 +360,7 @@ body{
 .popup>h2,.popup>p{
   color:black;
 }
-.popuP>h2,.popuP>p{
-  color:black;
-}
+
 .overlay {
   position: absolute;
   top: 0;
@@ -382,22 +380,23 @@ body{
   border: 1px solid #666;
   width: 300px;
   box-shadow: 0 0 50px rgba(0,0,0,0.5);
-  position: fixed;
-}
-
-.popuP {
-  margin: 75px auto;
-  padding: 20px;
-  background: #fff;
-  border: 1px solid #666;
-  width: 300px;
-  box-shadow: 0 0 50px rgba(0,0,0,0.5);
   position: relative;
+  width: 50vw;
 }
-
+.btn-pop-cancel{
+  width: 20vh;
+}
+.btn-pop-cancel, .btn-pop-del{
+  margin: 1vh 0vw 1vh 0vw;
+}
+.popup > p{
+  font-style: italic;
+  color: gray;
+}
 .overlay:target {
   visibility: visible;
   opacity: 1;
+  
 }
 
 .close {
@@ -413,6 +412,7 @@ body{
   text-decoration: none;
   color: #666;
 }
+
 #formEditParterre{
   margin: auto;
   padding: auto;

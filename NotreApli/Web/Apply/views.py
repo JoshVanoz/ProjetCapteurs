@@ -82,7 +82,8 @@ def parterre_info(id):
     return render_template(
         "parterre-info.html",
         parterre = parterre,
-        title    = parterre.get_name())
+        title    = parterre.get_name(),
+        capteurs = get_capteurs_parterre(id))
 
 @app.route("/Capteur/")
 def capteur():

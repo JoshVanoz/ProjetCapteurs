@@ -127,8 +127,19 @@ def add_Capteur():
     return render_template(
         "addCapteur.html",
         form  = f,
-        title = "Nouveau Capteur",
+        title = "Nouveau capteur",
         param = "create")
+
+@app.route("/Ajouter/Capteur/Parterre/<int:id>")
+@login_required
+def add_Capteur_Part(id):
+    f = CapteurForm()
+    return render_template(
+        "addCapteur.html",
+        form  = f,
+        parterre = id,
+        title = "Nouveau capteur",
+        param = "createPart")
 
 @app.route("/Ajouter/Capteur/saving/", methods=("POST",))
 def new_capteur_saving():
@@ -149,7 +160,7 @@ def new_capteur_saving():
     return render_template(
         "addCapteur.html",
         form  = f,
-        title = "Nouveau Capteur",
+        title = "Nouveau capteur",
         param = "create")
 
 @app.route("/Supprimer/Capteur", methods = ["POST","GET"])
@@ -324,14 +335,16 @@ def delete_parterre(id):
     db.session.commit()
     return redirect(url_for("parterre"))
 
-@app.route("/Ajouter/Plante/")
+@app.route("/Ajouter/Plante/<int:id>")
 @login_required
-def add_Plante():
+def add_Plante(id):
     f = PlanteForm()
     return render_template(
         "create-plante.html",
         form  = f,
-        title = "Nouvelle Plante")
+        title = "Nouvelle Plante",
+        param = "create",
+        parterre = id)
 
 @app.route("/Ajouter/Plante/saving/", methods=("POST",))
 def new_plante_saving():
@@ -353,7 +366,8 @@ def new_plante_saving():
     return render_template(
         "create-plante.html",
         form  = f,
-        title = "Nouvelle plante")
+        title = "Nouvelle plante",
+        param = "create")
 
 @app.route("/Plante/save/", methods = ("POST",))
 def save_plante():
@@ -371,7 +385,8 @@ def save_plante():
     return render_template(
         "create-plante.html",
         title = a.get_name()+" - edit",
-        form  = f)
+        form  = f,
+        param = "modif")
 
 @app.route("/Plante/info/<int:id>")
 def plante_info(id):
@@ -397,4 +412,6 @@ def edit_plante(id):
     return render_template(
         "create-plante.html",
         title = plante.get_name()+" - edit",
-        form  = form)
+        form  = form,
+        plante = plante,
+        param = "modif")

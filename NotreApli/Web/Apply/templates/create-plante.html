@@ -1,7 +1,7 @@
 {% extends "header.html" %}
 {% block main %}
 <h1 class="h1"> {{ title }} </h1>
-<div class="pl">
+<div class="row" id="formEditPlante">
   <form class  = "form-horizontal"
         role = "form"
         method = "POST"
@@ -65,12 +65,16 @@
         {% endfor %}
         </ul>
     {% endif %}
-    <input class = "btn btn-success"
-            type ="submit"
-            value = "Enregistrer">
+    <div class="buttonSave">
+      <input class = "btn btn-success"
+              type ="submit"
+              value = "Enregistrer">
+    {% if param == "create" %}
+      <a href="{{ url_for('parterre_info',id=parterre)}}" class = "btn btn-danger">Annuler</a>
+    {% elif param == "modif" %}
+      <a href="{{ url_for('plante_info', id = plante.get_id()) }}" class = "btn btn-danger">Annuler</a>
+    {% endif %}
+    </div>
   </form>
 </div>
-
-
-
 {% endblock %}

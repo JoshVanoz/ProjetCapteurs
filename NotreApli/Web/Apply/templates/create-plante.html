@@ -20,6 +20,7 @@
       {{ form.nom_plante(size = 50,
                    class_ = "form-control") }}
 
+
       {{ form.comportement.label }}
       {{ form.comportement(size = 50,
                    class_ = "form-control") }}
@@ -38,16 +39,35 @@
                    class_ = "form-control") }}
       {% endif %}
     </div>
-  {% if form.nom_plante.errors %}
-  <ul class = "list-group">
-    {% for e in form.nom_plante.errors %}
-    <li class="list-group-item list-group-item-danger">{{ e }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  <input class = "btn btn-success"
-          type ="submit"
-          value = "Enregistrer">
+    {% if form.nom_plante.errors %}
+    <ul class = "list-group">
+      {% for e in form.nom_plante.errors %}
+      <li class="list-group-item list-group-item-danger">{{ e }}</li>
+      {% endfor %}
+    </ul>
+
+    {% elif form.quantite.errors %}
+        <ul class = "list-group">
+        {% for e in form.quantite.errors %}
+          <li class = "list-group-item list-group-item-danger">{{ e }}</li>
+        {% endfor %}
+        </ul>
+    {% elif form.taux_humidite.errors %}
+        <ul class = "list-group">
+        {% for e in form.taux_humidite.errors %}
+          <li class = "list-group-item list-group-item-danger">{{ e }}</li>
+        {% endfor %}
+        </ul>
+    {% elif form.parterre.errors %}
+        <ul class = "list-group">
+        {% for e in form.parterre.errors %}
+          <li class = "list-group-item list-group-item-danger">{{ e }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    <input class = "btn btn-success"
+            type ="submit"
+            value = "Enregistrer">
   </form>
 </div>
 

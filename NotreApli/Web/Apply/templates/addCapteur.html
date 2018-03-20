@@ -52,7 +52,12 @@
     <input class = "btn btn-success"
           type ="submit"
           value = "Enregistrer">
-    <a href="{{ url_for('capteur')}}" class = "btn btn-danger">Annuler</a>
+
+          {% if param == "create" %}
+    <a href="{{ url_for('home')}}" class = "btn btn-danger">Annuler</a>
+          {% elif param == "modif" %}
+    <a href="{{ url_for('capteur_info', id = capteur.get_id()) }}" class = "btn btn-danger">Annuler</a>
+          {% endif %}
   </div>
   </form>
 </div>

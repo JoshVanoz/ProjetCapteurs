@@ -126,7 +126,8 @@ def add_Capteur():
     return render_template(
         "addCapteur.html",
         form  = f,
-        title = "Nouveau Capteur")
+        title = "Nouveau Capteur",
+        param = "create")
 
 @app.route("/Ajouter/Capteur/saving/", methods=("POST",))
 def new_capteur_saving():
@@ -147,7 +148,8 @@ def new_capteur_saving():
     return render_template(
         "addCapteur.html",
         form  = f,
-        titre = "Nouveau Capteur")
+        title = "Nouveau Capteur",
+        param = "create")
 
 @app.route("/Supprimer/Capteur", methods = ["POST","GET"])
 @login_required
@@ -180,6 +182,9 @@ def delete_part():
         else:
             a = get_parterre(int(request.form['del']))
             a.clear_datas()
+            for capteur in a.get_capteurs():
+                a.delete_capteur(capteur)
+                capteur.set_parterre(1)
             db.session.delete(a)
             db.session.commit()
     return render_template(
@@ -204,7 +209,8 @@ def add_Parterre():
     return render_template(
         "create-parterre.html",
         form  = f,
-        title = "Ajouter un nouveau Parterre")
+        title = "Ajouter un nouveau Parterre",
+        param = "create")
 
 @app.route("/Ajouter/Parterre/saving/", methods=("POST",))
 def new_parterre_saving():
@@ -231,7 +237,8 @@ def new_parterre_saving():
     return render_template(
         "create-parterre.html",
         form  = f,
-        titre = "Nouveau Capteur")
+        title = "Ajouter un nouveau Parterre",
+        param = "create")
 
 @app.route("/Capteur/edit/<int:id>")
 def edit_capteur(id):
@@ -240,7 +247,9 @@ def edit_capteur(id):
     return render_template(
         "addCapteur.html",
         title = capteur.get_name()+" - edit",
-        form  = form)
+        form  = form,
+        capteur = capteur,
+        param = "modif")
 
 @app.route("/Capteur/save/", methods = ("POST",))
 def save_capteur():
@@ -261,7 +270,8 @@ def save_capteur():
     return render_template(
         "addCapteur.html",
         title = a.get_name()+" - edit",
-        form  = f)
+        form  = f,
+        param = "modif")
 
 @app.route("/Parterre/edit/<int:id>")
 def edit_parterre(id):
@@ -269,7 +279,9 @@ def edit_parterre(id):
     form = ParterreForm(parterre)
     return render_template("create-parterre.html",
                 title= parterre.get_name()+"  - edit",
-                form = form)
+                form = form,
+                parterre = parterre,
+                param = "modif")
 
 @app.route("/Parterre/save/", methods = ("POST",))
 def save_parterre():
@@ -294,7 +306,8 @@ def save_parterre():
         return redirect(url_for("parterre_info", id = a.get_id()))
     return render_template("create-parterre.html",
                 title= parterre.get_name()+"  - edit",
-                form = f)
+                form = f,
+                param = "modif")
 
 @app.route("/Supprimer/Parterre/<int:id>")
 def delete_parterre(id):
@@ -337,11 +350,12 @@ def new_plante_saving():
     return render_template(
         "create-plante.html",
         form  = f,
-        titre = "Nouvelle plante")
+        title = "Nouvelle plante")
 
 @app.route("/Plante/save/", methods = ("POST",))
 def save_plante():
     f = PlanteForm()
+    f.parterre.data = get_parterre(get_plante(f.get_id()).get_parterre())
     a = get_plante(f.get_id())
     if f.validate_on_submit():
         a.set_name(f.get_name())

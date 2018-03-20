@@ -15,6 +15,7 @@
     <a href = "{{ url_for('capteur_info_relever', id = capteur.get_id()) }}" id="bDanger">
       <input class = "btn btn-primary" type = "submit" value = "Relévés">
     </a>
+    <a href="{{ url_for('parterre_info',id=capteur.get_parterre()) }}" class = "btn btn-default">Accéder au parterre</a>
   </div>
 </div>
 <div id="mapInfo">
@@ -29,22 +30,22 @@
     </ul>
     <div id="buttonCap">
       <div class="">
-        <a href="#popup1" class="btn btn-danger">Supprimer</a>
+        <a href="#popup1" class="btn btn-danger" onclick="cacher()">Supprimer</a>
       </div>
-
         <div id="popup1" class = "overlay">
             <div class = "popup">
               <h2> Etes-vous sûr de vouloir supprimer ce capteur ? </h2>
-              <p> Cette action le supprimera définitivement</p>
-              <a href="#">
-                <button type="button" class="btn btn-default">Annuler</button>
+              <p> Cette action le supprimera définitivement !</p>
+              <a href="{{ url_for('delete_cap', id = capteur.get_id()) }}">
+                <button type="button" class="btn btn-danger btn-pop-del" >Supprimer</button>
               </a>
-              <a href = "{{ url_for('delete_capteur', id = capteur.get_id()) }}" class="btn btn-danger">Supprimer
+              <a href="#">
+                <button type="button" class="btn btn-default btn-pop-cancel" onclick="afficher()">Annuler</button>
               </a>
             </div>
         </div>
       <a href = "{{ url_for('edit_capteur', id = capteur.get_id()) }}">
-        <input class = "btn btn-default" type = "submit" value = "Modifier">
+        <input class = "btn btn-default" type = "submit" value = "Modifier" >
       </a>
     </div>
   </div>
@@ -60,53 +61,62 @@
   {% block scripts %}
   {{super()}}
   <script>
-  var imageStyle = new ol.style.Style({
-          image: new ol.style.Circle({
-                radius: 5,
-                snapToPixel: false,
-                fill: new ol.style.Fill({
-                color: [0 , 0 , 255, 0.2]
-            }),
-            stroke: new ol.style.Stroke({
-                color: [0 , 0 , 255 , 1],
-                width: 1
-            })
-      })
-  });
-   var coordonnee = [{{capteur.get_coordonnees()[0]}},{{capteur.get_coordonnees()[1]}}];
-   var zoom = 9;
-   var attribution = new ol.control.Attribution({
-    collapsible: false
-  });
+    var imageStyle = new ol.style.Style({
+            image: new ol.style.Circle({
+                  radius: 5,
+                  snapToPixel: false,
+                  fill: new ol.style.Fill({
+                  color: [0 , 0 , 255, 0.2]
+              }),
+              stroke: new ol.style.Stroke({
+                  color: [0 , 0 , 255 , 1],
+                  width: 1
+              })
+        })
+    });
+     var coordonnee = [{{capteur.get_coordonnees()[0]}},{{capteur.get_coordonnees()[1]}}];
+     var zoom = 9;
+     var attribution = new ol.control.Attribution({
+      collapsible: false
+    });
 
-  var map = new ol.Map({
-    controls: ol.control.defaults({ attribution: false }).extend([attribution]),
-    target: 'map',
-    view: new ol.View({
-        center: ol.proj.fromLonLat(coordonnee),
-      zoom: zoom
-    })
-  });
-  var layer = new ol.layer.Tile({
-    source: new ol.source.OSM()
-  });
-  map.addLayer(layer);
-  function transform_geometry(element) {
-    var current_projection = new ol.proj.Projection({ code: "EPSG:4326" });
-    var new_projection = layer.getSource().getProjection();
-    element.getGeometry().transform(current_projection, new_projection);
-  }
-  var point = new ol.geom.Point(coordonnee, 'XY');
-  var point_feature = new ol.Feature ( point );
-  point_feature.setStyle(imageStyle);
-  var features = [ point_feature];
-  features.forEach(transform_geometry);
-  var layer_point = new ol.layer.Vector({
-    source: new ol.source.Vector( {
-      features: features
-    })
-  });
-  map.addLayer(layer_point);
+    var map = new ol.Map({
+      controls: ol.control.defaults({ attribution: false }).extend([attribution]),
+      target: 'map',
+      view: new ol.View({
+          center: ol.proj.fromLonLat(coordonnee),
+        zoom: zoom
+      })
+    });
+    var layer = new ol.layer.Tile({
+      source: new ol.source.OSM()
+    });
+    map.addLayer(layer);
+    function transform_geometry(element) {
+      var current_projection = new ol.proj.Projection({ code: "EPSG:4326" });
+      var new_projection = layer.getSource().getProjection();
+      element.getGeometry().transform(current_projection, new_projection);
+    }
+    var point = new ol.geom.Point(coordonnee, 'XY');
+    var point_feature = new ol.Feature ( point );
+    point_feature.setStyle(imageStyle);
+    var features = [ point_feature];
+    features.forEach(transform_geometry);
+    var layer_point = new ol.layer.Vector({
+      source: new ol.source.Vector( {
+        features: features
+      })
+    });
+    map.addLayer(layer_point);
+
+    function cacher() {
+        $('.map').css('visibility','hidden');
+        console.log("ok");
+    }
+    function afficher() {
+        $('.map').css('visibility','visible');
+        console.log("ok");
+    }
+
   </script>
-</div>
 {% endblock %}

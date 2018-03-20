@@ -13,18 +13,19 @@
   {% if parterre.get_name()!= "Bac à sable" %}
     <div class="buttonDelete">
       <div class="">
-        <a href="#popup1" class="btn btn-danger" id="bDanger">Supprimer</a>
+        <a href="#popup1" class="btn btn-danger" id="bDanger" onclick="cacher()">Supprimer</a>
       </div>
 
         <div id="popup1" class = "overlay">
-            <div class = "popup">
+            <div class = "popuP">
               <h2> Etes-vous sûr de vouloir supprimer ce parterre ? </h2>
-              <p> Cette action le supprimera définitivement</p>
+              <p> Cette action le supprimera définitivement !</p>
+              <a href = "{{ url_for('delete_parterre', id = parterre.get_id()) }}" class="btn btn-danger btn-pop-del">Supprimer
+              </a>
               <a href="#">
-                <button type="button" class="btn btn-default">Annuler</button>
+                <button type="button" class="btn btn-default btn-pop-cancel" onclick="afficher()">Annuler</button>
               </a>
-              <a href = "{{ url_for('delete_parterre', id = parterre.get_id()) }}" class="btn btn-danger">Supprimer
-              </a>
+
             </div>
         </div>
       <a href = "{{ url_for('edit_parterre', id = parterre.get_id()) }}" id="bEdit">
@@ -39,11 +40,13 @@
     <section class = "fleurs">
       <h4> Liste des fleurs :</h4>
       <div>
-        <ul class="listeP">
-          {% for plante in parterre.get_plantes() %}
-            <li><a href="{{ url_for('plante_info', id = plante.get_id()) }}" class="btn btn-default buttonliste"> {{ plante.get_name() }} </a></li>
-          {% endfor %}
-        </ul>
+        <div class="scrollParterre">
+          <ul class="listeP">
+            {% for plante in parterre.get_plantes() %}
+              <li><a href="{{ url_for('plante_info', id = plante.get_id()) }}" class="btn btn-default buttonliste"> {{ plante.get_name() }} </a></li>
+            {% endfor %}
+          </ul>
+      </div>
       <div>
         <a href="{{ url_for('add_Plante')}}" class="btn btn-default" id="addflower">Ajouter une fleur</a>
       </div>
@@ -53,11 +56,13 @@
     <section class = "capteurs">
       <h4> Liste des capteurs :</h4>
       <div>
+        <div class="scrollParterre">
         <ul class="listeP">
           {% for capteur in parterre.get_capteurs() %}
             <li><a href="{{ url_for('capteur_info', id = capteur.get_id()) }}" class="btn btn-default buttonliste">{{ capteur.get_name() }}</a></li>
           {% endfor %}
         </ul>
+      </div>
         <div>
           <a href="{{ url_for('add_Capteur')}}" class="btn btn-default" id="addC">Ajouter un capteur</a>
         </div>
@@ -115,6 +120,15 @@
           zoom: 15
         })
       });
+
+      function cacher() {
+          $('.map').css('visibility','hidden');
+          console.log("ok");
+      }
+      function afficher() {
+          $('.map').css('visibility','visible');
+          console.log("ok");
+      }
 
 </script>
 

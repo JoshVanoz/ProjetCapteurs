@@ -152,10 +152,10 @@ body{
   text-align: center;
   width: 20%;
 }
-#bDanger {
+#bDanger{
   margin-bottom: 2vh;
   padding: 1vh 2vw 1vh 2vw;
-  width: 100%
+  width: 100%;
 }
 #bEdit > input{
   padding: 1vh 2vw 1vh 2vw;
@@ -312,15 +312,16 @@ body{
   display: flex;
   flex-direction: column;
 }
-.fleurs >div, .capteurs >div{
+.fleurs > div, .capteurs >div{
   display: flex;
 }
 .listeP{
   list-style-type: none;
   flex: 1;
+  width: initial;
 }
 .listeP a{
-  width: 80%;
+  width: 100%;;
   font-size: 1.5vh;
 }
 #addflower, #addC{
@@ -332,14 +333,25 @@ body{
 #addflower:hover, #addC:hover{
   background-color: white;
 }
-#buttonCap >a{
-  margin: 2vh;
+#buttonCap a{
+  margin: auto;
+  width: 150%;
 }
-#buttonCap{;
+#buttonCap input{
+  width: 50%;
+  margin-left: 5vw;
+}
+#buttonCap{
   text-align: center;
+  display: flex;
 }
-.btnReleve{
-  margin-top: 1vh;
+.btnReleve input{
+  padding: 1vh 2.5vw 1vh 2.5vw;
+  margin: auto;
+}
+.btnReleve {
+  margin: auto;
+  margin-right: 2vh;
 }
 .pl{
   padding-left: 45vh;
@@ -348,6 +360,7 @@ body{
 .popup>h2,.popup>p{
   color:black;
 }
+
 .overlay {
   position: absolute;
   top: 0;
@@ -368,12 +381,34 @@ body{
   width: 300px;
   box-shadow: 0 0 50px rgba(0,0,0,0.5);
   position: relative;
+  width: 50vw;
 }
 
+.popuP {
+  margin: 75px auto;
+  padding: 20px;
+  background: #fff;
+  border: 1px solid #666;
+  width: 300px;
+  box-shadow: 0 0 50px rgba(0,0,0,0.5);
+  position: relative;
+  width: 50vw;
+}
 
+.btn-pop-cancel{
+  width: 20vh;
+}
+.btn-pop-cancel, .btn-pop-del{
+  margin: 1vh 0vw 1vh 0vw;
+}
+.popup > p, .popuP > p{
+  font-style: italic;
+  color: gray;
+}
 .overlay:target {
   visibility: visible;
   opacity: 1;
+
 }
 
 .close {
@@ -389,6 +424,7 @@ body{
   text-decoration: none;
   color: #666;
 }
+
 #formEditParterre{
   margin: auto;
   padding: auto;
@@ -414,4 +450,55 @@ body{
   width: 30%;
   margin: auto;
   font-size: 2vh;
+}
+
+#info{
+  border: thin solid;
+  margin: auto;
+  height: 60vh;
+  flex: 1 1 0;
+}
+#graph{
+  margin: auto;
+  margin-top: 10vh;
+}
+#table, #info{
+  text-align: center;
+  padding: 1vw;
+  width: 100%;
+}
+#table{
+  padding-top: 2vh;
+  height: 20vh;
+}
+#table th {
+  text-align: center;
+}
+#table tr td {
+  border: thin solid;
+  padding: 1vh;
+}
+.sroll{
+  overflow: auto;
+
+  height: 50vh;
+  border: thin solid;
+}
+.th{
+  display: flex;
+  flex-direction: row;
+  width: inherit
+}
+.th h4 {
+  text-align: center;
+  padding: 1vh;
+  padding-right: 2vw;
+}
+
+.scrollParterre {
+  overflow: auto;
+  width: 70%;
+  height: 15vh;
+  margin-right: 1.5vw
+
 }

@@ -427,7 +427,7 @@ def get_capteur(id):
     return Capteur.query.get(id)
 
 def get_capteurs_parterre(id):
-    return Capteur.query.filter(Capteur.parterre_id==id).one()
+    return Capteur.query.filter(Capteur.parterre_id==id).all()
 
 def get_plante(id):
     return TypePlante.query.get(id)

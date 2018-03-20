@@ -108,7 +108,7 @@ body{
   font-weight: bold;
   font-size: 1.8vh;
 }
-#formEditCap{
+#formEditCap, #formEditPlante{
   padding: 2vh;
   margin: auto;
   width: 70%;
@@ -128,7 +128,7 @@ body{
   padding-right: 2.5vw;
   flex; 0 1;
 }
-#formEditCap label{
+#formEditCap label, #formEditPlante label{
   margin: 2vh;
   font-size: large;
   text-decoration: underline;

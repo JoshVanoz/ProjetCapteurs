@@ -272,6 +272,7 @@ def save_capteur():
         "addCapteur.html",
         title = a.get_name()+" - edit",
         form  = f,
+        capteur=a,
         param = "modif")
 
 @app.route("/Parterre/edit/<int:id>")
@@ -306,8 +307,9 @@ def save_parterre():
         db.session.commit()
         return redirect(url_for("parterre_info", id = a.get_id()))
     return render_template("create-parterre.html",
-                title= parterre.get_name()+"  - edit",
+                title= a.get_name()+"  - edit",
                 form = f,
+                parterre=a,
                 param = "modif")
 
 @app.route("/Supprimer/Parterre/<int:id>")

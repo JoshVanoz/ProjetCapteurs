@@ -127,8 +127,19 @@ def add_Capteur():
     return render_template(
         "addCapteur.html",
         form  = f,
-        title = "Nouveau Capteur",
+        title = "Nouveau capteur",
         param = "create")
+
+@app.route("/Ajouter/Capteur/Parterre/<int:id>")
+@login_required
+def add_Capteur_Part(id):
+    f = CapteurForm()
+    return render_template(
+        "addCapteur.html",
+        form  = f,
+        parterre = id,
+        title = "Nouveau capteur",
+        param = "createPart")
 
 @app.route("/Ajouter/Capteur/saving/", methods=("POST",))
 def new_capteur_saving():

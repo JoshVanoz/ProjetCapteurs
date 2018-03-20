@@ -43,14 +43,14 @@
       <input class = "btn btn-success"
             type ="submit"
             value = "Enregistrer">
-            
+
             {% if param == "create" %}
       <a href="{{ url_for('home')}}" class = "btn btn-danger">Annuler</a>
             {% elif param == "modif" %}
       <a href="{{ url_for('parterre_info', id = parterre.get_id()) }}" class = "btn btn-danger">Annuler</a>
             {% endif %}
     </div>
-
+    <div id="coords"></div>
   </form>
 
 </div>
@@ -62,28 +62,70 @@
 var raster = new ol.layer.Tile({
   source: new ol.source.OSM()
 });
-var source = new ol.source.Vector({wrapX: false});
-var vector = new ol.layer.Vector({
-  source: source
-});
-var map = new ol.Map({
-  layers: [raster, vector],
-  target: 'map',
-  view: new ol.View({
-    center: [214408, 6080900],
-    zoom: 15
-  })
-});
+
+var coords = new Array();
+{% if param == "modif" %}
+  let geojsonObject = {
+    'type': 'FeatureCollection',
+    'crs': {
+      'type': 'name',
+      'properties': {
+        'name': 'EPSG:3857'
+      }
+    },
+    'features': [{
+      'type': 'Feature',
+      'geometry': {
+        'type': 'Polygon',
+        'coordinates': [[
+          {% for coord in parterre.coordonnees %}
+              [ {{ coord.get_Y()}}, {{coord.get_X()}}],
+          {% endfor %}
+        ]]
+      },
+    },
+    ]
+  };
+  let source = new ol.source.Vector({wrapX: false, features: (new ol.format.GeoJSON()).readFeatures(geojsonObject)});
+
+  let vector = new ol.layer.Vector({
+    source: source
+  });
+  let map = new ol.Map({
+    layers: [raster, vector],
+    target: 'map',
+    view: new ol.View({
+      center: [214408, 6080900],
+      zoom: 15
+    })
+  });
+{% elif param == "create" %}
+  let source = new ol.source.Vector({wrapX: false});
+
+    let vector = new ol.layer.Vector({
+      source: source
+    });
+    let map = new ol.Map({
+      layers: [raster, vector],
+      target: 'map',
+      view: new ol.View({
+        center: [214408, 6080900],
+        zoom: 15
+      })
+    });
+{% endif %}
+
 var draw;
 function addInteraction() {
     draw = new ol.interaction.Draw({
       source: source,
       type: /** @type {ol.geom.GeometryType} */ ('Polygon')
     });
-    draw.on('drawstart', e=>{ source.clear(); document.getElementById("formulaire")} )
+    draw.on('drawstart', e=>{ source.clear();} )
     draw.on('drawend',
      e => {
        console.log(e.feature.getGeometry().getCoordinates());
+       console.log(e);
        let coords_node = document.getElementById("coords");
 
        while (coords_node.firstChild) {

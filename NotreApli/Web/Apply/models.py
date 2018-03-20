@@ -426,6 +426,9 @@ def get_capteurs():
 def get_capteur(id):
     return Capteur.query.get(id)
 
+def get_capteur_phone(num):
+    return Capteur.query.filter(Capteur.numTel==num)
+
 def get_capteurs_parterre(id):
     return Capteur.query.filter(Capteur.parterre_id==id).all()
 

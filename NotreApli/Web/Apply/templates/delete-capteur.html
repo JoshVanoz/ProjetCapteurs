@@ -1,36 +1,33 @@
 {% extends "header.html" %}
 {% block main %}
-<body>
-  <h1 class="h1">Suppression d'un Capteur : </h1>
-  <div class="row Suppr">
-      <form method = "POST" action = "{{ url_for('delete_capteur') }}">
-        <h3>Veuillez selectionner un capteur :</h3>
-        <div class="delete">
-          <select name = "del" class="del">
-            <option value = "">Faites votre choix</option>
-            {% for capteur in liste %}
-              <option value = "{{ capteur.get_id() }}">{{ capteur.get_name() }}</option>
-            {% endfor %}
-          </select>
-        </div>
-        <div class="">
-          <a href="#popup1" class="btn btn-danger">Supprimer</a>
-        </div>
+<h1 class="h1">Suppression d'un capteur : </h1>
+<div class="row Suppr">
+    <form method = "POST" action = "{{ url_for('delete_capteur') }}">
+      <h3>Veuillez selectionner un capteur :</h3>
+      <div class="delete">
+        <select name = "del" class="del">
+          <option value = "">Faites votre choix</option>
+          {% for capteur in liste %}
+            <option value = "{{ capteur.get_id() }}">{{ capteur.get_name() }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="">
+        <a href="#popup1" id="Supp" class="btn btn-danger">Supprimer</a>
+      </div>
 
-          <div id="popup1" class = "overlay">
-              <div class = "popup">
-                <h2> Etes-vous sûr de vouloir supprimer ce capteur ? </h2>
-                <p> Cette action le supprimera définitivement</p>
-                <a href="#">
-                  <button type="button" class="btn btn-default">Annuler</button>
-                </a>
-                <input class = "btn btn-danger"
-                       type  = "submit"
-                       value = "Supprimer">
-              </div>
+      <div id="popup1" class = "overlay">
+          <div class = "popuP">
+            <h2> Etes-vous sûr de vouloir supprimer ce capteur ? </h2>
+            <p> Cette action le supprimera définitivement !</p>
+            <input class = "btn btn-danger"
+                 type  = "submit"
+                 value = "Supprimer">
+            <a href="#">
+              <button type="button" class="btn btn-default btn-pop-cancel">Annuler</button>
+            </a>
           </div>
-        </form>
-        </div>
-
-
-        {% endblock %}
+      </div>
+  </form>
+</div>
+{% endblock %}
